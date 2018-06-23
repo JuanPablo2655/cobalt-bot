@@ -6,7 +6,7 @@ exports.run = async (client, message, args, level) => {
     .addField('First Appeared', 'March 12, 2018')
     .addField('First Instituted', 'March 12, 2018')
     .setImage('https://cdn.discordapp.com/attachments/349728237729087498/447913912877449216/CobaltCross.png')
-    .addField('Holders', "soon"),
+    .addField('Holders', 'soon'),
   message.channel.send({embed});
 };
 

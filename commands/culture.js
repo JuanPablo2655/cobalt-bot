@@ -6,7 +6,7 @@ embed.setTitle('Order of Culture with Ribbon')
 .addField('First Appeared', 'March 13, 2018')
 .addField('First Instituted', 'March 13, 2018')
 .setImage("https://cdn.discordapp.com/attachments/322507598912028672/458776765012377635/culture.png")
-.addField('Holders', "soon"),
+.addField('Holders', 'soon'),
 message.channel.send({embed});
 
 };
