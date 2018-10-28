@@ -9,6 +9,7 @@ secrets.json
 config.js
 data/
 test.js
+template
 
 # Runtime data
 pids
