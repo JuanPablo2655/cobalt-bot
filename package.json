@@ -18,6 +18,9 @@
   "homepage": "https://github.com/JuanPablo2655/Cobalt#readme",
   "dependencies": {
     "discord.js": "^11.4.2",
-    "enmap": "^4.3.2"
+    "enmap": "^4.3.2",
+    "moment": "^2.22.2",
+    "superagent": "^4.0.0-beta.5",
+    "xml2js": "^0.4.19"
   }
 }

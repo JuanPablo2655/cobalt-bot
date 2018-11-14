@@ -26,7 +26,7 @@ cobalt.on('message', (message) =>{
 		cmd = cobalt.commands.get(command);
 	} else if (cobalt.aliases.has(command)) {
 		cmd = cobalt.commands.get(cobalt.aliases.get(command));
-	}
+	} if (!cmd) return false;
     cmd.run(cobalt, message, args);
 });
 
@@ -51,7 +51,7 @@ fs.readdir('./commands/', (err, files) => {
 });
 
 cobalt.buildHelpMenu = function(commands) {
-    let helpMenu = new Discord.RichEmbed().setTitle('Help Menu');
+    let helpMenu = new Discord.RichEmbed().setTitle('Help Menu').setColor('RANDOM');
     for (let i = 0; i < commands.keyArray().length; i++) {
         let cmd = commands.keyArray()[i];
         let info = commands.get(cmd).help;
@@ -64,9 +64,10 @@ cobalt.advancedHelp = function(command) {
     if (!command) return "That command doesn't exist.";
     let helpMenu = new Discord.RichEmbed()
         .setTitle('Help Menu')
-        .addField('Description', command.help["description"], true)
-        .addField("Usage", command.help["usage"], true)
-        .addField("Aliases", command.conf["aliases"].join(", "), true);
+        .setColor('RANDOM')
+        .addField('Description', command.help["description"])
+        .addField("Usage", command.help["usage"])
+        .addField("Aliases", command.conf["aliases"].join(", "));
     return helpMenu;
 }
     
