@@ -20,6 +20,8 @@
     "discord.js": "^11.4.2",
     "enmap": "^4.3.2",
     "moment": "^2.22.2",
+    "moment-duration-format": "^2.2.2",
+    "snekfetch": "^4.0.4",
     "superagent": "^4.0.0-beta.5",
     "xml2js": "^0.4.19"
   }

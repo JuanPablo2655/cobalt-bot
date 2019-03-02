@@ -1,3 +1,13 @@
+const ascii = `
+#####                                       ######               
+#     #  ####  #####    ##   #      #####    #     #  ####  ##### 
+#       #    # #    #  #  #  #        #      #     # #    #   #   
+#       #    # #####  #    # #        #      ######  #    #   #   
+#       #    # #    # ###### #        #      #     # #    #   #   
+#     # #    # #    # #    # #        #      #     # #    #   #   
+ #####   ####  #####  #    # ######   #      ######   ####    #   
+			`;
+
 const Discord = require("discord.js");
 const cobalt = new Discord.Client();
 const fs = require("fs");
@@ -10,8 +20,16 @@ cobalt.commands = new Discord.Collection();
 cobalt.aliases = new Discord.Collection();
 
 cobalt.on('ready', () => {
-    console.log("I'm ready.")
-    cobalt.user.setActivity("test", {type: 'WATCHING'})
+    console.log('bot ready!', ascii);
+    setInterval(function(){
+        let l = [
+          'Axalis take a shower',
+          'John suck big peepee',
+          'Alois committing genocide',
+          'over the server'
+        ]
+        cobalt.user.setActivity(l[Math.floor(Math.random()*l.length)], {type: 'WATCHING'});
+      }, 3600000);
 });
 
 cobalt.on('message', (message) =>{
@@ -26,7 +44,10 @@ cobalt.on('message', (message) =>{
 		cmd = cobalt.commands.get(command);
 	} else if (cobalt.aliases.has(command)) {
 		cmd = cobalt.commands.get(cobalt.aliases.get(command));
-	} if (!cmd) return false;
+    } if (!cmd) return false;
+    if (cmd) {
+        console.log(`Cobalt: ${message.author.username}#${message.author.discriminator} used command '${cmd.help["name"]}' on ${message.guild.name}`);
+    }
     cmd.run(cobalt, message, args);
 });
 
@@ -71,4 +92,4 @@ cobalt.advancedHelp = function(command) {
     return helpMenu;
 }
     
-  cobalt.login(secrets.token);
+cobalt.login(secrets.token);
