@@ -100,7 +100,6 @@ cobalt.on('message', (message) =>{
     if (message.content.indexOf(config.prefix) !== 0) {
         let money = require('./model/economy.js');
         let moneyToAdd = Math.ceil(Math.random() * 5);
-        console.log(moneyToAdd + " cobalt bucks");
         money.findOne({userID: message.author.id, serverID: message.guild.id}, (err, res) => {
             if (err) console.log(err);
             if (!res) {
@@ -118,7 +117,7 @@ cobalt.on('message', (message) =>{
             }
         });
     }
-
+    
     const args = message.content.slice(config.prefix.length).trim().split(/ +/g);
     const command = args.shift().toLowerCase();
 
