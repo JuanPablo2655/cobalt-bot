@@ -1,3 +1,4 @@
+const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const economy = new Schema({
@@ -6,5 +7,5 @@ const economy = new Schema({
     money: Number
 });
 
-module.exports = mongoose.module("ecomony", economy);
+module.exports = mongoose.model("ecomony", economy);
   

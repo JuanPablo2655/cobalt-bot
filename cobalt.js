@@ -97,7 +97,25 @@ cobalt.on("guildMemberRemove", (member) => {
 
 cobalt.on('message', (message) =>{
     if (message.author.bot) return;
-    if (message.content.indexOf(config.prefix) !== 0) return;
+    if (message.content.indexOf(config.prefix) !== 0) {
+        let money = require('./model/economy.js');
+        let moneyToAdd = Math.ceil(Math.random() * 5);
+        console.log(moneyToAdd + " cobalt bucks");
+        money.findOne({userID: message.author.id, serverID: message.guild.id}, (err, res) => {
+            if (err) console.log(err);
+            if (!res) {
+                const newMoney = new money({
+                    userID: message.author.id,
+                    serverID: message.guild.id,
+                    money: moneyToAdd
+                });
+                newMoney.save().catch(err => console.log(err));
+            } else {
+                res.money = res.money + moneyToAdd;
+                res.save().catch(err => console.log(err));
+            }
+        });
+    }
 
     const args = message.content.slice(config.prefix.length).trim().split(/ +/g);
     const command = args.shift().toLowerCase();
@@ -112,6 +130,7 @@ cobalt.on('message', (message) =>{
         console.log(`Cobalt: ${message.author.username}#${message.author.discriminator} used command '${cmd.help["name"]}' on ${message.guild.name}`);
     }
     cmd.run(cobalt, message, args);
+
 });
 
 fs.readdir('./commands/', (err, files) => {
