@@ -106,7 +106,9 @@ cobalt.on('message', (message) =>{
             if (!res) {
                 const newMoney = new money({
                     userID: message.author.id,
+                    userName: message.author.username,
                     serverID: message.guild.id,
+                    serverName: message.guild.name,
                     money: moneyToAdd
                 });
                 newMoney.save().catch(err => console.log(err));

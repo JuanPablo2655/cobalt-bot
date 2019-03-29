@@ -3,7 +3,9 @@ const Schema = mongoose.Schema;
 
 const economy = new Schema({
     userID: String,
+    userName: String,
     serverID: String,
+    serverName: String,
     money: Number
 });
 
