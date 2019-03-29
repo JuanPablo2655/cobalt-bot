@@ -9,8 +9,11 @@ const ascii = `
 			`;
 
 const Discord = require("discord.js");
+const mongoose = require('mongoose');
 const cobalt = new Discord.Client();
 const fs = require("fs");
+
+mongoose.connect('mongodb://localhost/cobalt', {useNewUrlParser: true});
 
 const config = require("./config.json");
 const secrets = require("./secrets.json");
