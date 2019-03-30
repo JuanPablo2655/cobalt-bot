@@ -2,9 +2,9 @@ const Discord = require("discord.js");
 const mongoose = require('mongoose');
 let money = require('../model/economy.js');
 
-mongoose.connect('mongodb://localhost/cobalt', {
-    useNewUrlParser: true
-});
+// mongoose.connect('mongodb://localhost/cobalt', {
+//     useNewUrlParser: true
+// });
 
 module.exports.run = async (cobalt, message, args) => {
     money.find({
