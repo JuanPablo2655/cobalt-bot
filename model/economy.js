@@ -1,7 +1,6 @@
 const mongoose = require('mongoose');
-const Schema = mongoose.Schema;
 
-const economy = new Schema({
+const economySchema = mongoose.Schema({
     userID: String,
     userName: String,
     serverID: String,
@@ -9,5 +8,4 @@ const economy = new Schema({
     money: Number
 });
 
-module.exports = mongoose.model("ecomony", economy);
-  
+module.exports = mongoose.model("ecomony", economySchema);
