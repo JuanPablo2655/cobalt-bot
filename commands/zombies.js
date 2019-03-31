@@ -31,7 +31,7 @@ module.exports.run = async (cobalt, message, args) => {
 }
 
 exports.conf = {
-    aliases: ['zombie','zday', 'z-day']
+    aliases: ['zday', 'z-day']
 }
 
 exports.help = {

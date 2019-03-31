@@ -19,7 +19,7 @@ module.exports.run = async (cobalt, message, args) => {
 }
 
 exports.conf = {
-    aliases: ['serverinfo']
+    aliases: []
 }
 
 exports.help = {

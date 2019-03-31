@@ -21,7 +21,7 @@ module.exports.run = async (cobalt, message, args) => {
 }
 
 exports.conf = {
-    aliases: ['request']
+    aliases: []
 }
 
 exports.help = {

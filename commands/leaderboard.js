@@ -1,20 +1,20 @@
 const Discord = require("discord.js");
 const mongoose = require('mongoose');
-let money = require('../model/economy.js');
+let levels = require('../model/levels.js');
 
 // mongoose.connect('mongodb://localhost/cobalt', {
 //     useNewUrlParser: true
 // });
 
 module.exports.run = async (cobalt, message, args) => {
-    money.find({
+    levels.find({
         serverID: message.guild.id
     }).sort([
-        ['money', 'descending']
+        ['lvl', 'descending']
     ]).exec((err, res) => {
         if (err) console.log(err);
         let leaderEmbed = new Discord.RichEmbed()
-            .setTitle("The top ten richest Cobaltians")
+            .setTitle("The top Cobaltians")
         if (res.length === 0) {
             leaderEmbed.setColor('RED');
             leaderEmbed.addField('No data found', 'Looks like a dead server to me')
@@ -23,18 +23,18 @@ module.exports.run = async (cobalt, message, args) => {
             for (i = 0; i < res.length; i++) {
                 let member = message.guild.members.get(res[i].userID) || "User Left"
                 if (member === "User Left") {
-                    leaderEmbed.addField(`${i + 1}. ${member}`, `**Money**: ${res[i].money}`);
+                    leaderEmbed.addField(`${i + 1}. ${member}`, `**levels**: ${res[i].lvl}`);
                 } else {
-                    leaderEmbed.addField(`${i + 1}. ${member.user.username}`, `**Money**: ${res[i].money}`);
+                    leaderEmbed.addField(`${i + 1}. ${member.user.username}`, `**levels**: ${res[i].lvl}`);
                 }
             }
         } else {
             for (i = 0; i < 10; i++) {
                 let member = message.guild.members.get(res[i].userID) || "User Left"
                 if (member === "User Left") {
-                    leaderEmbed.addField(`${i + 1}. ${member}`, `**Money**: ${res[i].money}`);
+                    leaderEmbed.addField(`${i + 1}. ${member}`, `**levels**: ${res[i].lvl}`);
                 } else {
-                    leaderEmbed.addField(`${i + 1}. ${member.user.username}`, `**Money**: ${res[i].money}`);
+                    leaderEmbed.addField(`${i + 1}. ${member.user.username}`, `**levels**: ${res[i].lvl}`);
                 }
             }
         }
@@ -44,7 +44,7 @@ module.exports.run = async (cobalt, message, args) => {
 }
 
 exports.conf = {
-    aliases: ['leaderboard', 'lb']
+    aliases: ['lb']
 }
 
 exports.help = {

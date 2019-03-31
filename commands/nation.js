@@ -39,7 +39,7 @@ module.exports.run = async (cobalt, message, args) => {
 }
 
 exports.conf = {
-    aliases: ['nation']
+    aliases: []
 }
 
 exports.help = {

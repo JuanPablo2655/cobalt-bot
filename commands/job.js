@@ -1,6 +1,6 @@
 const Discord = require("discord.js");
 const mongoose = require('mongoose');
-let jobs = require('../model/job.js');
+let jobs = require('../model/jobs.js');
 
 module.exports.run = async (cobalt, message, args) => {
     const filter = m => m.author.id === message.author.id
@@ -34,7 +34,7 @@ module.exports.run = async (cobalt, message, args) => {
 }
 
 exports.conf = {
-    aliases: ['jobs']
+    aliases: []
 }
 
 exports.help = {

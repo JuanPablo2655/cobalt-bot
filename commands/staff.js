@@ -8,7 +8,7 @@ module.exports.run = async (cobalt, message, args) => {
 }
 
 exports.conf = {
-    aliases: ['staff']
+    aliases: []
 }
 
 exports.help = {

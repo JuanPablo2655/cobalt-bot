@@ -28,7 +28,7 @@ module.exports.run = async (cobalt, message, args) => {
 }
 
 exports.conf = {
-    aliases: ['rule34', 'r34']
+    aliases: ['r34']
 }
 
 exports.help = {

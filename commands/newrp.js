@@ -23,7 +23,7 @@ var getInitials = function (string) {
 };
 
 exports.conf = {
-    aliases: ['newrp']
+    aliases: []
 }
 
 exports.help = {

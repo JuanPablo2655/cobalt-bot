@@ -5,7 +5,7 @@ module.exports.run = async (cobalt, message, args) => {
 }
 
 exports.conf = {
-    aliases: ['ping']
+    aliases: []
 }
 
 exports.help = {

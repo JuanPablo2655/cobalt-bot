@@ -9,7 +9,7 @@ module.exports.run = async (cobalt, message, args) => {
 }
 
 exports.conf = {
-    aliases: ['help', 'halp', 'h']
+    aliases: ['halp', 'h']
 }
 
 exports.help = {
