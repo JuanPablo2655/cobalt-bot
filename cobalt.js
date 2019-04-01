@@ -18,7 +18,7 @@ cobalt.config = config;
 
 cobalt.commands = new Discord.Collection();
 cobalt.aliases = new Discord.Collection();
-cobalt.mongoose = require('./utils/mongoose.js');
+const mongoose = require('./utils/mongoose.js');
 
 fs.readdir('./commands/', (err, files) => {
     if (err)
@@ -73,7 +73,7 @@ cobalt.advancedHelp = function (command) {
     return helpMenu;
 }
 
-cobalt.mongoose.init();
+mongoose.init();
 cobalt.login(secrets.token);
 
 exports.config = config;

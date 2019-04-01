@@ -22,7 +22,7 @@ module.exports = async (cobalt, message) => {
                 });
                 newLevel.save().catch(err => console.log(err));
             } else {
-                const curLevel = 5 * Math.pow(res.lvl, 2) + 50 * res.lvl + 100
+                const curLevel = 5 * (Math.pow(res.lvl, 2)) + 50 * res.lvl + 100
                 if (res.xp > curLevel) {
                     res.lvl = res.lvl + 1;
                     message.channel.send("congratulations you are now level " + res.lvl + "!")

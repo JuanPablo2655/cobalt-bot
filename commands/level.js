@@ -1,10 +1,5 @@
 const Discord = require("discord.js");
-const mongoose = require('mongoose');
 let levels = require('../model/levels.js');
-
-mongoose.connect('mongodb://localhost/cobalt', {
-    useNewUrlParser: true
-});
 
 module.exports.run = async (cobalt, message, args) => {
     levels.findOne({
