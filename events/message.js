@@ -1,9 +1,15 @@
 const cobalt = require("./../cobalt.js");
 const config = cobalt.config;
 
+let cooldown = new Set();
+
 module.exports = async (cobalt, message) => {
     if (message.author.bot) return;
+    if (cooldown.has(message.author.id)) {
+        return
+    } else {
     if (message.content.indexOf(config.prefix) !== 0) {
+        cooldown.add(message.author.id);
         let levels = require('../model/levels.js');
         let xpToAdd = Math.round(Math.random() * ((25 - 15) + 1) + 15);
         levels.findOne({
@@ -34,6 +40,11 @@ module.exports = async (cobalt, message) => {
             }
         });
     }
+}
+
+    setTimeout(() => {
+        cooldown.delete(message.author.id)
+    }, 1000 * 60)
 
     //Return out if the prefix is not at the beginning of the message
     if (message.content.indexOf(config.prefix) !== 0) {
