@@ -9,7 +9,7 @@ module.exports = (cobalt, oldMessage, newMessage) => {
     let updateMessage = new Discord.RichEmbed()
         .setTitle('Message updated')
         .setAuthor(author.username, avatar)
-        .addField("Original", oldMessage.cleanContent, true)
+        .addField("Original", `${oldMessage.cleanContent} `, true)
         .addField("Edit", newMessage.cleanContent, true)
         .setColor("#00a1ff");
     channel.send(updateMessage);

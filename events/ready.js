@@ -9,7 +9,7 @@ const ascii = `
 			`;
 
 module.exports = cobalt => {
-    console.log('bot ready!', ascii);
+    console.log('[Cobalt]\tOnline', ascii);
     setInterval(function () {
         let l = [
             'Axalis take a shower',

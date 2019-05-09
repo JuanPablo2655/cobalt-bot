@@ -17,7 +17,7 @@ module.exports = {
         mongoose.Promise = global.Promise;
         
         mongoose.connection.on('connected', () => {
-            console.log('[Mongoose]\tMongoose connection successfully opened!');
+            console.log('[Mongoose]\tMongoose connection successfully opened');
         });
         
         mongoose.connection.on('err', err => {

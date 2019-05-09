@@ -42,11 +42,11 @@ fs.readdir('./commands/', (err, files) => {
 
 fs.readdir('./events/', (err, files) => {
     if (err) return console.error;
+    console.log(`[Events]\tLoaded a total amount ${files.length} Events`)
     files.forEach(file => {
         if (!file.endsWith('.js')) return;
         const evt = require(`./events/${file}`);
         let evtName = file.split('.')[0];
-        console.log(`Loaded event '${evtName}'`);
         cobalt.on(evtName, evt.bind(null, cobalt));
     });
 });
@@ -57,7 +57,7 @@ cobalt.buildHelpMenu = function (commands) {
     for (let i = 0; i < commands.keyArray().length; i++) {
         let cmd = commands.keyArray()[i];
         let info = commands.get(cmd).help;
-        helpMenu.addField(cmd, info["description"], true)
+        helpMenu.addField(cmd, info["description"])
     }
     return helpMenu;
 }

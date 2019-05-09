@@ -1,7 +1,7 @@
 const Discord = require("discord.js");
 
 module.exports = (cobalt, message) => {
-    var channel = cobalt.channels.get('426044465023680513');
+    var channelLog = cobalt.channels.get('426044465023680513');
     let author = message.author;
     let avatar = author.displayAvatarURL;
 
@@ -11,5 +11,5 @@ module.exports = (cobalt, message) => {
         .addField("Channel", message.channel, true)
         .addField("Content", message.content, true)
         .setColor("#d62424");
-    channel.send(deletedMessage);
+    channelLog.send(deletedMessage);
 }

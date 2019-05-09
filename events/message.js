@@ -5,10 +5,10 @@ let cooldown = new Set();
 
 module.exports = async (cobalt, message) => {
     if (message.author.bot) return;
-    if (cooldown.has(message.author.id)) {
-        return
-    } else {
     if (message.content.indexOf(config.prefix) !== 0) {
+        if (cooldown.has(message.author.id)) {
+            return
+        } else {
         cooldown.add(message.author.id);
         let levels = require('../model/levels.js');
         let xpToAdd = Math.round(Math.random() * ((25 - 15) + 1) + 15);
@@ -28,8 +28,8 @@ module.exports = async (cobalt, message) => {
                 });
                 newLevel.save().catch(err => console.log(err));
             } else {
-                const curLevel = 5 * (Math.pow(res.lvl, 2)) + 50 * res.lvl + 100
-                if (res.xp > curLevel) {
+                const nextLevel = 5 * Math.pow(res.lvl, 2) + 50 * res.lvl + 100;
+                if (res.xp > nextLevel) {
                     res.lvl = res.lvl + 1;
                     message.channel.send("congratulations you are now level " + res.lvl + "!")
                     res.save().catch(err => console.log(err));
@@ -38,6 +38,7 @@ module.exports = async (cobalt, message) => {
                     res.save().catch(err => console.log(err));
                 }
             }
+        
         });
     }
 }
