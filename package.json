@@ -3,22 +3,27 @@
   "version": "1.0.0",
   "description": "test",
   "main": "cobalt.js",
-  "dependencies": {
-    "mongoose": "^5.4.20",
-    "superagent": "^4.1.0"
-  },
-  "devDependencies": {},
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/JuanPablo2655/cobalt-bot.git"
+    "url": "git+https://github.com/JuanPablo2655/Cobalt.git"
   },
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/JuanPablo2655/cobalt-bot/issues"
+    "url": "https://github.com/JuanPablo2655/Cobalt/issues"
   },
-  "homepage": "https://github.com/JuanPablo2655/cobalt-bot#readme"
+  "homepage": "https://github.com/JuanPablo2655/Cobalt#readme",
+  "dependencies": {
+    "discord.js": "^11.4.2",
+    "enmap": "^4.3.2",
+    "moment": "^2.22.2",
+    "moment-duration-format": "^2.2.2",
+    "mongoose": "^5.4.20",
+    "snekfetch": "^4.0.4",
+    "superagent": "^4.1.0",
+    "xml2js": "^0.4.19"
+  }
 }
