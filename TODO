@@ -1,0 +1,15 @@
+MongoDB:
+
+Commands:
+
+Bot:
+  ✔ Fix the 'yeah' bug. @done(19-04-12 20:24)
+    It's being picked up as a help command and I don't know why.
+
+Ideas:
+  ☐ Jobs
+    ☐ plantation owner
+    ☐ Insurance Company CEO
+    ☐ CEO of Cobalt Airlines
+    ☐ Slave trader
+    ☐ Human milk farmer
