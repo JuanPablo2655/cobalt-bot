@@ -5,9 +5,12 @@ npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 config.json
+secrets.json
 config.js
 data/
 test.js
+template
+TODO
 
 # Runtime data
 pids
