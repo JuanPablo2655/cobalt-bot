@@ -6,8 +6,8 @@ module.exports.run = async (cobalt, message, args) => {
         message.channel.send("Error: Can\'t create a channel with no name.");
     } else if (name) {
         rp = getInitials(name.join(' '))
-        message.guild.createChannel(`${rp}-development`, "text")
-            .then(channel => channel.setParent('393965452579307521'))
+        message.guild.createChannel(`${rp}-development`, {type: 'text'})
+            .then(channel => channel.setParent('576916280737660938'))
             .then(channel => channel.lockPermissions());
         message.channel.send("Channel created.")
     }
