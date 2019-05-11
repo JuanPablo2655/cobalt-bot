@@ -12,7 +12,7 @@ module.exports = {
             family: 4
         };
         
-        mongoose.connect('mongodb://localhost/cobalt', dbOptions);
+        mongoose.connect('mongodb://cobaltia:cobaltpass@localhost:27017/cobalt?authSource=admin', dbOptions);
         mongoose.set('useFindAndModify', false);
         mongoose.Promise = global.Promise;
         
