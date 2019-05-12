@@ -7,7 +7,7 @@ module.exports.run = async (cobalt, message, args) => {
     } else if (name) {
         rp = getInitials(name.join(' '))
         message.guild.createChannel(`${rp}-development`, {type: 'text'})
-            .then(channel => channel.setParent('576916280737660938'))
+            .then(channel => channel.setParent('393965452579307521'))
             .then(channel => channel.lockPermissions());
         message.channel.send("Channel created.")
     }
