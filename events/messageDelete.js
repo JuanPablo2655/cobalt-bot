@@ -1,7 +1,7 @@
 const Discord = require("discord.js");
 
 module.exports = (cobalt, message) => {
-    var channelLog = cobalt.channels.get('426044465023680513');
+    var channelLog = cobalt.channels.get('405158191324987393');
     let author = message.author;
     let avatar = author.displayAvatarURL;
 
