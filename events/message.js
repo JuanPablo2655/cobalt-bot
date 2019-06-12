@@ -32,7 +32,7 @@ module.exports = async (cobalt, message) => {
                 if (res.xp > nextLevel) {
                     res.lvl = res.lvl + 1;
                     res.xp = 0;
-                    message.channel.send("congratulations you are now level " + res.lvl + "!")
+                    message.channel.send("Congratulations you are now level " + res.lvl + "!")
                     res.save().catch(err => console.log(err));
                 } else {
                     res.xp = res.xp + xpToAdd;

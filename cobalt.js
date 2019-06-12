@@ -69,7 +69,7 @@ cobalt.advancedHelp = function (command) {
         .setColor('RANDOM')
         .addField('Description', command.help["description"])
         .addField("Usage", command.help["usage"])
-        .addField("Aliases", command.conf["aliases"].join(", ") || "no Aliases");
+        .addField("Aliases", command.conf["aliases"].join(", ") || "No Aliases");
     return helpMenu;
 }
 
