@@ -29,6 +29,6 @@ exports.conf = {
 
 exports.help = {
     name: "rps",
-    description: "Let the bot say stuff",
+    description: "Play RPS with the bot",
     usage: "rps [rock|paper|scissors]"
 }

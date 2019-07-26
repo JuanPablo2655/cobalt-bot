@@ -4,32 +4,51 @@ const path = require('path');
 
 module.exports.run = async (cobalt, message, args) => {
     const categories = fs.readdirSync('./commands/').filter(file => fs.statSync(path.join('./commands/', file)).isDirectory());
-    let helpEmbed = new Discord.RichEmbed()
-    if (args.length == 0) {
-        helpEmbed.setAuthor('Cobalt Network', message.guild.iconURL)
-    helpEmbed.setTitle('Help Menu')
-    for (i = 0; i < categories.length; i++) {
-        helpEmbed.addField(categories[i], `\`t!!help ${categories[i]}\``, true)
-    }
-    helpEmbed.setFooter('h')
+    let helpEmbed = new Discord.RichEmbed();
     helpEmbed.setTimestamp()
+    helpEmbed.setAuthor('Cobalt Network', message.guild.iconURL)
     helpEmbed.setColor('RANDOM')
-    
-    message.channel.send(helpEmbed)
-    } else if (args[0] = categories) {
-        message.channel.send('commands').catch(console.error);
-    } else if(args[0] !== categories) {
-        message.channel.send(cobalt.advancedHelp(cobalt.commands.get(args[0]))).catch(console.error);
-    }
 
+    if (args.length === 0) {
+        helpEmbed.setDescription("Please select one of the following categories");
+        categories.forEach(category => {
+            if (category === 'dev') return;
+            helpEmbed.addField(category, `\`cn!help ${category}\``, true);
+        });
+        message.channel.send(helpEmbed);
+    } else {
+        let dir = args[0];
+        if (!categories.includes(dir) && !(cobalt.commands.get(dir))) {
+            return message.channel.send("Invalid category or command");
+        }
+
+        if (categories.includes(dir)) {
+            fs.readdir(`./commands/${args[0]}/`, (err, files) => {
+                helpEmbed.setDescription("Showing help for category " + dir);
+                if (err) throw err;
+                files.forEach(f => {
+                    const props = require(`../${args[0]}/${f}`)
+                    helpEmbed.addField(props.help.name, props.help.description)
+                })
+                message.channel.send(helpEmbed)
+            })
+        } else {
+            const props = cobalt.commands.get(dir);
+            helpEmbed.setDescription("Showing help for command " + dir);
+            helpEmbed.addField("Usage", props.help.usage, true);
+            helpEmbed.addField("Description", props.help.description, true);
+            helpEmbed.addField("aliases", props.conf.aliases.join(", ") || "No Aliases");
+            message.channel.send(helpEmbed)
+        }
+    }
 }
 
 exports.conf = {
-    aliases: ['h']
+    aliases: ['h', 'command', 'cmd', 'commands']
 }
 
 exports.help = {
     name: "help",
     description: "Let the bot say stuff",
-    usage: "help"
+    usage: "help [category|command]"
 }

@@ -15,12 +15,6 @@ module.exports = async (cobalt, message) => {
         message.reply("the prefix is: " + config.prefix);
     }
 
-    if (message.content == "test") {
-        message.channel.send("test")
-    }
-    let msg = JSON.stringify(messageDAT).replace(" ", ",")
-    console.log(msg)
-
     if (!messageDAT.startsWith(config.prefix)) {
        return manageLevels(message);
     }

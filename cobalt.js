@@ -3,6 +3,7 @@ const cobalt = new Discord.Client();
 const mongoose = require('./utils/mongoose.js');
 const fs = require("fs");
 const path = require('path');
+const moment = require('moment');
 
 const config = require("./config.json");
 cobalt.config = config;
