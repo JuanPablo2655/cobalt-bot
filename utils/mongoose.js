@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const secrets = require("../secrets.json");
 
 module.exports = {
     init: () => {
@@ -12,7 +13,7 @@ module.exports = {
             family: 4
         };
         
-        mongoose.connect('mongodb://localhost:27017/cobalt', dbOptions);
+        mongoose.connect(secrets.databasePass, dbOptions);
         mongoose.set('useFindAndModify', false);
         mongoose.Promise = global.Promise;
         
