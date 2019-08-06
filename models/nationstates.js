@@ -3,7 +3,7 @@ const mongoose = require('mongoose');
 const nationSchema = mongoose.Schema({
     username: String,
     userID: String,
-    nationstates: String
+    nation: String
 });
 
-module.exports = mongoose.model("nationstates", nationSchema);
+module.exports = mongoose.model("nations", nationSchema);

@@ -32,6 +32,7 @@ module.exports.run = async (cobalt, message, args) => {
     }
 
 exports.conf = {
+    enabled: true,
     aliases: ['r']
 }
 

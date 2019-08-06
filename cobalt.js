@@ -14,10 +14,10 @@ cobalt.aliases = new Discord.Collection();
 const categories = fs.readdirSync('./commands/').filter(file => fs.statSync(path.join('./commands/', file)).isDirectory());
 
 categories.forEach(c => {
-    fs.readdir(`./commands/${c}/`, (err, files) => {
+    fs.readdir(`./commands/${c}/`, async (err, files) => {
         if (err) throw err;
         console.log(`[Commands]\tLoaded ${files.length} commands of category ${c}`);
-        files.forEach(f => {
+        await files.forEach(f => {
             const props = require(`./commands/${c}/${f}`);
             cobalt.commands.set(props.help.name, props);
             props.conf.aliases.forEach(alias => {
@@ -27,10 +27,10 @@ categories.forEach(c => {
     });
 });
 
-fs.readdir('./events/', (err, files) => {
+fs.readdir('./events/', async (err, files) => {
     if (err) return console.error;
     console.log(`[Events]\tLoaded a total amount ${files.length} Events`)
-    files.forEach(file => {
+    await files.forEach(file => {
         if (!file.endsWith('.js')) return;
         const evt = require(`./events/${file}`);
         let evtName = file.split('.')[0];

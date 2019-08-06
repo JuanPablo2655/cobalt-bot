@@ -28,6 +28,7 @@ module.exports = async (cobalt, message) => {
     if (!cmd) {
         return manageLevels(message);
     };
+    if (cmd.conf["enabled"] === false) return
     if (cmd) {
         console.log(`[Cobalt]\t${message.author.username} used command '${cmd.help["name"]}'`);
     }
