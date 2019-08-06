@@ -12,8 +12,8 @@ module.exports = (cobalt, oldMessage, newMessage) => {
         .setTitle('Message updated')
         .setAuthor(author.username, avatar)
         .setDescription(`[Jump to message](https://discordapp.com/channels/${guild}/${msgChannel}/${newMessage.id})`)
-        .addField("Original", oldMessage.cleanContent + " ", true)
-        .addField("Edit", newMessage.cleanContent, true)
+        .addField("Original", oldMessage.cleanContent)
+        .addField("Edit", newMessage.cleanContent)
         .setColor("#00a1ff")
         .setFooter("ID: "+newMessage.id)
         .setTimestamp();

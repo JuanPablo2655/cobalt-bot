@@ -7,6 +7,8 @@ module.exports = (cobalt, member) => {
         .setTitle('Old Cobaltia citizen left or got banned')
         .setAuthor(member.user.username, member.user.displayAvatarURL)
         .addField("member count", member.guild.memberCount)
-        .setColor("d62424");
+        .setColor("d62424")
+        .setFooter("ID: "+member.user.id)
+        .setTimestamp();
     channel.send(newMember);
 }

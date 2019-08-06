@@ -8,7 +8,9 @@ module.exports = (cobalt, member) => {
         .setTitle('New Cobaltia citizen has joined')
         .setAuthor(member.user.username, member.user.displayAvatarURL)
         .addField("Member count", member.guild.memberCount)
-        .setColor("#1cc936");
+        .setColor("#1cc936")
+        .setFooter("ID: "+member.user.id)
+        .setTimestamp();
     log.send(newMember);
 
     welcome.send(`Welcome ${member.user.username} to Cobaltia. Please wait while the Directors administers your member role.`)
