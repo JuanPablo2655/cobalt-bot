@@ -1,0 +1,34 @@
+{
+  "name": "cobalt-bot",
+  "version": "1.0.0",
+  "description": "",
+  "main": "cobalt.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/JuanPablo2655/cobalt-bot.git"
+  },
+  "keywords": [
+    "discord",
+    "discord.js",
+    "bot"
+  ],
+  "author": "Juan Pablo",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/JuanPablo2655/cobalt-bot/issues"
+  },
+  "homepage": "https://github.com/JuanPablo2655/cobalt-bot#readme",
+  "dependencies": {
+    "discord.js": "^11.5.1",
+    "initials": "^3.0.1",
+    "moment": "^2.24.0",
+    "moment-duration-format": "^2.3.2",
+    "mongoose": "^5.6.7",
+    "node-fetch": "^2.6.0",
+    "superagent": "^5.1.0",
+    "xml2js": "^0.4.19"
+  }
+}
