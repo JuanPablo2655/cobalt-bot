@@ -2,7 +2,7 @@ const Discord = require("discord.js");
 
 module.exports = (cobalt, oldMessage, newMessage) => {
     if (oldMessage.author.bot) return;
-    var channel = cobalt.channels.get('426044465023680513');
+    var channel = cobalt.channels.get('405158191324987393');
     let author = newMessage.author;
     let avatar = author.displayAvatarURL;
     let guild = newMessage.guild.id

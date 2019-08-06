@@ -1,7 +1,7 @@
 const Discord = require("discord.js");
 
 module.exports = (cobalt, member) => {
-    var log = cobalt.channels.get('426044465023680513');
+    var log = cobalt.channels.get('405158191324987393');
     var welcome = cobalt.channels.get('433831532981911553')
 
     let newMember = new Discord.RichEmbed()
