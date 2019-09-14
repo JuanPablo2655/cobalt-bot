@@ -21,6 +21,7 @@ module.exports = (cobalt, oldMember, newMember) => {
         voiceEmbed.addField('Channel', oldUserChannel.name)
         channel.send(voiceEmbed)
     } else if (oldUserChannel != undefined && newUserChannel != undefined) {
+        if (oldUserChannel == newUserChannel) return
         voiceEmbed.setTitle('User switched')
         voiceEmbed.addField('From', oldUserChannel.name, true)
         voiceEmbed.addField('To', newUserChannel.name, true)
