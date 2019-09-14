@@ -4,6 +4,7 @@ module.exports = (cobalt, message) => {
     var log = cobalt.channels.get('405158191324987393');
     let author = message.author;
     let avatar = author.displayAvatarURL;
+    if (message.content == 0) return
 
     let deletedMessage = new Discord.RichEmbed()
         .setTitle('Message deleted')
@@ -11,7 +12,7 @@ module.exports = (cobalt, message) => {
         .addField("Channel", message.channel)
         .addField("Content", message.content)
         .setColor("#d62424")
-        .setFooter("ID: "+message.id)
+        .setFooter("Message ID: "+message.id)
         .setTimestamp();
     log.send(deletedMessage);
 }
