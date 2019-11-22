@@ -2,19 +2,19 @@ const Discord = require("discord.js");
 
 module.exports.run = async (cobalt, message, args, cb) => {
     try {
-        message.channel.send('Pong').catch(e => cb(e));
+        return;
     } catch (e) {
         cb(e)
     }
 }
 
 exports.conf = {
-    enabled: true,
+    enabled: false,
     aliases: []
 }
 
 exports.help = {
-    name: "ping",
-    description: "ping pong",
-    usage: "ping"
+    name: "map",
+    description: "View the Minecraft Map of a world",
+    usage: "map"
 }

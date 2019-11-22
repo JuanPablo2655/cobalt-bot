@@ -11,13 +11,15 @@ const secrets = require("./secrets.json");
 
 cobalt.commands = new Discord.Collection();
 cobalt.aliases = new Discord.Collection();
+cobalt.queue = new Map()
+
 const categories = fs.readdirSync('./commands/').filter(file => fs.statSync(path.join('./commands/', file)).isDirectory());
 
 categories.forEach(c => {
     fs.readdir(`./commands/${c}/`, async (err, files) => {
         if (err) throw err;
         console.log(`[Commands]\tLoaded ${files.length} commands of category ${c}`);
-        await files.forEach(f => {
+        files.forEach(f => {
             const props = require(`./commands/${c}/${f}`);
             cobalt.commands.set(props.help.name, props);
             props.conf.aliases.forEach(alias => {
@@ -30,13 +32,17 @@ categories.forEach(c => {
 fs.readdir('./events/', async (err, files) => {
     if (err) return console.error;
     console.log(`[Events]\tLoaded a total amount ${files.length} Events`)
-    await files.forEach(file => {
-        if (!file.endsWith('.js')) return;
+    files.forEach(file => {
+        if (!file.endsWith('.js'))
+            return;
         const evt = require(`./events/${file}`);
         let evtName = file.split('.')[0];
         cobalt.on(evtName, evt.bind(null, cobalt));
     });
 });
+
+cobalt.on("warn", info => console.log(info))
+cobalt.on("error", console.error)
 
 cobalt.advancedHelp = function (command) {
     if (!command) return "That command doesn't exist.";
@@ -48,6 +54,8 @@ cobalt.advancedHelp = function (command) {
         .addField("Aliases", command.conf["aliases"].join(", ") || "No Aliases");
     return helpMenu;
 }
+
+process.on('unhandledRejection', error => console.error('Uncaught Promise Rejection', error))
 
 mongoose.init();
 cobalt.login(secrets.token);

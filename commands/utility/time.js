@@ -1,9 +1,14 @@
 const Discord = require("discord.js");
 const moment = require("moment");
+require('moment-timezone');
 
-module.exports.run = async (cobalt, message, args) => {
-    time = moment().format('LT');
-    message.channel.send("It's "+time+" CBT")
+module.exports.run = async (cobalt, message, args, cb) => {
+    try {
+        time = moment().tz('America/New_York').format('LT');
+        message.channel.send("It's " + time + " CBT")
+    } catch (e) {
+        cb(e)
+    }
 }
 
 exports.conf = {
