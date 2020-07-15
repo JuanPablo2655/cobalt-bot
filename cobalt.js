@@ -11,7 +11,7 @@ const secrets = require("./secrets.json");
 
 cobalt.commands = new Discord.Collection();
 cobalt.aliases = new Discord.Collection();
-cobalt.queue = new Map()
+cobalt.sniper = new Map();
 
 const categories = fs.readdirSync('./commands/').filter(file => fs.statSync(path.join('./commands/', file)).isDirectory());
 

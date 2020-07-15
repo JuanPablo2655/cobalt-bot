@@ -1,6 +1,5 @@
 const Discord = require("discord.js");
-const moment = require("moment");
-require('moment-timezone');
+const moment = require("moment-timezone");
 
 module.exports.run = async (cobalt, message, args, cb) => {
     try {
@@ -13,6 +12,7 @@ module.exports.run = async (cobalt, message, args, cb) => {
 
 exports.conf = {
     enabled: true,
+    ownerOnly: false,
     aliases: []
 }
 

@@ -7,7 +7,7 @@ module.exports.run = async (cobalt, message, args, cb) => {
         levels.find({
             servers: message.guild.id
         }).sort([
-            ['lvl', 'descending']
+            ['totalXp', 'descending']
         ]).exec((err, res) => {
             if (err) console.log(err);
             let leaderEmbed = new Discord.RichEmbed()
@@ -45,6 +45,7 @@ module.exports.run = async (cobalt, message, args, cb) => {
 
 exports.conf = {
     enabled: true,
+    ownerOnly: false,
     aliases: ['lb']
 }
 

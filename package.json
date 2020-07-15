@@ -32,8 +32,6 @@
     "opusscript": "0.0.7",
     "simple-youtube-api": "^5.2.1",
     "superagent": "^5.1.0",
-    "xml2js": "^0.4.19",
-    "ytdl-core": "^1.0.0",
-    "ytdl-core-discord": "^1.0.3"
+    "xml2js": "^0.4.19"
   }
 }

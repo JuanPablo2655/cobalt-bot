@@ -14,7 +14,7 @@ module.exports.run = async (cobalt, message, args, cb) => {
             helpEmbed.setDescription("Please select one of the following categories");
             categories.forEach(category => {
                 if (category === 'dev') return;
-                helpEmbed.addField(category, `\`cn!help ${category}\``, true);
+                helpEmbed.addField(category, `\`${cobalt.config.prefix}help ${category}\``, true);
             });
             message.channel.send(helpEmbed);
         } else {
@@ -49,6 +49,7 @@ module.exports.run = async (cobalt, message, args, cb) => {
 
 exports.conf = {
     enabled: true,
+    ownerOnly: false,
     aliases: ['h', 'command', 'cmd', 'commands']
 }
 

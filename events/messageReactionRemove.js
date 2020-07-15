@@ -15,7 +15,7 @@ module.exports = async (cobalt, data, user) => {
         .setColor('#00a1ff')
         .setTimestamp()
         .setAuthor(user.username, user.displayAvatarURL)
-        .setTitle('Reaction added')
+        .setTitle('Reaction removed')
         .addField('Message', message)
         .setFooter("Message ID: "+message.id);
     

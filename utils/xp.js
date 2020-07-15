@@ -10,7 +10,8 @@ exports.add = async function (xpToAdd, message) {
                 userID: message.author.id,
                 servers: [message.guild.id],
                 xp: xpToAdd,
-                lvl: 0
+                lvl: 0,
+                totalXp: xpToAdd
             });
             newLevel.save().catch(err => console.log(err));
         } else {
@@ -30,6 +31,7 @@ exports.add = async function (xpToAdd, message) {
             }
             res.lvl = futureLevel;
             res.xp = futureXP;
+            res.totalXp = futureLevel * nextLevel + futureXP
             res.save().catch(err => console.log(err));
         }
     });

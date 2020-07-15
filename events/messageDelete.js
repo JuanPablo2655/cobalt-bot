@@ -10,9 +10,21 @@ module.exports = (cobalt, message) => {
         .setTitle('Message deleted')
         .setAuthor(author.username, avatar)
         .addField("Channel", message.channel)
-        .addField("Content", message.content)
         .setColor("#d62424")
-        .setFooter("Message ID: "+message.id)
+        .setFooter("Message ID: " + message.id)
         .setTimestamp();
+        if (message.attachments.size > 0) {
+            deletedMessage.addField("Content", message.content + message.attachments)
+        } else {
+            deletedMessage.addField("Content", message.content)
+        }
     log.send(deletedMessage);
+
+    let construct = {
+        message: message.content,
+        author: message.author.tag,
+        avatar: message.author.displayAvatarURL
+    };
+
+    cobalt.sniper.set(message.channel.id, construct);
 }

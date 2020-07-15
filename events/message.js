@@ -1,6 +1,8 @@
 const cobalt = require("./../cobalt.js");
 const config = cobalt.config;
 
+const devMode = true
+
 let cooldowns = {};
 
 module.exports = async (cobalt, message) => {
@@ -34,7 +36,14 @@ module.exports = async (cobalt, message) => {
     if (!cmd) {
         return manageLevels(message);
     };
-    if (cmd.conf["enabled"] === false) return
+    if (cmd.conf["enabled"] === false) {
+        if (devMode == true) {
+            cmd.run(cobalt, message, args, commandError)
+        } else return
+    }
+    if (cmd.conf["ownerOnly"] === true) {
+        if (!message.author.id == "288703114473635841") return
+    }
     if (cmd) {
         console.log(`[Cobalt]\t${message.author.username} used command '${cmd.help["name"]}'`);
     }
@@ -42,7 +51,7 @@ module.exports = async (cobalt, message) => {
     function commandError(err){
         console.log("ERROR RUNNING COMMAND");
         console.log(err);
-        message.channel.send("An internal error occoured.");
+        message.channel.send("The command failed to run.");
         cobalt.channels.get('645753142838951947').send(`\`\`\`${err.stack}\`\`\``||"error lmao");
     }
     

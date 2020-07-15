@@ -1,11 +1,16 @@
 const Discord = require("discord.js");
 
 module.exports.run = async (cobalt, message, args) => {
-    return;
+    try {
+        return;
+    } catch (e) {
+        cb(e)
+    }
 }
 
 exports.conf = {
-    enabled: false,
+    enabled: true,
+    ownerOnly: false,
     aliases: []
 }
 

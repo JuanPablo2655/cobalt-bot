@@ -7,7 +7,7 @@ module.exports = (cobalt, guild, user) => {
     let banEmbed = new Discord.RichEmbed()
         .setTitle('User Banned')
         .setAuthor(user.username, avatar)
-        .addField("member count", guild.memberCount)
+        .addField("member count", guild.memberCount - 1)
         .setColor("#d62424")
         .setFooter("User ID: "+user.id)
         .setTimestamp()
