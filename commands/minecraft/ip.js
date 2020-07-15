@@ -2,20 +2,20 @@ const Discord = require("discord.js");
 
 module.exports.run = async (cobalt, message, args, cb) => {
     try {
-        message.channel.send('Pong').catch(e => cb(e));
+        return;
     } catch (e) {
         cb(e)
     }
 }
 
 exports.conf = {
-    enabled: true,
+    enabled: false,
     ownerOnly: false,
     aliases: []
 }
 
 exports.help = {
-    name: "ping",
-    description: "ping pong",
-    usage: "ping"
+    name: "ip",
+    description: "get the Minecraft Server IP",
+    usage: "ip"
 }

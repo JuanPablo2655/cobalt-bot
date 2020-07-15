@@ -4,7 +4,7 @@
   "description": "",
   "main": "cobalt.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "node cobalt.js"
   },
   "repository": {
     "type": "git",
@@ -29,6 +29,8 @@
     "moment-timezone": "^0.5.26",
     "mongoose": "^5.7.5",
     "node-fetch": "^2.6.0",
+    "opusscript": "0.0.7",
+    "simple-youtube-api": "^5.2.1",
     "superagent": "^5.1.0",
     "xml2js": "^0.4.19"
   }

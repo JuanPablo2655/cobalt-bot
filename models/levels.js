@@ -5,7 +5,8 @@ const levelsSchema = mongoose.Schema({
     userID: String,
     servers: [String],
     xp: Number,
-    lvl: Number
+    lvl: Number,
+    totalXp: Number
 });
 
 module.exports = mongoose.model("levels", levelsSchema);

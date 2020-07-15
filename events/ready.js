@@ -1,7 +1,8 @@
-const moment = require('moment');
-require('moment-timezone');
+const moment = require('moment-timezone');
+
 module.exports = cobalt => {
     console.log('[Cobalt]\tOnline!')
+    cobalt.user.setActivity('Samuel', {type: 'WATCHING'});
 
     let timeChannel = cobalt.channels.get('602981047294099508');
     setInterval(function () {

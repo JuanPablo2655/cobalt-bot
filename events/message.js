@@ -17,8 +17,14 @@ module.exports = async (cobalt, message) => {
         message.reply("the prefix is: " + config.prefix);
     }
 
+    // const swearWords = ["heck", "damn","darn"];
+    // if (swearWords.some(word => message.content.includes(word))) {
+    //     message.delete();
+    //     message.author.send('Hey! That word has been banned, please don\'t use it!');
+    // }
+
     if (!messageDAT.startsWith(config.prefix)) {
-       return manageLevels(message);
+        return manageLevels(message);
     }
 
     let cmd;
@@ -30,11 +36,26 @@ module.exports = async (cobalt, message) => {
     if (!cmd) {
         return manageLevels(message);
     };
-    if (cmd.conf["enabled"] === false) return
+    if (cmd.conf["enabled"] === false) {
+        if (devMode == true) {
+            cmd.run(cobalt, message, args, commandError)
+        } else return
+    }
+    if (cmd.conf["ownerOnly"] === true) {
+        if (!message.author.id == "288703114473635841") return
+    }
     if (cmd) {
         console.log(`[Cobalt]\t${message.author.username} used command '${cmd.help["name"]}'`);
     }
-    cmd.run(cobalt, message, args);
+
+    function commandError(err){
+        console.log("ERROR RUNNING COMMAND");
+        console.log(err);
+        message.channel.send("The command failed to run.");
+        cobalt.channels.get('645753142838951947').send(`\`\`\`${err.stack}\`\`\``||"error lmao");
+    }
+    
+    cmd.run(cobalt, message, args, commandError);
 
     function manageLevels(message) {
         if (!cooldowns['__xp'])

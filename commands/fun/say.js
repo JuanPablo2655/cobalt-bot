@@ -1,13 +1,18 @@
 const Discord = require("discord.js");
 
-module.exports.run = async (cobalt, message, args) => {
-    const sayMessage = args.join(" ");
-    message.delete().catch(O_o=>{});
-    message.channel.send(sayMessage);
+module.exports.run = async (cobalt, message, args, cb) => {
+    try {
+        const sayMessage = args.join(" ");
+        message.delete().catch(O_o=>{});
+        message.channel.send(sayMessage);
+    } catch (e) {
+        cb(e)
+    }
 }
 
 exports.conf = {
     enabled: true,
+    ownerOnly: false,
     aliases: []
 }
 
