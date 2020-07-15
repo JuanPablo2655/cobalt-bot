@@ -1,6 +1,8 @@
 const cobalt = require("./../cobalt.js");
 const config = cobalt.config;
 
+const devMode = false
+
 let cooldowns = {};
 
 module.exports = async (cobalt, message) => {
