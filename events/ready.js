@@ -9,5 +9,5 @@ module.exports = cobalt => {
         time = moment().tz('America/New_York').format('LT');
         timeChannel.setName("🕒 " + time + " CBT").then(console.log("what the bot changed: "+time))
         console.log("time: "+time)
-    }, 10 * 60000)
+    }, 5 * 60000)
 }
