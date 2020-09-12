@@ -28,7 +28,7 @@
     "moment-duration-format": "^2.3.2",
     "moment-timezone": "^0.5.26",
     "mongoose": "^5.7.5",
-    "node-fetch": "^2.6.0",
+    "node-fetch": "^2.6.1",
     "opusscript": "0.0.7",
     "simple-youtube-api": "^5.2.1",
     "superagent": "^5.1.0",
