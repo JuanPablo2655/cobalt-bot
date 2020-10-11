@@ -2,6 +2,7 @@ const cobalt = require("./../cobalt.js");
 const config = cobalt.config;
 
 const devMode = true
+const levelMode = true
 
 let cooldowns = {};
 
@@ -24,7 +25,9 @@ module.exports = async (cobalt, message) => {
     // }
 
     if (!messageDAT.startsWith(config.prefix)) {
-        return manageLevels(message);
+        if (levelMode == true){
+            return manageLevels(message);
+        } else return
     }
 
     let cmd;
@@ -34,7 +37,9 @@ module.exports = async (cobalt, message) => {
         cmd = cobalt.commands.get(cobalt.aliases.get(command));
     }
     if (!cmd) {
-        return manageLevels(message);
+        if (levelMode == true){
+            return manageLevels(message);
+        } else return
     };
     if (cmd.conf["enabled"] === false) {
         if (devMode == true) {
