@@ -3,14 +3,14 @@ const Discord = require("discord.js");
 module.exports.run = async (cobalt, message, args, cb) => {
     try {
         let xp = require('../../utils/xp.js');
-        let user = cobalt.users.get(args[0]) || message.mentions.users.last();
+        let user = cobalt.users.cache.get(args[0]) || message.mentions.users.last();
         if (!user){
             user = message.author;
         }
     
         let level = await xp.get(user.id);
     
-        let levelEmbed = new Discord.RichEmbed()
+        let levelEmbed = new Discord.MessageEmbed()
             .setAuthor('Cobalt Network', message.guild.iconURL)
             .setTitle(`${user.username}'s level`)
             .setColor('RANDOM')
@@ -21,7 +21,7 @@ module.exports.run = async (cobalt, message, args, cb) => {
                 levelEmbed.addField('level', level.lvl, true)
                 levelEmbed.addField('xp', level.xp+"/"+xp.nextLevel(level.lvl), true)
             }
-            levelEmbed.setFooter(`${message.author.username}`, `${message.author.displayAvatarURL}`)
+            levelEmbed.setFooter(`${message.author.username}`, `${message.author.displayAvatarURL({format: 'png'})}`)
             levelEmbed.setTimestamp()
         message.channel.send(levelEmbed);
     } catch (e) {

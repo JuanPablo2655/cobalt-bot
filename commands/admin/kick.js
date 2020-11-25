@@ -3,7 +3,7 @@ const moment = require("moment-timezone");
 
 module.exports.run = async (cobalt, message, args, cb) => {
     try {
-        let userKick = cobalt.users.get(args[0]) || message.mentions.users.first();
+        let userKick = cobalt.users.cache.get(args[0]) || message.mentions.users.first();
         let [...reason] = args;
         if (message.member.hasPermission("KICK_MEMBERS")) {
             try {

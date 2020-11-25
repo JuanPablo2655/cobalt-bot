@@ -3,7 +3,7 @@ const fetch = require("node-fetch");
 
 module.exports.run = async (cobalt, message, args, cb) => {
     try {
-        let covidEmbed = new Discord.RichEmbed();
+        let covidEmbed = new Discord.MessageEmbed();
         let [parameter, ...fullName] = args;
 
             if (parameter === 'state') {

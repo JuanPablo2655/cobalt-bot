@@ -2,7 +2,7 @@ const Discord = require("discord.js");
 
 module.exports.run = async (cobalt, message, args, cb) => {
     try {
-        let resEmbed = new Discord.RichEmbed()
+        let resEmbed = new Discord.MessageEmbed()
             .setTitle("RP resources")
             .addField('Map Generator', 'https://azgaar.github.io/Fantasy-Map-Generator/')
             .addField('Name generator', 'https://www.fantasynamegenerators.com/')

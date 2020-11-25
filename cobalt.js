@@ -1,5 +1,5 @@
 const Discord = require('discord.js');
-const cobalt = new Discord.Client();
+const cobalt = new Discord.Client({ws: { intents: Discord.Intents.ALL }});
 const mongoose = require('./utils/mongoose.js');
 const fs = require("fs");
 const path = require('path');
@@ -46,7 +46,7 @@ cobalt.on("error", console.error)
 
 cobalt.advancedHelp = function (command) {
     if (!command) return "That command doesn't exist.";
-    let helpMenu = new Discord.RichEmbed()
+    let helpMenu = new Discord.MessageEmbed()
         .setTitle('Help Menu')
         .setColor('RANDOM')
         .addField('Description', command.help["description"])

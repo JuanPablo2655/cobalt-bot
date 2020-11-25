@@ -5,7 +5,7 @@ const path = require('path');
 module.exports.run = async (cobalt, message, args, cb) => {
     try {
         const categories = fs.readdirSync('./commands/').filter(file => fs.statSync(path.join('./commands/', file)).isDirectory());
-        let helpEmbed = new Discord.RichEmbed();
+        let helpEmbed = new Discord.MessageEmbed();
         helpEmbed.setTimestamp()
         helpEmbed.setAuthor('Cobalt Network', message.guild.iconURL)
         helpEmbed.setColor('RANDOM')

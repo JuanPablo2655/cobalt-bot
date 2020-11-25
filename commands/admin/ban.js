@@ -2,7 +2,7 @@ const Discord = require("discord.js");
 const moment = require("moment-timezone");
 
 module.exports.run = async (cobalt, message, args, cb) => {
-    let userBan = cobalt.users.get(args[0]) || message.mentions.users.first();
+    let userBan = cobalt.users.cache.get(args[0]) || message.mentions.users.first();
     let [days, ...reason] = args
     try {
         if (message.member.hasPermission("BAN_MEMBERS")) {

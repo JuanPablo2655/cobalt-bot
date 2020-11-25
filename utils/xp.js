@@ -28,7 +28,7 @@ exports.add = async function (xpToAdd, message) {
                 futureLevel ++;
                 futureXP -= nextLevel;
                 message.channel.send("Congratulations <@"+res.userID+"> you are now level " + futureLevel + "!").then(message => {
-                    message.delete(10000)
+                    message.delete({timeout: 10000})
                 });
             }
             res.lvl = futureLevel;
