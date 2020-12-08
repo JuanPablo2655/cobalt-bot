@@ -1,7 +1,9 @@
+const { conf } = require("../commands/utility/help.js");
 const cobalt = require("./../cobalt.js");
 const config = cobalt.config;
 
-const devMode = false
+const devMode = config.devMode
+const levelMode = config.levelMode
 
 let cooldowns = {};
 
@@ -24,7 +26,9 @@ module.exports = async (cobalt, message) => {
     // }
 
     if (!messageDAT.startsWith(config.prefix)) {
-        return manageLevels(message);
+        if (levelMode == true){
+            return manageLevels(message);
+        } else return
     }
 
     let cmd;
@@ -34,7 +38,9 @@ module.exports = async (cobalt, message) => {
         cmd = cobalt.commands.get(cobalt.aliases.get(command));
     }
     if (!cmd) {
-        return manageLevels(message);
+        if (levelMode == true){
+            return manageLevels(message);
+        } else return
     };
     if (cmd.conf["enabled"] === false) {
         if (devMode == true) {
@@ -52,7 +58,7 @@ module.exports = async (cobalt, message) => {
         console.log("ERROR RUNNING COMMAND");
         console.log(err);
         message.channel.send("The command failed to run.");
-        cobalt.channels.get('645753142838951947').send(`\`\`\`${err.stack}\`\`\``||"error lmao");
+        cobalt.channels.cache.get('645753142838951947').send(`\`\`\`${err.stack}\`\`\``||"error lmao");
     }
     
     cmd.run(cobalt, message, args, commandError);

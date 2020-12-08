@@ -1,9 +1,8 @@
 const Discord = require('discord.js');
-const cobalt = new Discord.Client();
+const cobalt = new Discord.Client({ws: { intents: Discord.Intents.ALL }, partials: ['MESSAGE', 'CHANNEL', 'REACTION', 'USER']});
 const mongoose = require('./utils/mongoose.js');
 const fs = require("fs");
 const path = require('path');
-const moment = require('moment');
 
 const config = require("./config.json");
 cobalt.config = config;
@@ -43,17 +42,6 @@ fs.readdir('./events/', async (err, files) => {
 
 cobalt.on("warn", info => console.log(info))
 cobalt.on("error", console.error)
-
-cobalt.advancedHelp = function (command) {
-    if (!command) return "That command doesn't exist.";
-    let helpMenu = new Discord.RichEmbed()
-        .setTitle('Help Menu')
-        .setColor('RANDOM')
-        .addField('Description', command.help["description"])
-        .addField("Usage", command.help["usage"])
-        .addField("Aliases", command.conf["aliases"].join(", ") || "No Aliases");
-    return helpMenu;
-}
 
 process.on('unhandledRejection', error => console.error('Uncaught Promise Rejection', error))
 

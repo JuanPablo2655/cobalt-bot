@@ -6,12 +6,11 @@ module.exports.run = async (cobalt, message, args, cb) => {
         const fetch = require('node-fetch');
         const parseString = require('xml2js').parseString;
         let [...name] = args;
-        let nationEmbed = new Discord.RichEmbed();
+        let nationEmbed = new Discord.MessageEmbed();
 
         const nationInfo = async (nation) => {
             const request = await fetch(`https://www.nationstates.net/cgi-bin/api.cgi?nation=${nation}&q=name+gdp+population+category+currency+region+wa+flag+fullname+motto+influence+founded+lastactivity+demonym`)
             const textToParse = await request.text();
-            console.log(textToParse)
             return new Promise((resolve, reject) => {
                 parseString(textToParse, (err, obj) => {
                     if (err) return reject(err)

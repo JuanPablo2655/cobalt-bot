@@ -1,27 +1,29 @@
 const Discord = require("discord.js");
 
-module.exports = (cobalt, oldMember, newMember) => {
-    var channel = cobalt.channels.get('405158191324987393');
-    let avatar = newMember.user.displayAvatarURL;
+module.exports = async (cobalt, oldState, newState) => {
+    var channel = cobalt.channels.cache.get('405158191324987393');
+    let avatar = newState.member.user.displayAvatarURL({format: 'png'});
 
-    let newUserChannel = newMember.voiceChannel;
-    let oldUserChannel = oldMember.voiceChannel;
+    let newUserChannelID = newState.channelID;
+    let oldUserChannelID = oldState.channelID;
+    let newUserChannel = await cobalt.channels.cache.get(newUserChannelID)
+    let oldUserChannel = await cobalt.channels.cache.get(oldUserChannelID)
 
-    let voiceEmbed = new Discord.RichEmbed()
+    let voiceEmbed = new Discord.MessageEmbed()
         .setColor('#00a1ff')
         .setTimestamp()
-        .setAuthor(newMember.user.username, avatar);
+        .setAuthor(newState.member.user.username, avatar);
 
-    if (oldUserChannel === undefined && newUserChannel !== undefined) {
+    if (oldUserChannelID === null && newUserChannelID !== null) {
         voiceEmbed.setTitle('User Joined')
         voiceEmbed.addField('Channel', newUserChannel.name)
         channel.send(voiceEmbed)
-    } else if (newUserChannel === undefined) {
+    } else if (newUserChannelID === null) {
         voiceEmbed.setTitle('User left')
         voiceEmbed.addField('Channel', oldUserChannel.name)
         channel.send(voiceEmbed)
-    } else if (oldUserChannel != undefined && newUserChannel != undefined) {
-        if (oldUserChannel == newUserChannel) return
+    } else if (oldUserChannelID != null && newUserChannelID != null) {
+        if (oldUserChannelID == newUserChannelID) return
         voiceEmbed.setTitle('User switched')
         voiceEmbed.addField('From', oldUserChannel.name, true)
         voiceEmbed.addField('To', newUserChannel.name, true)

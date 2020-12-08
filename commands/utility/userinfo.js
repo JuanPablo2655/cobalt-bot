@@ -1,18 +1,18 @@
 const Discord = require("discord.js");
-const moment = require('moment');
+const { DateTime } = require("luxon");
 
 module.exports.run = async (cobalt, message, args, cb) => {
     try {
-        let userboi = cobalt.users.get(args[0]) || message.mentions.users.last();
+        let userboi = cobalt.users.cache.get(args[0]) || message.mentions.users.last();
         if (!userboi) {
             userboi = message.author;
         }
-        let memberboi = await message.guild.fetchMember(userboi);
-        let created = moment(userboi.createdAt).format('MMMM Do YYYY, h:mm:ss a');
-        let joined = moment(memberboi.joinedAt).format('MMMM Do YYYY, h:mm:ss a');
+        let memberboi = await message.guild.members.fetch(userboi);
+        let created = DateTime.fromISO(userboi.createdAt.toISOString()).setZone("America/New_York").toLocaleString(DateTime.DATETIME_MED);
+        let joined = DateTime.fromISO(memberboi.joinedAt.toISOString()).setZone("America/New_York").toLocaleString(DateTime.DATETIME_MED);
         let game = userboi.presence.game ? userboi.presence.game.name : 'None';
         let nickname = !memberboi.nickname ? 'None' : memberboi.nickname;
-        let avatar = userboi.displayAvatarURL;
+        let avatar = userboi.displayAvatarURL({format: 'png'});
         let userid = userboi.id;
         let tag = userboi.tag
         let isBot = userboi.bot ? 'Yes' : 'No';
@@ -27,9 +27,9 @@ module.exports.run = async (cobalt, message, args, cb) => {
             status = 'Do not disturb';
         }
         let server = message.guild;
-        let userinfo = new Discord.RichEmbed()
+        let userinfo = new Discord.MessageEmbed()
             .setTitle('Userinfo | ' + userboi.username)
-            .setAuthor(`${server.name}`, `${server.iconURL}`)
+            .setAuthor(`${server.name}`, `${server.iconURL({format: 'png'})}`)
             .setThumbnail(avatar)
             .setDescription(`[Click Avatar Link](${avatar})`)
             .addField('ID', `${userid}`, true)

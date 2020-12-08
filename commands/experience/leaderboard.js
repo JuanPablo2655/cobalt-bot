@@ -10,7 +10,7 @@ module.exports.run = async (cobalt, message, args, cb) => {
             ['totalXp', 'descending']
         ]).exec((err, res) => {
             if (err) console.log(err);
-            let leaderEmbed = new Discord.RichEmbed()
+            let leaderEmbed = new Discord.MessageEmbed()
                 .setTitle("Leaderboard")
             if (res.length === 0) {
                 leaderEmbed.setColor('RED');
@@ -18,7 +18,7 @@ module.exports.run = async (cobalt, message, args, cb) => {
             } else if (res.length < 10) {
                 leaderEmbed.setColor('RANDOM');
                 for (i = 0; i < res.length; i++) {
-                    let member = message.guild.members.get(res[i].userID) || "User Left"
+                    let member = message.guild.members.cache.get(res[i].userID) || "User Left"
                     if (member === "User Left") {
                         leaderEmbed.addField(`${i + 1}. ${member}`, `**levels**: ${res[i].lvl}`);
                     } else {
@@ -27,7 +27,7 @@ module.exports.run = async (cobalt, message, args, cb) => {
                 }
             } else {
                 for (i = 0; i < 10; i++) {
-                    let member = message.guild.members.get(res[i].userID) || "User Left"
+                    let member = message.guild.members.cache.get(res[i].userID) || "User Left"
                     if (member === "User Left") {
                         leaderEmbed.addField(`${i + 1}. ${member}`, `**levels**: ${res[i].lvl}`);
                     } else {

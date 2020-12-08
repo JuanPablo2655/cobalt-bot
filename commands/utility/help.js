@@ -5,7 +5,7 @@ const path = require('path');
 module.exports.run = async (cobalt, message, args, cb) => {
     try {
         const categories = fs.readdirSync('./commands/').filter(file => fs.statSync(path.join('./commands/', file)).isDirectory());
-        let helpEmbed = new Discord.RichEmbed();
+        let helpEmbed = new Discord.MessageEmbed();
         helpEmbed.setTimestamp()
         helpEmbed.setAuthor('Cobalt Network', message.guild.iconURL)
         helpEmbed.setColor('RANDOM')
@@ -36,8 +36,8 @@ module.exports.run = async (cobalt, message, args, cb) => {
             } else {
                 const props = cobalt.commands.get(dir);
                 helpEmbed.setDescription("Showing help for command " + dir);
-                helpEmbed.addField("Usage", props.help.usage, true);
-                helpEmbed.addField("Description", props.help.description, true);
+                helpEmbed.addField("Usage", props.help.usage || props.help.name, true);
+                helpEmbed.addField("Description", props.help.description || "No Description", true);
                 helpEmbed.addField("aliases", props.conf.aliases.join(", ") || "No Aliases");
                 message.channel.send(helpEmbed)
             }
