@@ -27,5 +27,5 @@ exports.conf = {
 exports.help = {
     name: "trump",
     description: "send a tweet as trump",
-    usage: "trump"
+    usage: "trump [message]"
 }

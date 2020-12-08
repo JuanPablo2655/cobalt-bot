@@ -1,9 +1,13 @@
 const Discord = require("discord.js");
 
-module.exports = async (cobalt, data, user) => {
-    let message = data.message;
-    let emojiID = data.emoji.id
-    let emojiName = data.emoji.name
+module.exports = async (cobalt, reaction, user) => {
+    if(user.partial) await user.fetch();
+    if(reaction.partial) await reaction.fetch();
+    if(reaction.message.partial) await reaction.message.fetch();
+    
+    let message = reaction.message;
+    let emojiID = reaction.emoji.id
+    let emojiName = reaction.emoji.name
     let emoji = cobalt.emojis.cache.get(emojiID);
     var channel = cobalt.channels.cache.get('405158191324987393');
 

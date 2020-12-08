@@ -1,15 +1,12 @@
-const {
-    version
-} = require("discord.js");
-const Discord = require("discord.js");
-const moment = require("moment");
-require("moment-duration-format");
+const { version } = require("discord.js");
+const { MessageEmbed } = require("discord.js");
+const { Duration } = require("luxon");
 
 module.exports.run = async (cobalt, message, args, cb) => {
     try {
-        let uptime = moment.duration(cobalt.uptime).format(" D [days], H [hrs], m [mins], s [secs]");
+        let uptime = Duration.fromMillis(cobalt.uptime).toFormat('dd:hh:mm:ss')
         if (!args[0]) {
-            let stats = new Discord.MessageEmbed()
+            let stats = new MessageEmbed()
                 .setTitle("Stats")
                 .addField("Mem Usage", ((process.memoryUsage().heapUsed / 1024 / 1024).toFixed(2)) + "MB")
                 .addField("Uptime", uptime)
@@ -18,7 +15,7 @@ module.exports.run = async (cobalt, message, args, cb) => {
                 .addField("Ping", cobalt.ws.ping + "ms");
             message.channel.send(stats)
         } else if (args[0] = uptime) {
-            let ut = new Discord.MessageEmbed()
+            let ut = new MessageEmbed()
                 .setTitle('Stats')
                 .addField("Uptime", uptime);
             message.channel.send(ut)
@@ -31,11 +28,11 @@ module.exports.run = async (cobalt, message, args, cb) => {
 exports.conf = {
     enabled: true,
     ownerOnly: true,
-    aliases: []
+    aliases: ['status']
 }
 
 exports.help = {
     name: "stats",
     description: "shows stats about the bot",
-    usage: "stats"
+    usage: "stats [uptime]"
 }

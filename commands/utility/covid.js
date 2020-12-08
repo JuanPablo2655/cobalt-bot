@@ -19,6 +19,7 @@ module.exports.run = async (cobalt, message, args, cb) => {
                     .addField('Total Deaths', ans.deaths, true)
                     .addField('Today\'s deaths', ans.todayDeaths, true)
                     .addField('Today\'s Cases', ans.todayCases, true)
+                    .addField('% of Population Infected', (ans.active / ans.population) * 100 + "%")
                     message.channel.send(covidEmbed)
             }
         } else if (parameter === 'country') {

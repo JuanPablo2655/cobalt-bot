@@ -1,9 +1,9 @@
 const Discord = require("discord.js");
-const moment = require("moment-timezone");
+const { DateTime } = require("luxon");
 
 module.exports.run = async (cobalt, message, args, cb) => {
     try {
-        time = moment().tz('America/New_York').format('LT');
+        time = DateTime.fromObject({zone: 'America/New_York'}).toLocaleString(DateTime.DATETIME_MED)
         message.channel.send("It's " + time + " CBT")
     } catch (e) {
         cb(e)

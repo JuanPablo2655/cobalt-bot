@@ -1,5 +1,5 @@
 const Discord = require("discord.js");
-const moment = require('moment');
+const { DateTime } = require("luxon");
 
 module.exports.run = async (cobalt, message, args, cb) => {
     try {
@@ -8,8 +8,8 @@ module.exports.run = async (cobalt, message, args, cb) => {
             userboi = message.author;
         }
         let memberboi = await message.guild.members.fetch(userboi);
-        let created = moment(userboi.createdAt).format('MMMM Do YYYY, h:mm:ss a');
-        let joined = moment(memberboi.joinedAt).format('MMMM Do YYYY, h:mm:ss a');
+        let created = DateTime.fromISO(userboi.createdAt.toISOString()).setZone("America/New_York").toLocaleString(DateTime.DATETIME_MED);
+        let joined = DateTime.fromISO(memberboi.joinedAt.toISOString()).setZone("America/New_York").toLocaleString(DateTime.DATETIME_MED);
         let game = userboi.presence.game ? userboi.presence.game.name : 'None';
         let nickname = !memberboi.nickname ? 'None' : memberboi.nickname;
         let avatar = userboi.displayAvatarURL({format: 'png'});

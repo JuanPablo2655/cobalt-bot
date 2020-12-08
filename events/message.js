@@ -1,8 +1,9 @@
+const { conf } = require("../commands/utility/help.js");
 const cobalt = require("./../cobalt.js");
 const config = cobalt.config;
 
-const devMode = true
-const levelMode = false
+const devMode = config.devMode
+const levelMode = config.levelMode
 
 let cooldowns = {};
 

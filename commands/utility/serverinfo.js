@@ -1,10 +1,10 @@
 const Discord = require("discord.js");
-const moment = require('moment');
+const { DateTime } = require("luxon");
 
 module.exports.run = async (cobalt, message, args, cb) => {
     try {
         let server = message.guild;
-        let created = moment(server.createdAt).format('MMMM Do YYYY, h:mm:ss a');
+        let created = DateTime.fromISO(server.createdAt.toISOString()).setZone("America/New_York").toLocaleString(DateTime.DATETIME_MED);
         let online = message.guild.members.cache.filter(m => m.user.presence.status == "online").size
         let offline = message.guild.members.cache.filter(m => m.user.presence.status == "offline").size
         let idle = message.guild.members.cache.filter(m => m.user.presence.status == "idle").size

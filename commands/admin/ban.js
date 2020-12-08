@@ -1,5 +1,4 @@
 const Discord = require("discord.js");
-const moment = require("moment-timezone");
 
 module.exports.run = async (cobalt, message, args, cb) => {
     let userBan = cobalt.users.cache.get(args[0]) || message.mentions.users.first();
@@ -26,7 +25,7 @@ module.exports.run = async (cobalt, message, args, cb) => {
 }
 
 exports.conf = {
-    enabled: true,
+    enabled: false,
     ownerOnly: false,
     aliases: []
 }
