@@ -1,6 +1,6 @@
 const Discord = require("discord.js");
 
-module.exports = (cobalt, message) => {
+module.exports = async (cobalt, message) => {
     var log = cobalt.channels.cache.get('405158191324987393');
     let author = message.author;
     let avatar = author.displayAvatarURL({format: 'png'});
@@ -13,10 +13,13 @@ module.exports = (cobalt, message) => {
         .setColor("#d62424")
         .setFooter("Message ID: " + message.id)
         .setTimestamp();
-        if (message.attachments.size > 0) {
-            deletedMessage.addField("Content", message.content + message.attachments)
+        if (message.content == '') {
+            deletedMessage.setImage(message.attachments.first().proxyURL)
+        } else if (message.attachments.first() == undefined) {
+            deletedMessage.addField("Content", message.content)
         } else {
             deletedMessage.addField("Content", message.content)
+            deletedMessage.setImage(message.attachments.first().proxyURL)
         }
     log.send(deletedMessage);
 

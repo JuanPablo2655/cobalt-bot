@@ -19,9 +19,16 @@ module.exports = async (cobalt, reaction, user) => {
         .setColor('#00a1ff')
         .setTimestamp()
         .setAuthor(user.username, user.displayAvatarURL({format: 'png'}))
-        .setTitle('Reaction added')
-        .addField('Message', message)
-        .setFooter("Message ID: "+message.id);
+        .setTitle('Reaction added');
+        if (message.content == '') {
+            reactionEmbed.setImage(message.attachments.first().url)
+        } else if (message.attachments.first() == undefined) {
+            reactionEmbed.addField('Message', message)
+        } else {
+            reactionEmbed.addField('Message', message)
+            reactionEmbed.setImage(message.attachments.first().url)
+        }
+        reactionEmbed.setFooter("Message ID: "+message.id);
     
     if (emoji == undefined) {
         reactionEmbed.addField('Reaction', emojiName)

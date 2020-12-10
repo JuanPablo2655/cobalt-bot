@@ -25,8 +25,15 @@ module.exports = async (cobalt, oldMember , newMember) => {
         }
         channel.send(updateEmbed);
     } else {
+        if (oldMember.nickname == newMember.nickname) return
         updateEmbed.addField('Old Nickname', oldMember.nickname || oldMember.user.username)
         updateEmbed.addField('New nickname', newMember.nickname || newMember.user.username)
         channel.send(updateEmbed);
     }
 }
+
+
+
+// if (oldMember.premiumSince !== newMember.premiumSince) {
+//     Might come useful later
+//  }
