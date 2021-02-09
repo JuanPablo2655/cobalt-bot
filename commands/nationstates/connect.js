@@ -4,6 +4,15 @@ let nations = require('../../models/nationstates.js');
 module.exports.run = async (cobalt, message, args, cb) => {
     try {
         let [...nationName] = args;
+        // // const dmChannel = await message.author.createDM();
+        // // console.log(dmChannel)
+        // message.channel.send("Please check your DMs")
+        // message.author.send("What is the name of your main nation? Please do not include the pretitle.").then(msg => {
+        //     msg.channel.awaitMessages({max: 1, time: 30000, errors: ['time']}).then(answer => {
+        //         nationName = answer.join("_")
+        //         message.author.send(nationName)
+        //     })
+        // })
         if (!nationName || !args[0]) {
             message.channel.send("I need a nation name")
         } else {

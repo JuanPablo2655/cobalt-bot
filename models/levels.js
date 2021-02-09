@@ -1,12 +1,12 @@
 const mongoose = require('mongoose');
 
 const levelsSchema = mongoose.Schema({
-    username: String,
-    userID: String,
-    servers: [String],
-    xp: Number,
-    lvl: Number,
-    totalXp: Number
+    username: { type: String, require: false },
+    userID: { type: String, require: false },
+    servers: { type: Array, require: false, default: [] },
+    xp: { type: Number, require: false, default: 0 },
+    lvl: { type: Number, require: false, default: 0 },
+    totalXp: { type: Number, require: false, default: 0 }
 });
 
 module.exports = mongoose.model("levels", levelsSchema);
