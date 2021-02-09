@@ -9,7 +9,7 @@ module.exports.run = async (cobalt, message, args) => {
 }
 
 exports.conf = {
-    enabled: true,
+    enabled: false,
     ownerOnly: false,
     aliases: []
 }

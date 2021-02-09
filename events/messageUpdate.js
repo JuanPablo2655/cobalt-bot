@@ -1,6 +1,7 @@
 const Discord = require("discord.js");
 
-module.exports = (cobalt, oldMessage, newMessage) => {
+module.exports = async (cobalt, oldMessage, newMessage) => {
+    if(oldMessage.partial) oldMessage = await oldMessage.fetch();
     if (oldMessage.author.bot) return;
     if (oldMessage.content == newMessage.content) return;
     var channel = cobalt.channels.cache.get('405158191324987393');

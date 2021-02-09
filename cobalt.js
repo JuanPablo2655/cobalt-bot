@@ -1,5 +1,5 @@
 const Discord = require('discord.js');
-const cobalt = new Discord.Client({ws: { intents: Discord.Intents.ALL }, partials: ['MESSAGE', 'CHANNEL', 'REACTION', 'USER']});
+const cobalt = new Discord.Client({ws: { intents: Discord.Intents.ALL }, partials: ['MESSAGE', 'CHANNEL', 'REACTION', 'USER', 'GUILD_MEMBER']});
 const mongoose = require('./utils/mongoose.js');
 const fs = require("fs");
 const path = require('path');
@@ -43,7 +43,17 @@ fs.readdir('./events/', async (err, files) => {
 cobalt.on("warn", info => console.log(info))
 cobalt.on("error", console.error)
 
-process.on('unhandledRejection', error => console.error('Uncaught Promise Rejection', error))
+process.on('uncaughtException', error => {
+    const errorMsg = error.stack.replace(new RegExp(`${__dirname}/`, "g"), "./");
+    console.error(`Uncaught Exception: ${errorMsg}`)
+    console.error(error)
+    process.exit(1)
+})
+
+process.on('unhandledRejection', error => {
+    console.error(`Unhandled rejection: ${error}`)
+    console.error(error);
+})
 
 mongoose.init();
 cobalt.login(secrets.token);

@@ -11,7 +11,7 @@ module.exports.run = async (cobalt, message, args, cb) => {
         let level = await xp.get(user.id);
     
         let levelEmbed = new Discord.MessageEmbed()
-            .setAuthor('Cobalt Network', message.guild.iconURL)
+            .setAuthor('Cobalt Network', message.guild.iconURL({format: 'png'}))
             .setTitle(`${user.username}'s level`)
             .setColor('RANDOM')
             if (!level) {
@@ -38,5 +38,5 @@ exports.conf = {
 exports.help = {
     name: "level",
     description: "show's how much xp you have",
-    usage: "level [message]"
+    usage: "level [user]"
 }

@@ -1,5 +1,4 @@
 const Discord = require("discord.js");
-const mongoose = require('mongoose');
 let levels = require('../../models/levels.js');
 
 module.exports.run = async (cobalt, message, args, cb) => {

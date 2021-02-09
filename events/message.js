@@ -6,6 +6,7 @@ const devMode = config.devMode
 const levelMode = config.levelMode
 
 let cooldowns = {};
+let bankCooldowns = {};
 
 module.exports = async (cobalt, message) => {
     const messageDAT = message.content + "";
@@ -19,6 +20,8 @@ module.exports = async (cobalt, message) => {
         message.reply("the prefix is: " + config.prefix);
     }
 
+    if (message.guild && !message.member) await message.guild.members.fetch(message.author);
+
     // const swearWords = ["heck", "damn","darn"];
     // if (swearWords.some(word => message.content.includes(word))) {
     //     message.delete();
@@ -27,8 +30,9 @@ module.exports = async (cobalt, message) => {
 
     if (!messageDAT.startsWith(config.prefix)) {
         if (levelMode == true){
-            return manageLevels(message);
-        } else return
+            manageLevels(message);
+            return manageBankSpace(message);
+        } else return manageBankSpace(message);
     }
 
     let cmd;
@@ -39,19 +43,21 @@ module.exports = async (cobalt, message) => {
     }
     if (!cmd) {
         if (levelMode == true){
-            return manageLevels(message);
-        } else return
+            manageLevels(message);
+            return manageBankSpace(message);
+        } else return manageBankSpace(message);
     };
-    if (cmd.conf["enabled"] === false) {
+    if (cmd.conf.enabled === false) {
         if (devMode == true) {
             cmd.run(cobalt, message, args, commandError)
-        } else return
+        } else return message.channel.send(`the command \`${cmd.help.name}\` is not enabled, try again later`)
     }
-    if (cmd.conf["ownerOnly"] === true) {
+    if (cmd.conf.ownerOnly === true) {
         if (!message.author.id == "288703114473635841") return
     }
     if (cmd) {
-        console.log(`[Cobalt]\t${message.author.username} used command '${cmd.help["name"]}'`);
+        manageBankSpace(message);
+        console.log(`[Cobalt]\t${message.author.username} used command '${cmd.help.name}'`);
     }
 
     function commandError(err){
@@ -76,4 +82,16 @@ module.exports = async (cobalt, message) => {
         require('../utils/xp.js').add(xpToAdd, message);
     }
 
+    function manageBankSpace(message) {
+        if (!bankCooldowns['__bank'])
+        bankCooldowns['__bank'] = {};
+
+        if (bankCooldowns['__bank'][message.author.id])
+            return;
+
+            bankCooldowns['__bank'][message.author.id] = new Date().getTime() + 60000;
+
+        let bankSpaceToAdd = Math.round(10 + Math.random() * 20)
+        require('../utils/economy').add(bankSpaceToAdd, message);
+    }
 }
