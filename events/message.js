@@ -56,7 +56,6 @@ module.exports = async (cobalt, message) => {
         if (!message.author.id == "288703114473635841") return
     }
     if (cmd) {
-        manageBankSpace(message);
         console.log(`[Cobalt]\t${message.author.username} used command '${cmd.help.name}'`);
     }
 
@@ -92,6 +91,6 @@ module.exports = async (cobalt, message) => {
             bankCooldowns['__bank'][message.author.id] = new Date().getTime() + 60000;
 
         let bankSpaceToAdd = Math.round(10 + Math.random() * 20)
-        require('../utils/economy').add(bankSpaceToAdd, message);
+        require('../utils/econ').add(bankSpaceToAdd, message);
     }
 }
