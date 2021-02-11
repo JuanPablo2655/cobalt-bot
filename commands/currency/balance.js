@@ -3,34 +3,26 @@ let currency = require('../../models/currency');
 
 module.exports.run = async (cobalt, message, args, cb) => {
     try {
-        let user = cobalt.users.cache.get(args[0]) || message.mentions.users.last();
-        if (!user){
-            user = message.author;
+        let moneyEmoji = cobalt.emojis.cache.get("426859750798655489");
+        const member = message.mentions.members.first() || message.guild.members.cache.get(args[0]) || message.guild.members.cache.find(member => member.user.username === args.slice(0).join(' ') || member.user.username === args[0]) || message.member;
+
+        let bal = await cobalt.fetchEconUser(member.id);
+
+        if (!bal.servers.includes(message.guild.id)) {
+            bal.servers.push(message.guild.id)
         }
+        await bal.save();
+
         let balanceEmbed = new Discord.MessageEmbed()
             .setAuthor('Cobalt Network', message.guild.iconURL({format: 'png'}))
-            .setTitle(`${user.username}'s balance`)
+            .setTitle(`${member.user.username}'s balance`)
             .setColor('RANDOM')
             .setFooter(`${message.author.username}`, `${message.author.displayAvatarURL({format: 'png'})}`)
-            .setTimestamp();
-        let moneyEmoji = cobalt.emojis.cache.get("426859750798655489");
-
-        currency.findOne({
-            userID: user.id
-        }, (err, res) => {
-            if (err) console.log(err)
-            if (!res) {
-                balanceEmbed.addField('Cash', `${moneyEmoji} 0`, true)
-                    .addField('Bank', `${moneyEmoji} 0/1000`, true)
-                    .addField('Net Worth', `${moneyEmoji} 0`)
-                return message.channel.send(balanceEmbed)
-            } else {
-                balanceEmbed.addField('Cash', `${moneyEmoji} ${res.onHand}`, true)
-                    .addField('Bank', `${moneyEmoji} ${res.deposited}/${res.bankSpace}`, true)
-                    .addField('Net Worth', `${moneyEmoji} ${res.netWorth}`)
-                 return message.channel.send(balanceEmbed)
-            }
-        })
+            .addField('Cash', `${moneyEmoji} ${bal.onHand}`, true)
+            .addField('Bank', `${moneyEmoji} ${bal.deposited}/${bal.bankSpace}`, true)
+            .addField('Net Worth', `${moneyEmoji} ${bal.netWorth}`)
+            .setTimestamp()
+        message.channel.send(balanceEmbed)
     } catch (e) {
         cb(e)
     }

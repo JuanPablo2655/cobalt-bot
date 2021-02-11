@@ -12,7 +12,8 @@ module.exports = async (cobalt, oldState, newState) => {
     let voiceEmbed = new Discord.MessageEmbed()
         .setColor('#00a1ff')
         .setTimestamp()
-        .setAuthor(newState.member.user.username, avatar);
+        .setAuthor(newState.member.user.username, avatar)
+        .setFooter("User ID: "+newState.member.user.id);
 
     if (oldUserChannelID === null && newUserChannelID !== null) {
         voiceEmbed.setTitle('User Joined')

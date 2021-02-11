@@ -1,6 +1,6 @@
 const { conf } = require("../commands/utility/help.js");
 const cobalt = require("./../cobalt.js");
-const config = cobalt.config;
+const config = require('../config.json');
 
 const devMode = config.devMode
 const levelMode = config.levelMode
