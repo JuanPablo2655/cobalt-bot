@@ -16,7 +16,9 @@ module.exports.run = async (cobalt, message, args, cb) => {
         let msg = "No matches.  Sorry!";
         if (first_2 && last_2) {
             msg = "Matched all of them!  Well done.";
+            // cobalt.giveMoney(message.author.id, 200)
         } else if (first_2 || last_2 || opposite_ends) {
+            // cobalt.giveMoney(message.author.id, 100)
             msg = "Matched 2!  Well done.";
         }
 

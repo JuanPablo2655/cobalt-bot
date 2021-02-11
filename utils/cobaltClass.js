@@ -1,8 +1,39 @@
+const { Client } = require('discord.js');
+const mongoose = require('mongoose');
 let currency = require('../models/currency');
 
-class Economy {
+class cobaltClass extends Client {
     constructor () {
-        this.currency = currency;
+        super();
+        this.config = require('../config.json');
+        this.secrets = require('../secrets.json');
+        const dbOptions = {
+            useNewUrlParser: true,
+            autoIndex: false,
+            useUnifiedTopology: true,
+            // reconnectTries: Number.MAX_VALUE,
+            // reconnectInterval: 500,
+            poolSize: 5,
+            connectTimeoutMS: 10000,
+            family: 4
+        };
+
+        mongoose.connect(this.secrets.databasePass, dbOptions);
+
+        mongoose.set('useFindAndModify', false);
+        mongoose.Promise = global.Promise;
+        
+        mongoose.connection.on('connected', () => {
+            console.log('[Mongoose]\tMongoose connection successfully opened');
+        });
+        
+        mongoose.connection.on('err', err => {
+            console.error(`[Mongoose]\tMongoose connection error: \n ${err.stack}`);
+        });
+        
+        mongoose.connection.on('disconnected', () => {
+            console.log('[Mongoose]\tMongoose connection disconnected');
+        });
     }
 
     /**
@@ -10,8 +41,8 @@ class Economy {
      * @param {string} userID - A discord user ID.
      */
 
-    async fetchUser(userID) {
-        const someone = users.cache.get(userID)
+    async fetchEconUser(userID) {
+        const someone = this.users.cache.get(userID)
         if (!someone || someone.bot) return false;
         let user = await currency.findOne({
             userID
@@ -34,7 +65,7 @@ class Economy {
      */
 
     async giveMoney(userID, amount) {
-        const someone = users.cache.get(userID);
+        const someone = this.users.cache.get(userID);
         if (!someone || someone.bot) return false;
         let user = await currency.findOne({
             userID
@@ -58,11 +89,11 @@ class Economy {
     /**
      * 
      * @param {string} userID - A discord user ID.
-     * @param {number} amount  - Amount of money to add or remove.
+     * @param {number} amount  - Amount of money to remove.
      */
 
     async removeMoney(userID, amount) {
-        const someone = users.cache.get(userID);
+        const someone = this.users.cache.get(userID);
         if (!someone || someone.bot) return false;
         let user = await currency.findOne({
             userID
@@ -90,7 +121,7 @@ class Economy {
      */
 
     async addBankSpace(userID, amount) {
-        const someone = users.cache.get(userID);
+        const someone = this.users.cache.get(userID);
         if (!someone || someone.bot) return false;
         let user = await currency.findOne({
             userID
@@ -116,7 +147,7 @@ class Economy {
      */
 
     async removeBankSpace(userID, amount) {
-        const someone = users.cache.get(userID);
+        const someone = this.users.cache.get(userID);
         if (!someone || someone.bot) return false;
         let user = await currency.findOne({
             userID
@@ -136,4 +167,4 @@ class Economy {
     }
 }
 
-module.exports = Economy;
+module.exports = cobaltClass;

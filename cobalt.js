@@ -1,15 +1,14 @@
-const Discord = require('discord.js');
-const cobalt = new Discord.Client({ws: { intents: Discord.Intents.ALL }, partials: ['MESSAGE', 'CHANNEL', 'REACTION', 'USER', 'GUILD_MEMBER']});
-const mongoose = require('./utils/mongoose.js');
+const { Collection, Intents } = require('discord.js');
+const cobaltClass = require('./utils/cobaltClass');
+const cobalt = new cobaltClass({ws: { intents: Intents.ALL }, partials: ['MESSAGE', 'CHANNEL', 'REACTION', 'USER', 'GUILD_MEMBER']});
+// const mongoose = require('./utils/mongoose.js');
 const fs = require("fs");
 const path = require('path');
 
-const config = require("./config.json");
-cobalt.config = config;
 const secrets = require("./secrets.json");
 
-cobalt.commands = new Discord.Collection();
-cobalt.aliases = new Discord.Collection();
+cobalt.commands = new Collection();
+cobalt.aliases = new Collection();
 cobalt.sniper = new Map();
 
 const categories = fs.readdirSync('./commands/').filter(file => fs.statSync(path.join('./commands/', file)).isDirectory());
@@ -55,8 +54,8 @@ process.on('unhandledRejection', error => {
     console.error(error);
 })
 
-mongoose.init();
+// mongoose.init();
 cobalt.login(secrets.token);
 
-exports.config = config;
+// exports.config = config;
 exports.cobalt = cobalt;
