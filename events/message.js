@@ -54,7 +54,8 @@ module.exports = async (cobalt, message) => {
         } else return message.channel.send(`the command \`${cmd.help.name}\` is not enabled, try again later`)
     }
     if (cmd.conf.ownerOnly === true) {
-        if (!message.author.id == "288703114473635841") return
+        const devs = ['288703114473635841', '232670598872956929'];
+        if (!devs.includes(message.author.id)) return
     }
     if (cmd) {
         if (!cobalt.cooldowns.has(cmd.help.name)) {
