@@ -1,6 +1,7 @@
 const { Client } = require('discord.js');
 const mongoose = require('mongoose');
 let currency = require('../models/currency');
+let stats = require('../models/stats');
 
 class cobaltClass extends Client {
     constructor () {
@@ -164,6 +165,20 @@ class cobaltClass extends Client {
         user.bankSpace -= parseInt(amount)
         await user.save();
         return user;
+    }
+
+    async commandUsed(message) {
+        const serverInfo = await stats.findOne({
+            serverID: message.guild.id
+        })
+        if(!serverInfo) {
+            const newEntry = new stats({
+                serverID: message.guild.id,
+            });
+            newEntry.save();
+            return newEntry;
+        }
+        return serverInfo;
     }
 }
 

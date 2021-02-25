@@ -28,6 +28,7 @@ module.exports.run = async (cobalt, message, args, cb) => {
 exports.conf = {
     enabled: true,
     ownerOnly: true,
+    cooldown: 1,
     aliases: ['status']
 }
 

@@ -29,6 +29,8 @@
     "node-fetch": "^2.6.1",
     "opusscript": "0.0.7",
     "pretty-ms": "^7.0.1",
+    "random-seed-weighted-chooser": "^1.0.14",
+    "rpg-dice-roller": "^4.5.2",
     "simple-youtube-api": "^5.2.1",
     "superagent": "^5.3.1",
     "xml2js": "^0.4.23"

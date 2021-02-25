@@ -1,5 +1,5 @@
 const { Collection, Intents } = require('discord.js');
-const cobaltClass = require('./utils/cobaltClass');
+const cobaltClass = require('./utils/cobaltClient');
 const cobalt = new cobaltClass({ws: { intents: Intents.ALL }, partials: ['MESSAGE', 'CHANNEL', 'REACTION', 'USER', 'GUILD_MEMBER']});
 // const mongoose = require('./utils/mongoose.js');
 const fs = require("fs");
@@ -9,6 +9,7 @@ const secrets = require("./secrets.json");
 
 cobalt.commands = new Collection();
 cobalt.aliases = new Collection();
+cobalt.cooldowns = new Collection();
 cobalt.sniper = new Map();
 
 const categories = fs.readdirSync('./commands/').filter(file => fs.statSync(path.join('./commands/', file)).isDirectory());
