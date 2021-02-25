@@ -70,19 +70,33 @@ module.exports = async (cobalt, message) => {
             if (now < expirationTime) {
                 const timeLeft = (expirationTime - now) / 1000;
                 const cooldownEmbed = new Discord.MessageEmbed()
-                    .setDescription(`**${message.author.username}** : This command is on a cooldown.\n\nYou will be able to run the command again in : \`${prettyMilliseconds(timeLeft * 1000)}\`.\n\nThe default cooldown on this command is \`${prettyMilliseconds(cmd.conf.cooldown * 1000)}\`.`)
+                    .setTitle(`Woah hold up buddy`)
+                    .setDescription(`This command is on a cooldown.\n\nYou will be able to run the command again in : \`${prettyMilliseconds(timeLeft * 1000)}\`.\n\nThe default cooldown on this command is \`${prettyMilliseconds(cmd.conf.cooldown * 1000)}\`.`)
                     .setColor('#FFA500');
                 return message.channel.send(cooldownEmbed);
             }
         }
 
+        cmd.run(cobalt, message, args, commandError);
         timestamps.set(message.author.id, now);
         setTimeout(() => timestamps.delete(message.author.id), cooldownAmount);
 
+        // let data = await cobalt.commandUsed(message);
+
+        // let findCmd = data.commands.find(x => x.cmdName === cmd.help.name);
+        // console.log(findCmd)
+        // let array = [];
+        // array = data.commands.filter(x => x.cmdName !== cmd.help.name);
+        // console.log(array)
+        // array.push({
+        //     cmdName: cmd.help.name,
+        //     timesRan: findCmd.timesRan + 1
+        // });
+        // data.commands = array
+        // await data.save();
+
         console.log(`[Cobalt]\t${message.author.username} used command '${cmd.help.name}'`);
     }
-
-    cmd.run(cobalt, message, args, commandError);
 
     function commandError(err) {
         console.log("ERROR RUNNING COMMAND");
@@ -97,13 +111,6 @@ module.exports = async (cobalt, message) => {
         setTimeout(() => {
             levelCooldowns.delete(message.author.id)
         }, 60000)
-        // if (!cooldowns['__xp'])
-        //     cooldowns['__xp'] = {};
-
-        // if (cooldowns['__xp'][message.author.id])
-        //     return console.log(cooldowns['__xp'][message.author.id]);
-
-        // cooldowns['__xp'][message.author.id] = new Date().getTime() + 60000;
 
         let xpToAdd = Math.round(Math.random() * ((25 - 15) + 1) + 15);
         require('../utils/xp.js').add(xpToAdd, message);
@@ -113,17 +120,4 @@ module.exports = async (cobalt, message) => {
         console.log('it worked')
         // require('../utils/econ').add(bankSpaceToAdd, message);
     }
-
-    // function manageBankSpace(message) {
-    //     if (!bankCooldowns['__bank'])
-    //     bankCooldowns['__bank'] = {};
-
-    //     if (bankCooldowns['__bank'][message.author.id])
-    //         return;
-
-    //         bankCooldowns['__bank'][message.author.id] = new Date().getTime() + 60000;
-
-    //     let bankSpaceToAdd = Math.round(10 + Math.random() * 20)
-    //     require('../utils/econ').add(bankSpaceToAdd, message);
-    // }
 }
