@@ -33,7 +33,7 @@ module.exports = async (cobalt, message) => {
     if (!messageDAT.startsWith(config.prefix)) {
         if (levelMode == true) {
             return await manageUser(message);
-        }
+        } else return
     }
 
     let cmd;
@@ -46,7 +46,7 @@ module.exports = async (cobalt, message) => {
     if (!cmd) {
         if (levelMode == true) {
             return await manageUser(message);
-        }
+        } else return
     };
     if (cmd.conf.enabled === false) {
         if (devMode == true) {
@@ -76,12 +76,13 @@ module.exports = async (cobalt, message) => {
             }
         }
 
-        cmd.run(cobalt, message, args, commandError);
         timestamps.set(message.author.id, now);
         setTimeout(() => timestamps.delete(message.author.id), cooldownAmount);
 
         console.log(`[Cobalt]\t${message.author.username} used command '${cmd.help.name}'`);
     }
+
+    cmd.run(cobalt, message, args, commandError);
 
     function commandError(err) {
         console.log("ERROR RUNNING COMMAND");
