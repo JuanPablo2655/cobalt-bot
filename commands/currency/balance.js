@@ -11,6 +11,7 @@ module.exports.run = async (cobalt, message, args, cb) => {
         if (!bal.servers.includes(message.guild.id)) {
             bal.servers.push(message.guild.id)
         }
+        bal.netWorth = bal.onHand + bal.deposited; // just to fix any errors on any other commands
         await bal.save();
 
         let balanceEmbed = new Discord.MessageEmbed()
