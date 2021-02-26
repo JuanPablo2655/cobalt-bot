@@ -11,10 +11,11 @@ module.exports.run = async (cobalt, message, args, cb) => {
         if (userData.bank - Number(args[0]) < 0) return message.channel.send("You don\'t have that much money deposited");
             if (args[0] == 'all') money = userData.deposited
             if (Number(args[0]) <= 0) return message.channel.send("You can't withdraw money you don\'t have");
-            userData.onHand += Number(args[0])
-            userData.deposited -= Number(args[0])
+            money = args[0]
+            userData.onHand += Number(money)
+            userData.deposited -= Number(money)
             userData.save().catch(err => cb(err));
-            message.channel.send(`You withdrew ${moneyEmoji} ${args[0]} your bank balance is now ${moneyEmoji} ${userData.deposited}`);
+            message.channel.send(`You withdrew ${moneyEmoji} ${money} your bank balance is now ${moneyEmoji} ${userData.deposited}`);
     } catch (e) {
         cb(e)
     }
