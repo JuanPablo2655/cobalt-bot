@@ -9,13 +9,12 @@ module.exports.run = async (cobalt, message, args, cb) => {
 
         const user = await cobalt.fetchEconUser(message.author.id);
         let member = message.mentions.members.first() || message.guild.members.cache.get(args[0]) || message.guild.members.cache.find(member => member.user.username === args.slice(0).join(' ') || member.user.username === args[0]);
-        if (!member || !args[0]) return pass == false; message.channel.send('Please pick someone to rob')
-        if (member.user.id == message.author.id) return pass == false; message.channel.send('Can\'t rob yourself')
+        if (!member || !args[0]) return message.channel.send('Please pick someone to rob')
+        if (member.user.id == message.author.id) return message.channel.send('Can\'t rob yourself')
         const robbedUser = await cobalt.fetchEconUser(member.user.id);
         const randomAmount = Math.round(Math.random() * robbedUser.onHand);
 
         if (robbedUser.onHand == 0) {
-            pass == false;
             message.channel.send(`${member.user.username} doesn\'t have cobaltian money`)
         } else {
             if (random === 0) {
