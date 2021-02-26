@@ -11,8 +11,8 @@ module.exports.run = async (cobalt, message, args, cb) => {
         let workentry = workEntries[Math.floor(Math.random() * workEntries.length)];
         
         let date = DateTime.local();
-        let cooldownDate = date.plus({ hours: 6 });
-        let moneyEarned = Math.floor(200 + Math.random() * 100)
+        let cooldownDate = date.plus({ minutes: 10 });
+        let moneyEarned = Math.floor(250 + Math.random() * 250)
 
         let userData = await cobalt.fetchEconUser(message.author.id);
         if (!userData.servers.includes(message.guild.id)) {
