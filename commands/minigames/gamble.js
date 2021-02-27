@@ -24,11 +24,7 @@ module.exports.run = async (cobalt, message, args, cb) => {
             await userData.save();
             message.channel.send(`The bot rolled: ${botRoll}\nYou rolled: ${userChoice}\nYou won ${moneyEmoji} **${wonCoins}**`)
         } else if (botRoll == userChoice) {
-            const tieCoins = Math.floor(betAmount/2);
-            userData.onHand -= tieCoins;
-            userData.netWorth -= tieCoins;
-            await userData.save();
-            message.channel.send(`The bot rolled: ${botRoll}\nYou rolled: ${userChoice}\nYou tied and lost ${moneyEmoji} **${tieCoins}**`)
+            message.channel.send(`The bot rolled: ${botRoll}\nYou rolled: ${userChoice}\nYou tied and won nothing`)
         } else {
             const lostCoins = betAmount;
             userData.onHand -= lostCoins;

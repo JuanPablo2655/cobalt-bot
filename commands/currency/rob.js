@@ -1,6 +1,6 @@
 const Discord = require("discord.js");
 const chooser = require("random-seed-weighted-chooser").default;
-let arrayOfWeights = [52, 18, 10, 13, 7];
+let arrayOfWeights = [52, 18, 10, 12, 8];
 
 module.exports.run = async (cobalt, message, args, cb) => {
     try {
@@ -20,32 +20,39 @@ module.exports.run = async (cobalt, message, args, cb) => {
             if (random === 0) {
                 user.onHand += randomAmount;
                 user.netWorth += randomAmount;
+                user.bounty += Math.floor(randomAmount * .5)
                 robbedUser.onHand -= randomAmount;
                 robbedUser.netWorth -= randomAmount;
                 await user.save();
                 await robbedUser.save();
-                message.channel.send(`You have successfully robbed ${member.user.username} ${moneyEmoji} ${randomAmount}.`)
+                message.channel.send(`You have successfully robbed ${member.user.username} ${moneyEmoji} ${randomAmount}. You now have a bounty of ${moneyEmoji} ${user.bounty}.`)
             } else if (random === 1) {
                 message.channel.send(`${member.user.username} fought back, you left without a single cobaltian dollar.`)
             } else if (random === 2) {
+                let bountyClaimed = user.bounty
+                robbedUser.onHand += bountyClaimed
+                await robbedUser.save();
                 user.onHand = 0
                 user.deposited = 0
                 user.bankSpace = 1000
                 user.netWorth = 0
+                user.bounty = 0
                 await user.save();
-                message.channel.send(`${member.user.username} fought back and killed you. You lost every thing.`)
+                message.channel.send(`${member.user.username} fought back, killed you, and claimed your bounty of ${moneyEmoji} ${bountyClaimed}. You lost every thing.`)
             } else if (random === 3) {
-                user.netWorth -= user.onHand
-                user.onHand = 0
+                const fineAmount = Math.round(Math.random() * user.onHand);
+                user.netWorth -= fineAmount
+                user.onHand -= fineAmount
+                user.bounty = 0
                 await user.save();
-                message.channel.send(`You were caught by the police and was arrested, they confiscated everything you had on hand.`)
+                message.channel.send(`You were caught by the police and was fined ${moneyEmoji} ${fineAmount}. Your bounty was reset.`)
             } else {
-                user.netWorth -= user.onHand
-                user.onHand = 0
                 robbedUser.onHand += user.onHand;
                 robbedUser.netWorth += user.onHand;
-                await user.save();
                 await robbedUser.save();
+                user.netWorth -= user.onHand
+                user.onHand = 0
+                await user.save();
                 message.channel.send(`${member.user.username} took your money instead KEKW.`)
             }
         }
