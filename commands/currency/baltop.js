@@ -21,9 +21,9 @@ module.exports.run = async (cobalt, message, args, cb) => {
                     if (res[i].netWorth == 0) continue
                     let member = message.guild.members.cache.get(res[i].userID) || "User Left"
                     if (member === "User Left") {
-                        balEmbed.addField(`${i + 1}. ${member}`, `**Net Worth**: ${moneyEmoji} ${res[i].netWorth}`);
+                        balEmbed.addField(`${i + 1}. ${member}`, `**Net Worth**: ₡${res[i].netWorth}`);
                     } else {
-                        balEmbed.addField(`${i + 1}. ${member.user.username}`, `**Net Worth**: ${moneyEmoji} ${res[i].netWorth}`);
+                        balEmbed.addField(`${i + 1}. ${member.user.username}`, `**Net Worth**: ₡${res[i].netWorth}`);
                     }
                 }
             } else {
@@ -31,9 +31,9 @@ module.exports.run = async (cobalt, message, args, cb) => {
                     if (res[i].netWorth == 0) continue
                     let member = message.guild.members.cache.get(res[i].userID) || "User Left"
                     if (member === "User Left") {
-                        balEmbed.addField(`${i + 1}. ${member}`, `**Net Worth**: ${moneyEmoji} ${res[i].netWorth}`);
+                        balEmbed.addField(`${i + 1}. ${member}`, `**Net Worth**: ₡${res[i].netWorth}`);
                     } else {
-                        balEmbed.addField(`${i + 1}. ${member.user.username}`, `**Net Worth**: ${moneyEmoji} ${res[i].netWorth}`);
+                        balEmbed.addField(`${i + 1}. ${member.user.username}`, `**Net Worth**: ₡${res[i].netWorth}`);
                     }
                 }
             }

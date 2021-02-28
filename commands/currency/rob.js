@@ -15,7 +15,7 @@ module.exports.run = async (cobalt, message, args, cb) => {
         const randomAmount = Math.round(Math.random() * robbedUser.onHand);
 
         if (robbedUser.onHand == 0) {
-            message.channel.send(`${member.user.username} doesn\'t have cobaltian money`)
+            message.channel.send(`${member.user.username} doesn\'t have CND`)
         } else {
             if (random === 0) {
                 user.onHand += randomAmount;
@@ -25,7 +25,7 @@ module.exports.run = async (cobalt, message, args, cb) => {
                 robbedUser.netWorth -= randomAmount;
                 await user.save();
                 await robbedUser.save();
-                message.channel.send(`You have successfully robbed ${member.user.username} ${moneyEmoji} ${randomAmount}. You now have a bounty of ${moneyEmoji} ${user.bounty}.`)
+                message.channel.send(`You have successfully robbed ${member.user.username} ₡${randomAmount}. You now have a bounty of ₡${user.bounty}.`)
             } else if (random === 1) {
                 message.channel.send(`${member.user.username} fought back, you left without a single cobaltian dollar.`)
             } else if (random === 2) {
@@ -38,14 +38,14 @@ module.exports.run = async (cobalt, message, args, cb) => {
                 user.netWorth = 0
                 user.bounty = 0
                 await user.save();
-                message.channel.send(`${member.user.username} fought back, killed you, and claimed your bounty of ${moneyEmoji} ${bountyClaimed}. You lost every thing.`)
+                message.channel.send(`${member.user.username} fought back, killed you, and claimed your bounty of ₡${bountyClaimed}. You lost every thing.`)
             } else if (random === 3) {
                 const fineAmount = Math.round(Math.random() * user.onHand);
                 user.netWorth -= fineAmount
                 user.onHand -= fineAmount
                 user.bounty = 0
                 await user.save();
-                message.channel.send(`You were caught by the police and was fined ${moneyEmoji} ${fineAmount}. Your bounty was reset.`)
+                message.channel.send(`You were caught by the police and was fined ₡${fineAmount}. Your bounty was reset.`)
             } else {
                 robbedUser.onHand += user.onHand;
                 robbedUser.netWorth += user.onHand;

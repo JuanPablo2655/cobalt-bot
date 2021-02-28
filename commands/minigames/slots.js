@@ -2,7 +2,7 @@ const Discord = require("discord.js");
 
 module.exports.run = async (cobalt, message, args, cb) => {
     try {
-        let options = [":banana:", ":apple:", ":pineapple:", ":grapes:", ":pear:", ":cherries:", ":strawberry:", ":watermelon: "];
+        let options = [":banana:", ":apple:", ":pineapple:", ":grapes:", ":pear:", ":cherries:", ":strawberry:", ":watermelon:"];
 
         let chosen = [];
         for (let i = 0; i < 3; i++) {
@@ -13,15 +13,16 @@ module.exports.run = async (cobalt, message, args, cb) => {
         let last_2 = chosen[1] === chosen[2];
         let opposite_ends = chosen[0] === chosen[2];
 
-        let msg = "No matches.  Sorry!";
+        let msg = "No matches. You lost ₡100";
+        cobalt.removeMoney(message.author.id, 100)
         if (first_2 && last_2) {
-            let moneyEarned = Math.floor(200 + Math.random() * 200)
-            msg = "Matched all of them!  Well done.";
+            let moneyEarned = Math.floor(50 + Math.random() * 100)
+            msg = `Matched all of them! You earned ₡${moneyEarned}.`;
             cobalt.giveMoney(message.author.id, moneyEarned)
         } else if (first_2 || last_2 || opposite_ends) {
-            let moneyEarned = Math.floor(100 + Math.random() * 150)
+            let moneyEarned = Math.floor(50 + Math.random() * 50)
             cobalt.giveMoney(message.author.id, moneyEarned)
-            msg = "Matched 2!  Well done.";
+            msg = `Matched 2! You earned ₡${moneyEarned}.`;
         }
 
         message.channel.send("|-" + chosen.join("-") + "-|\n`" + msg + "`");
@@ -33,7 +34,7 @@ module.exports.run = async (cobalt, message, args, cb) => {
 exports.conf = {
     enabled: true,
     ownerOnly: false,
-    cooldown: 1,
+    cooldown: 60*1,
     aliases: []
 }
 
