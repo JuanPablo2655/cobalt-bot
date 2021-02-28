@@ -8,7 +8,8 @@ const currencySchema = mongoose.Schema({
     deposited: { type: Number, require: false, default: 0 },
     bankSpace: { type: Number, require: false, default: 1000 },
     netWorth: { type: Number, require: false, default: 0 },
-    workCooldown: { type: Date, require: false }
+    workCooldown: { type: Date, require: false },
+    bounty: {type: Number, require: false, default: 0}
 });
 
 module.exports = mongoose.model("currency", currencySchema);

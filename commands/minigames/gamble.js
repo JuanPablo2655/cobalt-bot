@@ -12,29 +12,25 @@ module.exports.run = async (cobalt, message, args, cb) => {
 
         if (!betAmount || isNaN(betAmount) && betAmount !== 'all' && betAmount !== 'max') return message.channel.send('Please enter the amount you want to gamble')
 
-        if (betAmount < 50) return message.channel.send(`The minimum you can gamble is ${moneyEmoji} \`50\`.`)
+        if (betAmount < 50) return message.channel.send(`The minimum you can gamble is \`₡50\`.`)
         if (betAmount == 'all' || betAmount == 'max') betAmount = userData.onHand;
         else betAmount = parseInt(args[0]);
 
-        if (betAmount > userData.onHand) return message.channel.send("You dont have enough cobaltian money")
+        if (betAmount > userData.onHand) return message.channel.send("You dont have enough CND")
         if (botRoll < userChoice) {
             const wonCoins = Math.floor(betAmount + (betAmount * 0.30));
             userData.onHand += wonCoins;
             userData.netWorth += wonCoins;
             await userData.save();
-            message.channel.send(`The bot rolled: ${botRoll}\nYou rolled: ${userChoice}\nYou won ${moneyEmoji} **${wonCoins}**`)
+            message.channel.send(`The bot rolled: ${botRoll}\nYou rolled: ${userChoice}\nYou won **₡${wonCoins}**`)
         } else if (botRoll == userChoice) {
-            const tieCoins = Math.floor(betAmount/2);
-            userData.onHand -= tieCoins;
-            userData.netWorth -= tieCoins;
-            await userData.save();
-            message.channel.send(`The bot rolled: ${botRoll}\nYou rolled: ${userChoice}\nYou tied and lost ${moneyEmoji} **${tieCoins}**`)
+            message.channel.send(`The bot rolled: ${botRoll}\nYou rolled: ${userChoice}\nYou tied and won nothing`)
         } else {
             const lostCoins = betAmount;
             userData.onHand -= lostCoins;
             userData.netWorth -= lostCoins;
             await userData.save();
-            message.channel.send(`The bot rolled: ${botRoll}\nYou rolled: ${userChoice}\nYou lost ${moneyEmoji} **${lostCoins}**`)
+            message.channel.send(`The bot rolled: ${botRoll}\nYou rolled: ${userChoice}\nYou lost **₡${lostCoins}**`)
         }
     } catch (e) {
         cb(e)
@@ -44,7 +40,7 @@ module.exports.run = async (cobalt, message, args, cb) => {
 exports.conf = {
     enabled: true,
     ownerOnly: false,
-    cooldown: 60*5,
+    cooldown: 60*2,
     aliases: []
 }
 

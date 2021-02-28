@@ -3,14 +3,18 @@ const fetch = require('node-fetch');
 
 module.exports.run = async (cobalt, message, args, cb) => {
     try {
-        const request = await fetch('https://no-api-key.com/api/v1/animals/cat');
-        const json = await request.json();
-        let catEmbed = new Discord.MessageEmbed()
-            .setTitle(json.fact)
-            .setImage(json.image)
-            .setTimestamp()
-            .setColor('RANDOM')
-        message.channel.send(catEmbed)
+        try {
+            const request = await fetch('https://no-api-key.com/api/v1/animals/cat');
+            const json = await request.json();
+            let catEmbed = new Discord.MessageEmbed()
+                .setTitle(json.fact)
+                .setImage(json.image)
+                .setTimestamp()
+                .setColor('RANDOM')
+            message.channel.send(catEmbed)
+        } catch {
+            message.channel.send("The API is down contact Juan Pablo.")
+        }
     } catch (e) {
         cb(e)
     }

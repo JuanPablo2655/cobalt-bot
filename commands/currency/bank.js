@@ -18,6 +18,6 @@ exports.conf = {
 
 exports.help = {
     name: "bank",
-    description: "withdraw or deposit on the bank",
-    usage: "bank [deposit|withdraw] [amount]"
+    description: "bank",
+    usage: "bank"
 }

@@ -26,7 +26,7 @@ module.exports.run = async (cobalt, message, args, cb) => {
             await cobalt.giveMoney(message.author.id, moneyEarned);
             workEmbed.setAuthor(message.author.username, message.author.displayAvatarURL({ format: 'png' }))
                 .setColor('#1cc936')
-                .setDescription(`${workentry} ${moneyEmoji} ${moneyEarned}`);
+                .setDescription(`${workentry} ₡${moneyEarned}`);
             message.channel.send(workEmbed)
         } else if (userData.workCooldown > date) {
             let timeRemaining = prettyMilliseconds(userData.workCooldown - Date.now(), { verbose: true })
@@ -38,7 +38,7 @@ module.exports.run = async (cobalt, message, args, cb) => {
             await cobalt.giveMoney(message.author.id, moneyEarned);
             workEmbed.setAuthor(message.author.username, message.author.displayAvatarURL({ format: 'png' }))
                 .setColor('#1cc936')
-                .setDescription(`${workentry} ${moneyEmoji} ${moneyEarned}`);
+                .setDescription(`${workentry} ₡${moneyEarned}`);
             message.channel.send(workEmbed)
         }
     } catch (e) {

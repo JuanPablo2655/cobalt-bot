@@ -7,15 +7,15 @@ module.exports.run = async (cobalt, message, args, cb) => {
         let userData = await cobalt.fetchEconUser(message.author.id)
         if (!args[0]) return message.channel.send("How much money?")
         if (isNaN(parseInt(args[0], 10)) && args[0] !== 'all') return message.channel.send("Please input a valid number");
-        let money = args[0]
+        let money = Number(args[0])
 
-        if (userData.bank - Number(args[0]) < 0) return message.channel.send("You don\'t have that much money deposited");
-            if (args[0] == 'all') money = userData.deposited
-            if (Number(args[0]) <= 0) return message.channel.send("You can't withdraw money you don\'t have");
-            userData.onHand += Number(money)
-            userData.deposited -= Number(money)
-            userData.save().catch(err => cb(err));
-            message.channel.send(`You withdrew ${moneyEmoji} ${money} your bank balance is now ${moneyEmoji} ${userData.deposited}`);
+        if (userData.deposited - money < 0) return message.channel.send("You don\'t have that much money deposited");
+        if (args[0] == 'all') money = userData.deposited
+        if (money <= 0) return message.channel.send("You can't withdraw money you don\'t have");
+        userData.onHand += Number(money)
+        userData.deposited -= Number(money)
+        userData.save().catch(err => cb(err));
+        message.channel.send(`You withdrew ₡${money} your bank balance is now ₡${userData.deposited}`);
     } catch (e) {
         cb(e)
     }

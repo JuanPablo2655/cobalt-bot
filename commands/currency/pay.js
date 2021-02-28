@@ -25,7 +25,7 @@ module.exports.run = async (cobalt, message, args, cb) => {
         await cobalt.removeMoney(message.author.id, args[1])
         await cobalt.giveMoney(member.user.id, args[1])
 
-        message.channel.send(`You paid ${member.user.username} ${moneyEmoji} ${args[1]}. You now have ${moneyEmoji} ${authorData.onHand} left.`)
+        message.channel.send(`You paid ${member.user.username} ₡${args[1]}. You now have ₡${authorData.onHand} left.`)
     } catch (e) {
         cb(e)
     }
