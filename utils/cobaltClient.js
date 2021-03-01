@@ -2,6 +2,7 @@ const { Client } = require('discord.js');
 const mongoose = require('mongoose');
 let currency = require('../models/currency');
 let stats = require('../models/stats');
+const itemManager = require('./itemManager');
 
 class cobaltClass extends Client {
     constructor () {
@@ -35,6 +36,7 @@ class cobaltClass extends Client {
         mongoose.connection.on('disconnected', () => {
             console.log('[Mongoose]\tMongoose connection disconnected');
         });
+        this.items = new itemManager();
     }
 
     /**

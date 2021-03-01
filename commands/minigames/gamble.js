@@ -12,6 +12,7 @@ module.exports.run = async (cobalt, message, args, cb) => {
 
         if (!betAmount || isNaN(betAmount) && betAmount !== 'all' && betAmount !== 'max') return message.channel.send('Please enter the amount you want to gamble')
 
+        if (0 > betAmount) return message.channel.send("Please enter a positive number")
         if (betAmount < 50) return message.channel.send(`The minimum you can gamble is \`₡50\`.`)
         if (betAmount == 'all' || betAmount == 'max') betAmount = userData.onHand;
         else betAmount = parseInt(args[0]);
