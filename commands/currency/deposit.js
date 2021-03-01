@@ -9,7 +9,7 @@ module.exports.run = async (cobalt, message, args, cb) => {
         if (isNaN(parseInt(args[0], 10)) && args[0] !== 'all') return message.channel.send("Please input a valid number");
         let money = Number(args[0]);
 
-        if (userData.onHand - money < 0) return message.channel.send("You don\'t have that much money");
+        if (userData.onHand - money <= 0) return message.channel.send("You don\'t have that much money");
         if (money < 0) return message.channel.send("You can't deposit negative money");
         if (userData.deposited + money > userData.bankSpace) return message.channel.send("You don\'t have enough bank space");
         if (args[0] == 'all') {

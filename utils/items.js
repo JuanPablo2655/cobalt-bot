@@ -1,26 +1,23 @@
-const { cobalt } = require("../cobalt");
-const message = require("../events/message");
-
 const list = [{
     name: 'padlock',
     description: '**Padlock** protect your money on hand from robbers.',
     canUse: false,
     canBuy: true,
     displayOnShop: true,
-    sellAmount: 0,
-    price: 0,
+    sellAmount: 700,
+    price: 1000,
     keep: true,
     run: async (cobalt, message, args) => {
 
     }
 }, {
     name: 'banknote',
-    description: '**Padlock** more bank space.',
+    description: '**Bank Note** more bank capacity.',
     canUse: true,
     canBuy: true,
     displayOnShop: true,
-    sellAmount: 0,
-    price: 0,
+    sellAmount: 700,
+    price: 1000,
     keep: false,
     run: async (cobalt, message, args) => {
         const random = Math.floor((Math.random() * 400) + 100);
@@ -33,10 +30,12 @@ const list = [{
     canUse: false,
     canBuy: true,
     displayOnShop: true,
-    sellAmount: 0,
-    price: 0,
+    sellAmount: 1400,
+    price: 2000,
     keep: false,
     run: async (cobalt, message, args) => {
         
     }
 }]
+
+module.exports = list;

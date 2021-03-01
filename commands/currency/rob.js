@@ -14,7 +14,7 @@ module.exports.run = async (cobalt, message, args, cb) => {
         const robbedUser = await cobalt.fetchEconUser(member.user.id);
         const randomAmount = Math.round(Math.random() * robbedUser.onHand);
 
-        if (robbedUser.onHand == 0) {
+        if (robbedUser.onHand <= 0) {
             message.channel.send(`${member.user.username} doesn\'t have CND`)
         } else {
             if (random === 0) {

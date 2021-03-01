@@ -3,6 +3,15 @@ const Discord = require("discord.js");
 module.exports.run = async (cobalt, message, args, cb) => {
     try {
         let options = [":banana:", ":apple:", ":pineapple:", ":grapes:", ":pear:", ":cherries:", ":strawberry:", ":watermelon:"];
+        const userData = await cobalt.fetchEconUser(message.author.id);
+        let money = args[0]
+        if (!money || isNaN(money) && money !== 'all' && money !== 'max') return message.channel.send('Please enter an amount to play slots')
+        if (0 > money) return message.channel.send("Please enter a positive number")
+        if (money < 50) return message.channel.send(`The minimum you can gamble is \`₡100\`.`)
+        if (money == 'all' || money == 'max') money = userData.onHand;
+        else money = parseInt(args[0]);
+
+        if (money > userData.onHand) return message.channel.send("You dont have enough CND")
 
         let chosen = [];
         for (let i = 0; i < 3; i++) {
@@ -13,15 +22,21 @@ module.exports.run = async (cobalt, message, args, cb) => {
         let last_2 = chosen[1] === chosen[2];
         let opposite_ends = chosen[0] === chosen[2];
 
-        let msg = "No matches. You lost ₡100";
-        cobalt.removeMoney(message.author.id, 100)
+        userData.onHand -= money
+        userData.netWorth -= money
+        await userData.save()
+        let msg = `No matches. You lost ₡${money}`;
         if (first_2 && last_2) {
-            let moneyEarned = Math.floor(50 + Math.random() * 100)
+            let moneyEarned = money + Math.floor(50 + Math.random() * 100)
+            userData.onHand += moneyEarned
+            userData.netWorth += moneyEarned
+            await userData.save()
             msg = `Matched all of them! You earned ₡${moneyEarned}.`;
-            cobalt.giveMoney(message.author.id, moneyEarned)
         } else if (first_2 || last_2 || opposite_ends) {
-            let moneyEarned = Math.floor(50 + Math.random() * 50)
-            cobalt.giveMoney(message.author.id, moneyEarned)
+            let moneyEarned = money + Math.floor(50 + Math.random() * 50)
+            userData.onHand += moneyEarned
+            userData.netWorth += moneyEarned
+            await userData.save()
             msg = `Matched 2! You earned ₡${moneyEarned}.`;
         }
 
