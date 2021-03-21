@@ -1,7 +1,7 @@
 const Discord = require("discord.js");
 
 module.exports = (cobalt, member) => {
-    var channel = cobalt.channels.cache.get('405158191324987393');
+    var channel = member.guild.channels.cache.find(channel => channel.name === "record");
 
     let newMember = new Discord.MessageEmbed()
         .setTitle('Old Cobaltia citizen left')

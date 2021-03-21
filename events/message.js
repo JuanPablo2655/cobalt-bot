@@ -103,7 +103,7 @@ module.exports = async (cobalt, message) => {
         console.log("ERROR RUNNING COMMAND");
         console.log(err);
         message.channel.send("The command failed to run.");
-        cobalt.channels.cache.get('645753142838951947').send(`\`\`\`${err.stack}\`\`\`` || "error lmao");
+        cobalt.channels.cache.get('823301224798617680').send(`From ${message.guild.name} - ${message.guild.id}\n\`\`\`${err.stack}\`\`\`` || "error lmao");
     }
 
     async function manageUser(message) {

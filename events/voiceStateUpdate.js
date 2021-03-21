@@ -1,7 +1,7 @@
 const Discord = require("discord.js");
 
 module.exports = async (cobalt, oldState, newState) => {
-    var channel = cobalt.channels.cache.get('405158191324987393');
+    var channel = oldState.guild.channels.cache.find(channel => channel.name === "record");
     let avatar = newState.member.user.displayAvatarURL({format: 'png'});
 
     let newUserChannelID = newState.channelID;

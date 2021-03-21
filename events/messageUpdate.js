@@ -4,7 +4,7 @@ module.exports = async (cobalt, oldMessage, newMessage) => {
     if(oldMessage.partial) oldMessage = await oldMessage.fetch();
     if (oldMessage.author.bot) return;
     if (oldMessage.content == newMessage.content) return;
-    var channel = cobalt.channels.cache.get('405158191324987393');
+    var channel = oldMessage.guild.channels.cache.find(channel => channel.name === "record");
     let author = newMessage.author;
     let avatar = author.displayAvatarURL({format: 'png'});
     let guild = newMessage.guild.id

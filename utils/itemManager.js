@@ -6,13 +6,13 @@ class ItemManager {
     }
     
     find(item = '') {
-        const found = items.find(x => x.name === item);
+        const found = items.find(x => x.id === item);
         if (!found) return false;
         return found;
     }
 
     usable(item = '') {
-        const found = items.find(x => x.name === item);
+        const found = items.find(x => x.id === item);
         if (!found) return false;
         if (!found.canUse) return false;
         return true; 
