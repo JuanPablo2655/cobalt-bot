@@ -1,8 +1,10 @@
 const Discord = require("discord.js");
 
 module.exports = (cobalt, member) => {
-    var log = cobalt.channels.cache.get('405158191324987393');
-    var welcome = cobalt.channels.cache.get('433831532981911553')
+    var log = member.guild.channels.cache.find(channel => channel.name === "record");
+    if (!log) return
+    var welcome = member.guild.channels.cache.find(channel => channel.name === "border-patrol");
+    if (!welcome) return
 
     let newMember = new Discord.MessageEmbed()
         .setTitle('New Cobaltia citizen has joined')
@@ -13,5 +15,5 @@ module.exports = (cobalt, member) => {
         .setTimestamp();
     log.send(newMember);
 
-    welcome.send(`Welcome, ${member.user.username} to Cobaltia. Please wait while the Directors administers your member role.`)
+    welcome.send(`Welcome, ${member.user.username} to ${member.guild.name}. Please wait while the Directors administers your member role.`)
 }

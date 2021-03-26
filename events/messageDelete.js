@@ -1,7 +1,8 @@
 const Discord = require("discord.js");
 
 module.exports = async (cobalt, message) => {
-    var log = cobalt.channels.cache.get('405158191324987393');
+    var log = message.guild.channels.cache.find(channel => channel.name === "record");
+    if (!log) return
     let author = message.author;
     let avatar = author.displayAvatarURL({format: 'png'});
     if (message.content == 0) return

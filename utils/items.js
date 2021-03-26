@@ -1,5 +1,6 @@
 const list = [{
-    name: 'padlock',
+    name: 'Padlock',
+    id: 'padlock',
     description: '**Padlock** protect your money on hand from robbers.',
     canUse: false,
     canBuy: true,
@@ -11,7 +12,8 @@ const list = [{
 
     }
 }, {
-    name: 'banknote',
+    name: 'Bank Note',
+    id: 'banknote',
     description: '**Bank Note** more bank capacity.',
     canUse: true,
     canBuy: true,
@@ -25,7 +27,8 @@ const list = [{
         message.channel.send(`You redeemed a banknote and got an extra ${random.toLocaleString()} of bank space. You now have ${amount.bankSpace.toLocaleString()}.`)
     }
 }, {
-    name: 'extralife',
+    name: 'Extra Life',
+    id: 'extralife',
     description: '**Extra Life** another chance at living.',
     canUse: false,
     canBuy: true,

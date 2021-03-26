@@ -9,7 +9,8 @@ module.exports = async (cobalt, reaction, user) => {
     let emojiID = reaction.emoji.id
     let emojiName = reaction.emoji.name
     let emoji = cobalt.emojis.cache.get(emojiID);
-    var channel = cobalt.channels.cache.get('405158191324987393');
+    var channel = reaction.message.guild.channels.cache.find(channel => channel.name === "record");
+    if (!channel) return
 
     if (user.id == cobalt.user.id) return
 
