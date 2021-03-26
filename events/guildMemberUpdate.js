@@ -1,7 +1,8 @@
 const Discord = require("discord.js");
 
 module.exports = async (cobalt, oldMember , newMember) => {
-    var channel = oldmember.guild.channels.cache.find(channel => channel.name === "record");
+    var channel = newMember.guild.channels.cache.find(channel => channel.name === "record");
+    if (!channel) return
     let avatar = newMember.user.displayAvatarURL({format: 'png'});
 
     let updateEmbed = new Discord.MessageEmbed()
