@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 
 const statsSchema = mongoose.Schema({
-    serverID: { type: String, require: false },
+    serverID: { type: String, require: true },
     commands: { type: Array, require: false,
         default: [{
             cmdName: { type: String, require: true },

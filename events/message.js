@@ -4,6 +4,8 @@ const Discord = require('discord.js');
 const config = require('../config.json');
 const { DateTime } = require("luxon");
 const prettyMilliseconds = require('pretty-ms');
+const collector = require('../models/collector');
+const eventConfig = require('../models/eventConfig');
 
 const devMode = config.devMode
 const levelMode = config.levelMode
@@ -29,6 +31,57 @@ module.exports = async (cobalt, message) => {
     //     message.delete();
     //     message.author.send('Hey! That word has been banned, please don\'t use it!');
     // }
+
+    let roleConfigData = await eventConfig.findOne({ guildID: message.guild.id});
+    if (roleConfigData) {
+        let data = await collector.findOne({
+            channelID: message.channel.id
+        });
+    
+        var i;
+        for (i = 0; i < roleConfigData.roles.length; i++) {
+            if (message.member.roles.cache.has(roleConfigData.roles[i])) {
+                if (!data) {
+                    const newEntry = new collector({
+                        channelID: message.channel.id,
+                        roles: {
+                            roleID: message.member.roles.cache.get(roleConfigData.roles[i]).id,
+                            messages: 1
+                        },
+                    });
+                    newEntry.save();
+                } else {
+                    let roleData = await collector.findOne({
+                        channelID: message.channel.id,
+                        "roles.roleID": message.member.roles.cache.get(roleConfigData.roles[i]).id
+                    });
+                    if (roleData) {
+                        collector.updateOne({
+                            channelID: message.channel.id,
+                            "roles.roleID": message.member.roles.cache.get(roleConfigData.roles[i]).id
+                        }, {
+                            channelID: message.channel.id,
+                            'roles.$.roleID': message.member.roles.cache.get(roleConfigData.roles[i]).id,
+                            $inc: {
+                                'roles.$.messages': 1
+                            }
+                        }, {
+                            upsert: true,
+                        }, function (err) {
+                            if (err) return console.log(err)
+                        })
+                    } else {
+                        data.roles.push({
+                            roleID: message.member.roles.cache.get(roleConfigData.roles[i]).id,
+                            messages: 1
+                        });
+                        await data.save();
+                    }
+                }
+            } else continue
+        }
+
+    }
 
     if (!messageDAT.startsWith(config.prefix)) {
         if (levelMode == true) {
@@ -63,8 +116,10 @@ module.exports = async (cobalt, message) => {
         }
 
         const now = Date.now();
+        let cooldownAmount;
         const timestamps = cobalt.cooldowns.get(cmd.help.name);
-        const cooldownAmount = (cmd.conf.cooldown || 1) * 1000
+        if (devMode) cooldownAmount = .1;
+        else cooldownAmount = (cmd.conf.cooldown || 1) * 1000;
 
         if (timestamps.has(message.author.id)) {
             const expirationTime = timestamps.get(message.author.id) + cooldownAmount;

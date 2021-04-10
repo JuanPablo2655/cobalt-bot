@@ -1,10 +1,9 @@
 const mongoose = require('mongoose');
 
 const userSchema = mongoose.Schema({
-    userID: { type: String, require: false },
+    userID: { type: String, require: true },
     username: { type: String, require: false },
-    disciminator: { type: Number, require: false },
-    avatar: { type: String, require: false }
+    roles: { type: Array, require: false, default: [] }
 });
 
 module.exports = mongoose.model("user", userSchema);
