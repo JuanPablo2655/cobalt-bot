@@ -29,8 +29,12 @@ module.exports.run = async (cobalt, message, args, cb) => {
                 .setDescription(`${workentry} ₡${moneyEarned}`);
             message.channel.send(workEmbed)
         } else if (userData.workCooldown > date) {
-            let timeRemaining = prettyMilliseconds(userData.workCooldown - Date.now(), { verbose: true })
-            return message.channel.send(`You have to wait ${timeRemaining} until you can work again.`)
+            let timeRemaining = prettyMilliseconds(userData.workCooldown - Date.now())
+            const cooldownEmbed = new Discord.MessageEmbed()
+                    .setTitle(`Woah hold up buddy`)
+                    .setDescription(`This command is on a cooldown.\n\nYou will be able to run the command again in : \`${timeRemaining}\`.\n\nThe default cooldown on this command is \`${prettyMilliseconds(1 * 1000 * 60 * 10)}\`.`)
+                    .setColor('#FFA500');
+                return message.channel.send(cooldownEmbed);
         } else {
             userData.username = message.author.username;
             userData.workCooldown = cooldownDate
@@ -49,7 +53,7 @@ module.exports.run = async (cobalt, message, args, cb) => {
 exports.conf = {
     enabled: true,
     ownerOnly: false,
-    cooldown: 5,
+    cooldown: .01,
     aliases: []
 }
 

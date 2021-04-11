@@ -11,11 +11,11 @@ module.exports.run = async (cobalt, message, args, cb) => {
         if (member.user.id == message.author.id) return message.channel.send('Can\'t pay yourself')
         let userData = await cobalt.fetchEconUser(member.user.id)
         if (!amount) return message.channel.send('You have to pay the user some money')
-        if (isNaN(parseInt(amount, 10)) && amount !== 'all') return message.channel.send('Please input a valid number')
         if (authorData.onHand < Number(amount)) return message.channel.send('You don\'t have enough money')
-        if (Number(amount) < 0) return message.channel.send("Can\'t pay someone negative")
         if (args[1] == "all") amount = authorData.onHand
         else amount = args[1]
+        if (isNaN(Number(amount)) && amount !== 'all') return message.channel.send('Please input a valid number')
+        if (Number(amount) <= 0) return message.channel.send("Can\'t pay someone negative")
 
         if (!authorData.servers.includes(message.guild.id)) {
             authorData.servers.push(message.guild.id)

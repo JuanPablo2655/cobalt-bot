@@ -1,11 +1,7 @@
-const { conf } = require("../commands/utility/help.js");
-const cobalt = require("./../cobalt.js");
 const Discord = require('discord.js');
 const config = require('../config.json');
 const { DateTime } = require("luxon");
 const prettyMilliseconds = require('pretty-ms');
-const collector = require('../models/collector');
-const eventConfig = require('../models/eventConfig');
 
 const devMode = config.devMode
 const levelMode = config.levelMode
@@ -31,57 +27,6 @@ module.exports = async (cobalt, message) => {
     //     message.delete();
     //     message.author.send('Hey! That word has been banned, please don\'t use it!');
     // }
-
-    let roleConfigData = await eventConfig.findOne({ guildID: message.guild.id});
-    if (roleConfigData) {
-        let data = await collector.findOne({
-            channelID: message.channel.id
-        });
-    
-        var i;
-        for (i = 0; i < roleConfigData.roles.length; i++) {
-            if (message.member.roles.cache.has(roleConfigData.roles[i])) {
-                if (!data) {
-                    const newEntry = new collector({
-                        channelID: message.channel.id,
-                        roles: {
-                            roleID: message.member.roles.cache.get(roleConfigData.roles[i]).id,
-                            messages: 1
-                        },
-                    });
-                    newEntry.save();
-                } else {
-                    let roleData = await collector.findOne({
-                        channelID: message.channel.id,
-                        "roles.roleID": message.member.roles.cache.get(roleConfigData.roles[i]).id
-                    });
-                    if (roleData) {
-                        collector.updateOne({
-                            channelID: message.channel.id,
-                            "roles.roleID": message.member.roles.cache.get(roleConfigData.roles[i]).id
-                        }, {
-                            channelID: message.channel.id,
-                            'roles.$.roleID': message.member.roles.cache.get(roleConfigData.roles[i]).id,
-                            $inc: {
-                                'roles.$.messages': 1
-                            }
-                        }, {
-                            upsert: true,
-                        }, function (err) {
-                            if (err) return console.log(err)
-                        })
-                    } else {
-                        data.roles.push({
-                            roleID: message.member.roles.cache.get(roleConfigData.roles[i]).id,
-                            messages: 1
-                        });
-                        await data.save();
-                    }
-                }
-            } else continue
-        }
-
-    }
 
     if (!messageDAT.startsWith(config.prefix)) {
         if (levelMode == true) {
@@ -110,6 +55,35 @@ module.exports = async (cobalt, message) => {
         const devs = ['288703114473635841', '232670598872956929'];
         if (!devs.includes(message.author.id)) return
     }
+
+    // const addCD = () => {
+    //     if (!cobalt.cooldowns.has(cmd.help.name)) {
+    //         cobalt.cooldowns.set(cmd.help.name, new Discord.Collection());
+    //     }
+
+    //     const now = Date.now();
+    //     let cooldownAmount;
+    //     const timestamps = cobalt.cooldowns.get(cmd.help.name);
+    //     // if (devMode) cooldownAmount = .1;
+    //     // else 
+    //     cooldownAmount = (cmd.conf.cooldown || 1) * 1000;
+
+    //     if (timestamps.has(message.author.id)) {
+    //         const expirationTime = timestamps.get(message.author.id) + cooldownAmount;
+    //         if (now < expirationTime) {
+    //             const timeLeft = (expirationTime - now) / 1000;
+    //             const cooldownEmbed = new Discord.MessageEmbed()
+    //                 .setTitle(`Woah hold up buddy`)
+    //                 .setDescription(`This command is on a cooldown.\n\nYou will be able to run the command again in : \`${prettyMilliseconds(timeLeft * 1000)}\`.\n\nThe default cooldown on this command is \`${prettyMilliseconds(cmd.conf.cooldown * 1000)}\`.`)
+    //                 .setColor('#FFA500');
+    //             return message.channel.send(cooldownEmbed);
+    //         }
+    //     }
+
+    //     timestamps.set(message.author.id, now);
+    //     setTimeout(() => timestamps.delete(message.author.id), cooldownAmount);
+    // }
+
     if (cmd) {
         if (!cobalt.cooldowns.has(cmd.help.name)) {
             cobalt.cooldowns.set(cmd.help.name, new Discord.Collection());
@@ -162,7 +136,7 @@ module.exports = async (cobalt, message) => {
     }
 
     async function manageUser(message) {
-        if (levelCooldowns.has(message.author.id)) return console.log('cooldown')
+        if (levelCooldowns.has(message.author.id)) return
         levelCooldowns.add(message.author.id)
         setTimeout(() => {
             levelCooldowns.delete(message.author.id)
@@ -173,7 +147,6 @@ module.exports = async (cobalt, message) => {
 
         let bankSpaceToAdd = Math.round(10 + Math.random() * 20)
         await cobalt.addBankSpace(message.author.id, bankSpaceToAdd)
-        console.log('it worked')
         // require('../utils/econ').add(bankSpaceToAdd, message);
     }
 }

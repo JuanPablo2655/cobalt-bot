@@ -6,7 +6,7 @@ module.exports.run = async (cobalt, message, args, cb) => {
 
         let userData = await cobalt.fetchEconUser(message.author.id)
         if (!args[0]) return message.channel.send("How much money?")
-        if (isNaN(parseInt(args[0], 10)) && args[0] !== 'all') return message.channel.send("Please input a valid number");
+        if (isNaN(Number(args[0])) && args[0] !== 'all') return message.channel.send("Please input a valid number");
         let money = Number(args[0])
 
         if (userData.deposited - money <= 0) return message.channel.send("You don\'t have that much money deposited");
