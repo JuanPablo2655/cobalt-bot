@@ -10,13 +10,13 @@ module.exports.run = async (cobalt, message, args, cb) => {
         let money = Number(args[0]);
 
         if (userData.onHand - money <= 0) return message.channel.send("You don\'t have that much money");
-        if (money < 0) return message.channel.send("You can't deposit negative money");
         if (userData.deposited + money > userData.bankSpace) return message.channel.send("You don\'t have enough bank space");
         if (args[0] == 'all') {
             canDeposit = Number(userData.bankSpace) - Number(userData.deposited)
             if (canDeposit == 0) return message.channel.send("You don\'t have enough bank space");
             money = Math.min(canDeposit, Number(userData.onHand));
         }
+        if (money < 0) return message.channel.send("You can't deposit negative money");
         userData.onHand -= money
         userData.deposited += money
         userData.save().catch(err => cb(err));

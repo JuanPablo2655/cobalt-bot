@@ -1,6 +1,7 @@
 const Discord = require("discord.js");
 const fs = require("fs");
 const path = require('path');
+const prettyMilliseconds = require('pretty-ms');
 
 module.exports.run = async (cobalt, message, args, cb) => {
     try {
@@ -38,6 +39,7 @@ module.exports.run = async (cobalt, message, args, cb) => {
                 helpEmbed.setDescription("Showing help for command " + dir);
                 helpEmbed.addField("Usage", props.help.usage || props.help.name, true);
                 helpEmbed.addField("Description", props.help.description || "No Description", true);
+                helpEmbed.addField("Cooldown", prettyMilliseconds((props.conf.cooldown || 1) * 1000), true)
                 helpEmbed.addField("aliases", props.conf.aliases.join(", ") || "No Aliases");
                 message.channel.send(helpEmbed)
             }
