@@ -15,8 +15,6 @@ module.exports.run = async (cobalt, message, args, cb) => {
         const randomAmount = Math.round(Math.random() * robbedUser.onHand);
         if (robbedUser.onHand <= 0) return message.channel.send(`${member.user.username} doesn\'t have CND`)
 
-        await addCD();
-
         if (random === 0) {
             user.onHand += randomAmount;
             user.netWorth += randomAmount;
