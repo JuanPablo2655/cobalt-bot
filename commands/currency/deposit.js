@@ -1,6 +1,6 @@
 const Discord = require("discord.js");
 
-module.exports.run = async (cobalt, message, args, cb) => {
+module.exports.run = async (cobalt, message, args, addCD, cb) => {
     try {
         let moneyEmoji = cobalt.emojis.cache.get("426859750798655489");
 
@@ -17,6 +17,9 @@ module.exports.run = async (cobalt, message, args, cb) => {
             money = Math.min(canDeposit, Number(userData.onHand));
         }
         if (money < 0) return message.channel.send("You can't deposit negative money");
+
+        addCD();
+        
         userData.onHand -= money
         userData.deposited += money
         userData.save().catch(err => cb(err));

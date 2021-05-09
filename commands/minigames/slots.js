@@ -1,6 +1,6 @@
 const Discord = require("discord.js");
 
-module.exports.run = async (cobalt, message, args, cb) => {
+module.exports.run = async (cobalt, message, args, addCD, cb) => {
     try {
         let options = [":banana:", ":apple:", ":pineapple:", ":grapes:", ":pear:", ":cherries:", ":strawberry:", ":watermelon:"];
         const userData = await cobalt.fetchEconUser(message.author.id);
@@ -11,6 +11,8 @@ module.exports.run = async (cobalt, message, args, cb) => {
         else money = parseInt(args[0]);
         if (0 >= money) return message.channel.send("Please enter a positive number and more than ₡0")
         if (money > userData.onHand) return message.channel.send("You dont have enough CND")
+
+        addCD();
 
         let chosen = [];
         for (let i = 0; i < 3; i++) {

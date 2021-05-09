@@ -1,7 +1,7 @@
 const Discord = require("discord.js");
 let currency = require('../../models/currency');
 
-module.exports.run = async (cobalt, message, args, cb) => {
+module.exports.run = async (cobalt, message, args, addCD, cb) => {
     try {
         return
     } catch (e) {

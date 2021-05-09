@@ -1,6 +1,6 @@
 const Discord = require("discord.js");
 
-module.exports.run = async (cobalt, message, args, cb) => {
+module.exports.run = async (cobalt, message, args, addCD, cb) => {
     try {
         if (!args[0]) return message.channel.send("I need a category")
         if (!args[1]) return message.channel.send("I need a command to reload")

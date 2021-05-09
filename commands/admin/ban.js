@@ -1,6 +1,6 @@
 const Discord = require("discord.js");
 
-module.exports.run = async (cobalt, message, args, cb) => {
+module.exports.run = async (cobalt, message, args, addCD, cb) => {
     let userBan = cobalt.users.cache.get(args[0]) || message.mentions.users.first();
     let [days, ...reason] = args
     try {

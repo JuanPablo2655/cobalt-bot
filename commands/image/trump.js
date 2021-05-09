@@ -2,8 +2,9 @@ const { MessageEmbed } = require("discord.js");
 const fetch = require('node-fetch');
 const fs = require('fs');
 
-module.exports.run = async (cobalt, message, args, cb) => {
+module.exports.run = async (cobalt, message, args, addCD, cb) => {
     try {
+        addCD();
         let [...context] = args;
         if (!args[0]) {
             message.channel.send("please add message to the tweet!")

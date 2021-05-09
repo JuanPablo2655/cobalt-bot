@@ -1,7 +1,8 @@
 const Discord = require("discord.js");
 
-module.exports.run = async (cobalt, message, args, cb) => {
+module.exports.run = async (cobalt, message, args, addCD, cb) => {
     try {
+        addCD();
         let messageID = args[0];
         let filter = (reaction, user) => reaction.emoji.name === args[1];
         

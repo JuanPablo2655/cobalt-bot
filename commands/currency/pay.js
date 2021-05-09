@@ -1,7 +1,7 @@
 const Discord = require("discord.js");
 let currency = require('../../models/currency');
 
-module.exports.run = async (cobalt, message, args, cb) => {
+module.exports.run = async (cobalt, message, args, addCD, cb) => {
     try {
         let moneyEmoji = cobalt.emojis.cache.get("426859750798655489");
         let amount = args[1];
@@ -17,6 +17,8 @@ module.exports.run = async (cobalt, message, args, cb) => {
         if (isNaN(Number(amount)) && amount !== 'all') return message.channel.send('Please input a valid number')
         if (Number(amount) <= 0) return message.channel.send("Can\'t pay someone negative")
 
+        addCD();
+        
         if (!authorData.servers.includes(message.guild.id)) {
             authorData.servers.push(message.guild.id)
         }

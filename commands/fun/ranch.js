@@ -1,11 +1,11 @@
 const Discord = require("discord.js");
 
-module.exports.run = async (cobalt, message, args, cb) => {
+module.exports.run = async (cobalt, message, args, addCD, cb) => {
     try {
         let ranchedUser = cobalt.users.cache.get(args[0]) || message.mentions.users.first();
         if(!ranchedUser) return message.channel.send("bruh")
         message.channel.send("Fuck you "+ ranchedUser.username + " to the ranch dimension")
-
+        addCD();
     } catch (e) {
         cb(e)
     }

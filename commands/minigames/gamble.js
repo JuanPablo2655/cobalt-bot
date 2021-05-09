@@ -1,6 +1,6 @@
 const Discord = require("discord.js");
 
-module.exports.run = async (cobalt, message, args, cb) => {
+module.exports.run = async (cobalt, message, args, addCD, cb) => {
     try {
         let moneyEmoji = cobalt.emojis.cache.get("426859750798655489");
         const botRoll = Math.floor(Math.random() * 13)+1;
@@ -18,6 +18,9 @@ module.exports.run = async (cobalt, message, args, cb) => {
         if (0 >= betAmount) return message.channel.send("Please enter a positive number and more than 0")
 
         if (betAmount > userData.onHand) return message.channel.send("You dont have enough CND")
+
+        addCD();
+        
         if (botRoll < userChoice) {
             const wonCoins = Math.floor(betAmount + (betAmount * 0.30));
             userData.onHand += wonCoins;

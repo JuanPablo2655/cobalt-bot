@@ -1,8 +1,9 @@
 const Discord = require("discord.js");
 const { DateTime } = require("luxon");
 
-module.exports.run = async (cobalt, message, args, cb) => {
+module.exports.run = async (cobalt, message, args, addCD, cb) => {
     try {
+        addCD();
         let server = message.guild;
         let created = DateTime.fromISO(server.createdAt.toISOString()).setZone("America/New_York").toLocaleString(DateTime.DATETIME_MED);
         let online = message.guild.members.cache.filter(m => m.user.presence.status == "online").size

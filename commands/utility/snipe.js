@@ -1,7 +1,8 @@
 const Discord = require("discord.js");
 
-module.exports.run = async (cobalt, message, args, cb) => {
+module.exports.run = async (cobalt, message, args, addCD, cb) => {
     try {
+        addCD();
         let snipe = cobalt.sniper.get(message.channel.id);
 
         if (snipe == undefined) {

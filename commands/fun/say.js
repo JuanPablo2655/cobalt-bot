@@ -1,7 +1,8 @@
 const { Util } = require("discord.js");
 
-module.exports.run = async (cobalt, message, args, cb) => {
+module.exports.run = async (cobalt, message, args, addCD, cb) => {
     try {
+        addCD();
         const clean = async (text) => {
             if (text && text.constructor.name == "Promise")
               text = await text;

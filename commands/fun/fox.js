@@ -1,8 +1,7 @@
 const Discord = require("discord.js");
 const fetch = require('node-fetch');
 
-
-module.exports.run = async (cobalt, message, args, cb) => {
+module.exports.run = async (cobalt, message, args, addCD, cb) => {
     try {
         try {
             const request = await fetch('https://some-random-api.ml/animal/fox');
@@ -16,6 +15,7 @@ module.exports.run = async (cobalt, message, args, cb) => {
         } catch {
             message.channel.send("The API is down contact Juan Pablo.")
         }
+        addCD();
     } catch (e) {
         cb(e)
     }

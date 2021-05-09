@@ -56,39 +56,10 @@ module.exports = async (cobalt, message) => {
         if (!devs.includes(message.author.id)) return
     }
 
-    // const addCD = () => {
-    //     if (!cobalt.cooldowns.has(cmd.help.name)) {
-    //         cobalt.cooldowns.set(cmd.help.name, new Discord.Collection());
-    //     }
-
-    //     const now = Date.now();
-    //     let cooldownAmount;
-    //     const timestamps = cobalt.cooldowns.get(cmd.help.name);
-    //     // if (devMode) cooldownAmount = .1;
-    //     // else 
-    //     cooldownAmount = (cmd.conf.cooldown || 1) * 1000;
-
-    //     if (timestamps.has(message.author.id)) {
-    //         const expirationTime = timestamps.get(message.author.id) + cooldownAmount;
-    //         if (now < expirationTime) {
-    //             const timeLeft = (expirationTime - now) / 1000;
-    //             const cooldownEmbed = new Discord.MessageEmbed()
-    //                 .setTitle(`Woah hold up buddy`)
-    //                 .setDescription(`This command is on a cooldown.\n\nYou will be able to run the command again in : \`${prettyMilliseconds(timeLeft * 1000)}\`.\n\nThe default cooldown on this command is \`${prettyMilliseconds(cmd.conf.cooldown * 1000)}\`.`)
-    //                 .setColor('#FFA500');
-    //             return message.channel.send(cooldownEmbed);
-    //         }
-    //     }
-
-    //     timestamps.set(message.author.id, now);
-    //     setTimeout(() => timestamps.delete(message.author.id), cooldownAmount);
-    // }
-
-    if (cmd) {
+    const addCD = () => {
         if (!cobalt.cooldowns.has(cmd.help.name)) {
             cobalt.cooldowns.set(cmd.help.name, new Discord.Collection());
         }
-
         const now = Date.now();
         let cooldownAmount;
         const timestamps = cobalt.cooldowns.get(cmd.help.name);
@@ -98,18 +69,39 @@ module.exports = async (cobalt, message) => {
         if (timestamps.has(message.author.id)) {
             const expirationTime = timestamps.get(message.author.id) + cooldownAmount;
             if (now < expirationTime) {
+                return
+            }
+        }
+        timestamps.set(message.author.id, now);
+        setTimeout(() => timestamps.delete(message.author.id), cooldownAmount);
+    }
+    
+    const checkCD = () => {
+        const now = Date.now();
+        let cooldownAmount;
+        const timestamps = cobalt.cooldowns.get(cmd.help.name);
+        if (devMode) cooldownAmount = .1;
+        else cooldownAmount = (cmd.conf.cooldown || 1) * 1000;
+        if (!timestamps) return false
+
+        if (timestamps.has(message.author.id)) {
+            const expirationTime = timestamps.get(message.author.id) + cooldownAmount;
+            if (now < expirationTime) {
                 const timeLeft = (expirationTime - now) / 1000;
                 const cooldownEmbed = new Discord.MessageEmbed()
                     .setTitle(`Woah hold up buddy`)
                     .setDescription(`This command is on a cooldown.\n\nYou will be able to run the command again in : \`${prettyMilliseconds(timeLeft * 1000)}\`.\n\nThe default cooldown on this command is \`${prettyMilliseconds(cmd.conf.cooldown * 1000)}\`.`)
                     .setColor('#FFA500');
-                return message.channel.send(cooldownEmbed);
+                message.channel.send(cooldownEmbed);
+                return true
             }
         }
+        return false
+    }
 
-        cmd.run(cobalt, message, args, commandError);
-        timestamps.set(message.author.id, now);
-        setTimeout(() => timestamps.delete(message.author.id), cooldownAmount);
+    if (cmd) {
+        if (checkCD()) return
+        cmd.run(cobalt, message, args, addCD, commandError);
 
         // let data = await cobalt.commandUsed(message);
 
