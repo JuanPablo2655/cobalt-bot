@@ -1,7 +1,7 @@
 const Discord = require("discord.js");
 const items = require('../../utils/items');
 
-module.exports.run = async (cobalt, message, args, cb) => {
+module.exports.run = async (cobalt, message, args, addCD, cb) => {
     try {
         let user = cobalt.fetchEconUser(message.author.id)
         let [itemID, ...buyAmount] = args;
@@ -14,6 +14,8 @@ module.exports.run = async (cobalt, message, args, cb) => {
         if (!item) return message.channel.send(`That item doesn't exist, please use the correct item id`)
         if (!item.canBuy) return message.channel.send(`Can't buy this item`)
         if (item.price > user.onHand || (buyAmount * item.price) > user.onHand) return message.channel.send(`You don't have enough CND to buy the item`)
+
+        addCD();
         
         let itemInInv = user.items.find(x => x.id.toLowerCase() === item.id.toLowerCase());
         let array = [];

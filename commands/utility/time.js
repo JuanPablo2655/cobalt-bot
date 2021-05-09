@@ -1,8 +1,9 @@
 const Discord = require("discord.js");
 const { DateTime } = require("luxon");
 
-module.exports.run = async (cobalt, message, args, cb) => {
+module.exports.run = async (cobalt, message, args, addCD, cb) => {
     try {
+        addCD();
         time = DateTime.fromObject({zone: 'America/New_York'}).toLocaleString(DateTime.DATETIME_MED)
         message.channel.send("It's " + time + " CBT")
     } catch (e) {

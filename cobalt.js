@@ -40,20 +40,36 @@ fs.readdir('./events/', async (err, files) => {
     });
 });
 
-cobalt.on("warn", info => console.log(info))
-cobalt.on("error", console.error)
+// cobalt.on("warn", info => console.log(info))
+// cobalt.on("error", console.error)
 
-process.on('uncaughtException', error => {
-    const errorMsg = error.stack.replace(new RegExp(`${__dirname}/`, "g"), "./");
-    console.error(`Uncaught Exception: ${errorMsg}`)
-    console.error(error)
+// process.on('uncaughtException', error => {
+//     const errorMsg = error.stack.replace(new RegExp(`${__dirname}/`, "g"), "./");
+//     console.error(`Uncaught Exception: ${errorMsg}`)
+//     console.error(error)
+//     process.exit(1)
+// })
+
+// process.on('unhandledRejection', error => {
+//     console.error(`Unhandled rejection: ${error}`)
+//     console.error(error);
+// })
+
+const { inspect } = require("util")
+process.on('unhandledRejection', (reason, promise) => {
+    cobalt.channels.cache.get('823301224798617680').send(`UnhandledRejection\nReason:\n\`\`\`\n${inspect(reason, { depth: 0 })}\n\`\`\` Promise:\n\`\`\`\n${inspect(promise, { depth: 0 })}\n\`\`\``)
+    console.error(reason, promise)
+});
+
+process.on('uncaughtException', async (err, origin) => {
+    await cobalt.channels.cache.get('823301224798617680').send(`UncaughtException\nError:\n\`\`\`\n${inspect(err, { depth: 0 })}\n\`\`\`\nType: ${inspect(origin, { depth: 0 })}`)
+    await console.error(err, origin)
     process.exit(1)
-})
+});
 
-process.on('unhandledRejection', error => {
-    console.error(`Unhandled rejection: ${error}`)
-    console.error(error);
-})
+process.on('warning', (warn) => {
+    cobalt.channels.cache.get('823301224798617680').send(`Warning\nWarn:\n\`\`\`\n${warn.name}\n${warn.message}\n\n${warn.stack}\n\`\`\``)
+});
 
 // mongoose.init();
 cobalt.login(secrets.token);

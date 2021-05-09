@@ -1,8 +1,9 @@
 const Discord = require("discord.js");
 let currency = require('../../models/currency');
 
-module.exports.run = async (cobalt, message, args, cb) => {
+module.exports.run = async (cobalt, message, args, addCD, cb) => {
     try {
+        addCD();
         let moneyEmoji = cobalt.emojis.cache.get("426859750798655489");
         currency.find({
             servers: message.guild.id

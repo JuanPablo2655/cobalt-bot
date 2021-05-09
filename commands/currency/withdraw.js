@@ -1,6 +1,6 @@
 const Discord = require("discord.js");
 
-module.exports.run = async (cobalt, message, args, cb) => {
+module.exports.run = async (cobalt, message, args, addCD, cb) => {
     try {
         let moneyEmoji = cobalt.emojis.cache.get("426859750798655489");
 
@@ -8,10 +8,12 @@ module.exports.run = async (cobalt, message, args, cb) => {
         if (!args[0]) return message.channel.send("How much money?")
         if (isNaN(Number(args[0])) && args[0] !== 'all') return message.channel.send("Please input a valid number");
         let money = Number(args[0])
-
         if (userData.deposited - money <= 0) return message.channel.send("You don\'t have that much money deposited");
         if (args[0] == 'all') money = userData.deposited
         if (money <= 0) return message.channel.send("You can't withdraw money you don\'t have");
+        
+        addCD();
+
         userData.onHand += Number(money)
         userData.deposited -= Number(money)
         userData.save().catch(err => cb(err));

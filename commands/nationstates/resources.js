@@ -1,7 +1,8 @@
 const Discord = require("discord.js");
 
-module.exports.run = async (cobalt, message, args, cb) => {
+module.exports.run = async (cobalt, message, args, addCD, cb) => {
     try {
+        addCD();
         let resEmbed = new Discord.MessageEmbed()
             .setTitle("RP resources")
             .addField('Map Generator', 'https://azgaar.github.io/Fantasy-Map-Generator/')

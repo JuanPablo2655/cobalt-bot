@@ -1,8 +1,9 @@
 const Discord = require("discord.js");
 const { DateTime } = require("luxon");
 
-module.exports.run = async (cobalt, message, args, cb) => {
+module.exports.run = async (cobalt, message, args, addCD, cb) => {
     try {
+        addCD();
         let userboi = cobalt.users.cache.get(args[0]) || message.mentions.users.last();
         if (!userboi) {
             userboi = message.author;
@@ -29,7 +30,7 @@ module.exports.run = async (cobalt, message, args, cb) => {
         let server = message.guild;
         let userinfo = new Discord.MessageEmbed()
             .setTitle('Userinfo | ' + userboi.username)
-            .setAuthor(`${server.name}`, `${server.iconURL({format: 'png'})}`)
+            .setAuthor(`${server.name}`, `${server.iconURL({format: 'png', dynamic: true})}`)
             .setThumbnail(avatar)
             .setDescription(`[Click Avatar Link](${avatar})`)
             .addField('ID', `${userid}`, true)

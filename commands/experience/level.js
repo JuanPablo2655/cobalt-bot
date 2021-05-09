@@ -1,7 +1,8 @@
 const Discord = require("discord.js");
 
-module.exports.run = async (cobalt, message, args, cb) => {
+module.exports.run = async (cobalt, message, args, addCD, cb) => {
     try {
+        addCD();
         let xp = require('../../utils/xp.js');
         let user = cobalt.users.cache.get(args[0]) || message.mentions.users.last();
         if (!user){

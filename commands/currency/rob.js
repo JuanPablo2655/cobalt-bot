@@ -2,7 +2,7 @@ const Discord = require("discord.js");
 const chooser = require("random-seed-weighted-chooser").default;
 let arrayOfWeights = [52, 18, 10, 12, 8];
 
-module.exports.run = async (cobalt, message, args, cb) => {
+module.exports.run = async (cobalt, message, args, addCD, cb) => {
     try {
         let moneyEmoji = cobalt.emojis.cache.get("426859750798655489");
         const random = chooser.chooseWeightedIndex(arrayOfWeights);
@@ -14,6 +14,8 @@ module.exports.run = async (cobalt, message, args, cb) => {
         const robbedUser = await cobalt.fetchEconUser(member.user.id);
         const randomAmount = Math.round(Math.random() * robbedUser.onHand);
         if (robbedUser.onHand <= 0) return message.channel.send(`${member.user.username} doesn\'t have CND`)
+
+        addCD();
 
         if (random === 0) {
             user.onHand += randomAmount;

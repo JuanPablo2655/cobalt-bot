@@ -1,12 +1,25 @@
 const Discord = require("discord.js");
 const fetch = require("node-fetch");
 
-module.exports.run = async (cobalt, message, args, cb) => {
+module.exports.run = async (cobalt, message, args, addCD, cb) => {
     try {
+        addCD();
         let covidEmbed = new Discord.MessageEmbed();
         let [parameter, ...fullName] = args;
 
-            if (parameter === 'state') {
+        function addCommas(nStr) {
+            nStr += '';
+            x = nStr.split('.');
+            x1 = x[0];
+            x2 = x.length > 1 ? '.' + x[1] : '';
+            var rgx = /(\d+)(\d{3})/;
+            while (rgx.test(x1)) {
+                x1 = x1.replace(rgx, '$1' + ',' + '$2');
+            }
+            return x1 + x2;
+        }
+
+        if (parameter === 'state') {
             if (!fullName) {
                 return message.channel.send("I need a correct state name. Ex. New York.")
             } else {
@@ -14,13 +27,13 @@ module.exports.run = async (cobalt, message, args, cb) => {
                 const ans = await requestState.json();
                 covidEmbed.setColor('RANDOM')
                     .setTitle(`COVID-19 Data for ${ans.state}`)
-                    .addField('Total Cases', ans.cases, true)
-                    .addField('Active Cases', ans.active, true)
-                    .addField('Total Deaths', ans.deaths, true)
-                    .addField('Today\'s deaths', ans.todayDeaths, true)
-                    .addField('Today\'s Cases', ans.todayCases, true)
-                    .addField('% of Population Infected', (ans.active / ans.population) * 100 + "%")
-                    message.channel.send(covidEmbed)
+                    .addField('Total Cases', addCommas(ans.cases), true)
+                    .addField('Active Cases', addCommas(ans.active), true)
+                    .addField('Total Deaths', addCommas(ans.deaths), true)
+                    .addField('Today\'s deaths', addCommas(ans.todayDeaths), true)
+                    .addField('Today\'s Cases', addCommas(ans.todayCases), true)
+                    .addField('% of Population Infected', ((ans.active / ans.population) * 100).toString().substring(0, 4) + "%")
+                message.channel.send(covidEmbed)
             }
         } else if (parameter === 'country') {
             if (!fullName) {
@@ -31,14 +44,14 @@ module.exports.run = async (cobalt, message, args, cb) => {
                 covidEmbed.setColor('RANDOM')
                     .setTitle(`COVID-19 Data for ${ans.country}`)
                     .setThumbnail(ans.countryInfo.flag)
-                    .addField('Total Cases', ans.cases, true)
-                    .addField('Recovered', ans.recovered, true)
-                    .addField('Active Cases', ans.active, true)
-                    .addField('Total Deaths', ans.deaths, true)
-                    .addField('Today\'s deaths', ans.todayDeaths, true)
-                    .addField('Today\'s Cases', ans.todayCases, true)
-                    .addField('Today\'s Recovered', ans.todayRecovered, true)
-                    .addField('% of Population Infected', (ans.active / ans.population) * 100 + "%")
+                    .addField('Total Cases', addCommas(ans.cases), true)
+                    .addField('Recovered', addCommas(ans.recovered), true)
+                    .addField('Active Cases', addCommas(ans.active), true)
+                    .addField('Total Deaths', addCommas(ans.deaths), true)
+                    .addField('Today\'s deaths', addCommas(ans.todayDeaths), true)
+                    .addField('Today\'s Cases', addCommas(ans.todayCases), true)
+                    .addField('Today\'s Recovered', addCommas(ans.todayRecovered), true)
+                    .addField('% of Population Infected', ((ans.active / ans.population) * 100).toString().substring(0, 4) + "%")
                 message.channel.send(covidEmbed)
             }
         } else if (!parameter === 'state' || !parameter == 'county' || !fullName) {
@@ -48,14 +61,14 @@ module.exports.run = async (cobalt, message, args, cb) => {
             const ans = await requestAll.json();
             covidEmbed.setColor('RANDOM')
                 .setTitle('COVID-19 World Data')
-                .addField('Total Cases', ans.cases, true)
-                .addField('Recovered', ans.recovered, true)
-                .addField('Active Cases', ans.active, true)
-                .addField('Total Deaths', ans.deaths, true)
-                .addField('Today\'s deaths', ans.todayDeaths, true)
-                .addField('Today\'s Cases', ans.todayCases, true)
-                .addField('Today\'s Recovered', ans.todayRecovered, true)
-                .addField('% of Population Infected', (ans.active / ans.population) * 100 + "%")
+                .addField('Total Cases', addCommas(ans.cases), true)
+                .addField('Recovered', addCommas(ans.recovered), true)
+                .addField('Active Cases', addCommas(ans.active), true)
+                .addField('Total Deaths', addCommas(ans.deaths), true)
+                .addField('Today\'s deaths', addCommas(ans.todayDeaths), true)
+                .addField('Today\'s Cases', addCommas(ans.todayCases), true)
+                .addField('Today\'s Recovered', addCommas(ans.todayRecovered), true)
+                .addField('% of Population Infected', ((ans.active / ans.population) * 100).toString().substring(0, 4) + "%")
             message.channel.send(covidEmbed)
         }
     } catch (e) {

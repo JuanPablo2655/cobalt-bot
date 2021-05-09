@@ -1,8 +1,9 @@
 const Discord = require("discord.js");
 
-module.exports.run = async (cobalt, message, args, cb) => {
+module.exports.run = async (cobalt, message, args, addCD, cb) => {
     try {
         message.channel.send('Pong').catch(e => cb(e));
+        addCD();
     } catch (e) {
         cb(e)
     }

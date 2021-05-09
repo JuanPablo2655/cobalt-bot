@@ -1,7 +1,7 @@
 const Discord = require("discord.js");
 let nations = require('../../models/nationstates.js');
 
-module.exports.run = async (cobalt, message, args, cb) => {
+module.exports.run = async (cobalt, message, args, addCD, cb) => {
     try {
         let [...nationName] = args;
         // // const dmChannel = await message.author.createDM();
@@ -36,6 +36,7 @@ module.exports.run = async (cobalt, message, args, cb) => {
                 }
             })
         }
+        addCD();
     } catch (e) {
         cb(e)
     }

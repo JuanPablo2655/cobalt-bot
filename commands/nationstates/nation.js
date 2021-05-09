@@ -1,8 +1,9 @@
 const Discord = require("discord.js");
 let nations = require('../../models/nationstates.js');
 
-module.exports.run = async (cobalt, message, args, cb) => {
+module.exports.run = async (cobalt, message, args, addCD, cb) => {
     try {
+        addCD();
         const fetch = require('node-fetch');
         const parseString = require('xml2js').parseString;
         let [...name] = args;

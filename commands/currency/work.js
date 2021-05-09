@@ -3,8 +3,9 @@ let currency = require('../../models/currency');
 const { DateTime } = require("luxon");
 const prettyMilliseconds = require('pretty-ms');
 
-module.exports.run = async (cobalt, message, args, cb) => {
+module.exports.run = async (cobalt, message, args, addCD, cb) => {
     try {
+        addCD();
         let workEmbed = new Discord.MessageEmbed();
         let moneyEmoji = cobalt.emojis.cache.get("426859750798655489");
         let workEntries = [`${message.author.username} got his forklift certification, his pay:`, `${message.author.username} is based:`, `${message.author.username} drone strike'd children in Yemen for:`, `${message.author.username} works at Tencent for:`, `${message.author.username} had an epic poggers moment and got:`, `${message.author.username} sold some cheese and got:`, `${message.author.username} took out the alien form among us for: `]

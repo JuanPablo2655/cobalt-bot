@@ -3,8 +3,9 @@ const fs = require("fs");
 const path = require('path');
 const prettyMilliseconds = require('pretty-ms');
 
-module.exports.run = async (cobalt, message, args, cb) => {
+module.exports.run = async (cobalt, message, args, addCD, cb) => {
     try {
+        addCD();
         const categories = fs.readdirSync('./commands/').filter(file => fs.statSync(path.join('./commands/', file)).isDirectory());
         let helpEmbed = new Discord.MessageEmbed();
         helpEmbed.setTimestamp()

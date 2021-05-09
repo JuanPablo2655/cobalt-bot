@@ -1,6 +1,6 @@
 const Discord = require("discord.js");
 
-module.exports.run = async (cobalt, message, args, cb) => {
+module.exports.run = async (cobalt, message, args, addCD, cb) => {
     try {
         let arr = message.content.split(" ");
         delete arr[0];
@@ -8,8 +8,9 @@ module.exports.run = async (cobalt, message, args, cb) => {
         let choice = (arr.join(" ")).toLowerCase().trim();
         let options = ['rock', 'paper', 'scissors'];
 
-        if (!options.includes(choice))
-            return message.channel.send("Please choose either 'Rock', 'Paper', or 'Scissors'");
+        if (!options.includes(choice)) return message.channel.send("Please choose either 'Rock', 'Paper', or 'Scissors'");
+
+        addCD();
 
         let computer = options[Math.round(Math.random() * (options.length - 1))];
 

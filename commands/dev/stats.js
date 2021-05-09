@@ -2,7 +2,7 @@ const { version } = require("discord.js");
 const { MessageEmbed } = require("discord.js");
 const { Duration } = require("luxon");
 
-module.exports.run = async (cobalt, message, args, cb) => {
+module.exports.run = async (cobalt, message, args, addCD, cb) => {
     try {
         let uptime = Duration.fromMillis(cobalt.uptime).toFormat('dd:hh:mm:ss')
         if (!args[0]) {
