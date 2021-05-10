@@ -10,20 +10,22 @@ module.exports.run = async (cobalt, message, args, addCD, cb) => {
         }
     
         let level = await xp.get(user.id);
+        let xpPos = require('../../models/levels');
+        let pos = await xpPos.find({"totalXp": { "$gt" : level.totalXp}}).countDocuments()+1;
+
+        let xpPercent = (level.xp/xp.nextLevel(level.lvl))*100
     
         let levelEmbed = new Discord.MessageEmbed()
-            .setAuthor('Cobalt Network', message.guild.iconURL({format: 'png'}))
+            .setAuthor(`${message.guild.name}`, user.displayAvatarURL({format: 'png'}))
             .setTitle(`${user.username}'s level`)
             .setColor('RANDOM')
             if (!level) {
-                levelEmbed.addField('level', '0', true)
-                levelEmbed.addField('xp', '0/100', true)
+                levelEmbed.setDescription(`**Level**: 0\n**Experience**: 0/100 \`0.0%\``)
             } else {
-                levelEmbed.addField('level', level.lvl, true)
-                levelEmbed.addField('xp', level.xp+"/"+xp.nextLevel(level.lvl), true)
+                levelEmbed.setDescription(`**Level**: ${level.lvl}\n**Experience**: ${level.xp}/${xp.nextLevel(level.lvl)} \`${xpPercent.toString().substring(0, 4)}%\``)
             }
-            levelEmbed.setFooter(`${message.author.username}`, `${message.author.displayAvatarURL({format: 'png'})}`)
-            levelEmbed.setTimestamp()
+            levelEmbed.setFooter(`Leaderboard Rank: ${pos}`)
+            // levelEmbed.setTimestamp()
         message.channel.send(levelEmbed);
     } catch (e) {
         cb(e)

@@ -15,16 +15,14 @@ module.exports.run = async (cobalt, message, args, addCD, cb) => {
         bal.netWorth = bal.onHand + bal.deposited; // just to fix any errors on any other commands
         await bal.save();
 
+        let bankPercent = (bal.deposited/bal.bankSpace)*100
+
         let balanceEmbed = new Discord.MessageEmbed()
-            .setAuthor('Cobalt Network', message.guild.iconURL({format: 'png'}))
+            .setAuthor(`${message.guild.name}`, member.user.displayAvatarURL({format: 'png'}))
             .setTitle(`${member.user.username}'s balance`)
-            .setThumbnail(member.user.displayAvatarURL({format: 'png'}))
             .setColor('RANDOM')
+            .setDescription(`**Cash**: ₡${bal.onHand}\n**Bank**: ₡${bal.deposited} / ₡${bal.bankSpace} \`${bankPercent.toString().substring(0, 4)}%\`\n**Net Worth**: ₡${bal.netWorth}\n**Bounty**: ₡${bal.bounty}`)
             .setFooter(`${message.author.username}`, `${message.author.displayAvatarURL({format: 'png'})}`)
-            .addField('Cash', `₡${bal.onHand}`, true)
-            .addField('Bank', `₡${bal.deposited}/₡${bal.bankSpace}`, true)
-            .addField('Net Worth', `₡${bal.netWorth}`, true)
-            .addField('Bounty', `₡${bal.bounty}`, true)
             .setTimestamp()
         message.channel.send(balanceEmbed)
     } catch (e) {
