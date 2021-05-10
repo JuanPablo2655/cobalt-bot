@@ -17,7 +17,7 @@ module.exports.run = async (cobalt, message, args, addCD, cb) => {
         let profileEmbed = new Discord.MessageEmbed()
             .setAuthor(member.user.username, member.user.displayAvatarURL({format: 'png'}))
             .addField("Level", `${exp.lvl}`, true)
-            .addField("Experience", `${exp.xp}/${xp.nextLevel(exp.lvl)} \`${xpPercent.toString().substring(0, 4)}%\`\n**Leaderboard Rank**: ${pos}`, true)
+            .addField("Experience", `${exp.xp}/${xp.nextLevel(exp.lvl)} \`${xpPercent.toString().substring(0, 4)}%\`\n**Rank**: ${pos}`, true)
             .addField("Money", `**Cash**: ₡${bal.onHand}\n**Bank**: ₡${bal.deposited} / ₡${bal.bankSpace} \`${bankPercent.toString().substring(0, 4)}%\`\n**Net**: ₡${bal.netWorth}\n**Bounty**: ₡${bal.bounty}`, true)
         message.channel.send(profileEmbed)
     } catch (e) {
