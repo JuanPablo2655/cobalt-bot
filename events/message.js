@@ -28,7 +28,7 @@ module.exports = async (cobalt, message) => {
     //     message.author.send('Hey! That word has been banned, please don\'t use it!');
     // }
 
-    if (!messageDAT.startsWith(config.prefix)) {
+    if (!messageDAT.toLowerCase().startsWith(config.prefix)) {
         if (levelMode == true) {
             return await manageUser(message);
         } else return

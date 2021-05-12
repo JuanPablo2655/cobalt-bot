@@ -1,4 +1,4 @@
-const { Collection, Intents } = require('discord.js');
+const { Collection, Intents, WebhookClient } = require('discord.js');
 const cobaltClass = require('./utils/cobaltClient');
 const cobalt = new cobaltClass({ws: { intents: Intents.ALL }, partials: ['MESSAGE', 'CHANNEL', 'REACTION', 'USER', 'GUILD_MEMBER']});
 // const mongoose = require('./utils/mongoose.js');
@@ -73,6 +73,13 @@ process.on('warning', (warn) => {
 
 // mongoose.init();
 cobalt.login(secrets.token);
+
+webhook = new WebhookClient(secrets.webhookID, secrets.webhookToken)
+
+cobalt.on("disconnect", () => webhook.send("Bot is disconnecting..."))
+	.on("reconnecting", () => webhook.send("Bot reconnecting..."))
+	.on("error", (e) => webhook.send(e))
+	.on("warn", (info) => webhook.send(info));
 
 // exports.config = config;
 exports.cobalt = cobalt;

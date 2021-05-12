@@ -1,5 +1,4 @@
 const { MessageAttachment } = require("discord.js");
-const fs = require('fs');
 const { Gay } = require("discord-image-generation")
 
 module.exports.run = async (cobalt, message, args, addCD, cb) => {
