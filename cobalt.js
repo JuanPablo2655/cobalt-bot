@@ -1,4 +1,4 @@
-const { Collection, Intents, WebhookClient } = require('discord.js');
+const { Collection, Intents, WebhookClient, MessageEmbed } = require('discord.js');
 const cobaltClass = require('./utils/cobaltClient');
 const cobalt = new cobaltClass({ws: { intents: Intents.ALL }, partials: ['MESSAGE', 'CHANNEL', 'REACTION', 'USER', 'GUILD_MEMBER']});
 // const mongoose = require('./utils/mongoose.js');
@@ -76,10 +76,22 @@ cobalt.login(secrets.token);
 
 webhook = new WebhookClient(secrets.webhookID, secrets.webhookToken)
 
-cobalt.on("disconnect", () => webhook.send("Bot is disconnecting..."))
-	.on("reconnecting", () => webhook.send("Bot reconnecting..."))
-	.on("error", (e) => webhook.send(e))
-	.on("warn", (info) => webhook.send(info));
+cobalt.on("disconnect", () => {
+    let disEmbed = new MessageEmbed()
+        .setTitle("Disconnected")
+        .setDescription(`Cobalt Network has disconnected from the Discord API.`)
+        .setColor("#d62424")
+        .setTimestamp()
+    webhook.send(disEmbed)
+});
 
+cobalt.on("reconnecting", () => {
+    let reconEmbed = new MessageEmbed()
+        .setTitle("Disconnected")
+        .setDescription(`Cobalt Network is reconnecting to the Discord API.`)
+        .setColor("#00a1ff")
+        .setTimestamp()
+    webhook.send(reconEmbed)
+});
 // exports.config = config;
 exports.cobalt = cobalt;
