@@ -101,7 +101,7 @@ process.on('warning', warn => {
 // mongoose.init();
 cobalt.login(secrets.token);
 
-webhook = new WebhookClient(secrets.webhookID, secrets.webhookToken);
+webhook = new WebhookClient({ url: secrets.webhookURL });
 
 cobalt.on('disconnect', () => {
     let disEmbed = new MessageEmbed()
