@@ -1,4 +1,4 @@
-const { Permissions } = require("discord.js");
+const { Permissions } = require('discord.js');
 
 module.exports.run = async (cobalt, message, args, addCD, cb) => {
     let userBan = cobalt.users.cache.get(args[0]) || message.mentions.users.first();
@@ -10,14 +10,14 @@ module.exports.run = async (cobalt, message, args, addCD, cb) => {
                     return message.reply({ content: "You can't ban someoneon ranked the same or higher than you" });
                 await member.ban({
                     days: days || 0,
-                    reason: reason || "fuck you, to the ranch dimension",
+                    reason: reason || 'fuck you, to the ranch dimension',
                 });
                 message.channel.send({ content: `${userBan.displayName} has been sent to the ranch dimension` });
             } catch {
-                message.channel.send({ content: "I do not have permission to ban " + userBan.displayName });
+                message.channel.send({ content: 'I do not have permission to ban ' + userBan.displayName });
             }
         } else {
-            message.reply({ content: "you can not ban " + userBan.displayName });
+            message.reply({ content: 'you can not ban ' + userBan.displayName });
         }
     } catch (e) {
         cb(e);
@@ -32,7 +32,7 @@ exports.conf = {
 };
 
 exports.help = {
-    name: "ban",
-    description: "ban someone from the server",
-    usage: "ban [userID] [reason]",
+    name: 'ban',
+    description: 'ban someone from the server',
+    usage: 'ban [userID] [reason]',
 };

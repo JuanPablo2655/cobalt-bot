@@ -1,10 +1,10 @@
-const Discord = require("discord.js");
-const chooser = require("random-seed-weighted-chooser").default;
+const Discord = require('discord.js');
+const chooser = require('random-seed-weighted-chooser').default;
 let arrayOfWeights = [52, 18, 10, 12, 8];
 
 module.exports.run = async (cobalt, message, args, addCD, cb) => {
     try {
-        let moneyEmoji = cobalt.emojis.cache.get("426859750798655489");
+        let moneyEmoji = cobalt.emojis.cache.get('426859750798655489');
         const random = chooser.chooseWeightedIndex(arrayOfWeights);
 
         const user = await cobalt.fetchEconUser(message.author.id);
@@ -12,9 +12,9 @@ module.exports.run = async (cobalt, message, args, addCD, cb) => {
             message.mentions.members.first() ||
             message.guild.members.cache.get(args[0]) ||
             message.guild.members.cache.find(
-                (member) => member.user.username === args.slice(0).join(" ") || member.user.username === args[0]
+                member => member.user.username === args.slice(0).join(' ') || member.user.username === args[0],
             );
-        if (!member || !args[0]) return message.channel.send({ content: "Please pick someone to rob" });
+        if (!member || !args[0]) return message.channel.send({ content: 'Please pick someone to rob' });
         if (member.user.id == message.author.id) return message.channel.send({ content: "Can't rob yourself" });
         const robbedUser = await cobalt.fetchEconUser(member.user.id);
         const randomAmount = Math.round(Math.random() * robbedUser.onHand);
@@ -82,7 +82,7 @@ exports.conf = {
 };
 
 exports.help = {
-    name: "rob",
-    description: "rob someone",
-    usage: "rob [user]",
+    name: 'rob',
+    description: 'rob someone',
+    usage: 'rob [user]',
 };

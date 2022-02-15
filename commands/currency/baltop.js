@@ -1,45 +1,45 @@
-const Discord = require("discord.js");
-let currency = require("../../models/currency");
+const Discord = require('discord.js');
+let currency = require('../../models/currency');
 
 module.exports.run = async (cobalt, message, args, addCD, cb) => {
     try {
         addCD();
-        let moneyEmoji = cobalt.emojis.cache.get("426859750798655489");
+        let moneyEmoji = cobalt.emojis.cache.get('426859750798655489');
         currency
             .find({
                 servers: message.guild.id,
             })
-            .sort([["netWorth", "descending"]])
+            .sort([['netWorth', 'descending']])
             .exec((err, res) => {
                 if (err) console.log(err);
-                let balEmbed = new Discord.MessageEmbed().setTitle("Top 10 most rich users");
+                let balEmbed = new Discord.MessageEmbed().setTitle('Top 10 most rich users');
                 if (res.length === 0) {
-                    balEmbed.setColor("RED");
-                    balEmbed.addField("No data found", "Looks like a dead server to me");
+                    balEmbed.setColor('RED');
+                    balEmbed.addField('No data found', 'Looks like a dead server to me');
                 } else if (res.length < 10) {
-                    balEmbed.setColor("RANDOM");
+                    balEmbed.setColor('RANDOM');
                     for (i = 0; i < res.length; i++) {
                         if (res[i].netWorth == 0) continue;
-                        let member = message.guild.members.cache.get(res[i].userID) || "User Left";
-                        if (member === "User Left") {
+                        let member = message.guild.members.cache.get(res[i].userID) || 'User Left';
+                        if (member === 'User Left') {
                             balEmbed.addField(`${i + 1}. ${member}`, `**Net Worth**: ₡${res[i].netWorth}`);
                         } else {
                             balEmbed.addField(
                                 `${i + 1}. ${member.user.username}`,
-                                `**Net Worth**: ₡${res[i].netWorth}`
+                                `**Net Worth**: ₡${res[i].netWorth}`,
                             );
                         }
                     }
                 } else {
                     for (i = 0; i < 10; i++) {
                         if (res[i].netWorth == 0) continue;
-                        let member = message.guild.members.cache.get(res[i].userID) || "User Left";
-                        if (member === "User Left") {
+                        let member = message.guild.members.cache.get(res[i].userID) || 'User Left';
+                        if (member === 'User Left') {
                             balEmbed.addField(`${i + 1}. ${member}`, `**Net Worth**: ₡${res[i].netWorth}`);
                         } else {
                             balEmbed.addField(
                                 `${i + 1}. ${member.user.username}`,
-                                `**Net Worth**: ₡${res[i].netWorth}`
+                                `**Net Worth**: ₡${res[i].netWorth}`,
                             );
                         }
                     }
@@ -60,7 +60,7 @@ exports.conf = {
 };
 
 exports.help = {
-    name: "baltop",
-    description: "top 10 most rich people in the server",
-    usage: "baltop",
+    name: 'baltop',
+    description: 'top 10 most rich people in the server',
+    usage: 'baltop',
 };

@@ -1,5 +1,5 @@
-const Discord = require("discord.js");
-const { DateTime } = require("luxon");
+const Discord = require('discord.js');
+const { DateTime } = require('luxon');
 
 module.exports.run = async (cobalt, message, args, addCD, cb) => {
     try {
@@ -9,13 +9,17 @@ module.exports.run = async (cobalt, message, args, addCD, cb) => {
             userboi = message.author;
         }
         let memberboi = await message.guild.members.fetch(userboi);
-        let created = DateTime.fromISO(userboi.createdAt.toISOString()).setZone("America/New_York").toLocaleString(DateTime.DATETIME_MED);
-        let joined = DateTime.fromISO(memberboi.joinedAt.toISOString()).setZone("America/New_York").toLocaleString(DateTime.DATETIME_MED);
+        let created = DateTime.fromISO(userboi.createdAt.toISOString())
+            .setZone('America/New_York')
+            .toLocaleString(DateTime.DATETIME_MED);
+        let joined = DateTime.fromISO(memberboi.joinedAt.toISOString())
+            .setZone('America/New_York')
+            .toLocaleString(DateTime.DATETIME_MED);
         let game = userboi.presence.game ? userboi.presence.game.name : 'None';
         let nickname = !memberboi.nickname ? 'None' : memberboi.nickname;
-        let avatar = userboi.displayAvatarURL({format: 'png'});
+        let avatar = userboi.displayAvatarURL({ format: 'png' });
         let userid = userboi.id;
-        let tag = userboi.tag
+        let tag = userboi.tag;
         let isBot = userboi.bot ? 'Yes' : 'No';
         let status = '';
         if (userboi.presence.status === 'online') {
@@ -30,7 +34,7 @@ module.exports.run = async (cobalt, message, args, addCD, cb) => {
         let server = message.guild;
         let userinfo = new Discord.MessageEmbed()
             .setTitle('Userinfo | ' + userboi.username)
-            .setAuthor(`${server.name}`, `${server.iconURL({format: 'png', dynamic: true})}`)
+            .setAuthor({ name: `${server.name}`, iconURL: server.iconURL({ format: 'png', dynamic: true }) })
             .setThumbnail(avatar)
             .setDescription(`[Click Avatar Link](${avatar})`)
             .addField('ID', `${userid}`, true)
@@ -40,24 +44,24 @@ module.exports.run = async (cobalt, message, args, addCD, cb) => {
             .addField('Bot?', `${isBot}`, true)
             .addField('Created at', `${created}`, true)
             .addField('Joined server at', `${joined}`, true)
-            .setFooter(`Requested by ${message.author.tag}`, `${avatar}`)
+            .setFooter({ text: `Requested by ${message.author.tag}`, iconURL: avatar })
             .setTimestamp()
             .setColor('RANDOM');
-        message.channel.send(userinfo)
+        message.channel.send({ embeds: [userinfo] });
     } catch (e) {
-        cb(e)
+        cb(e);
     }
-}
+};
 
 exports.conf = {
     enabled: true,
     ownerOnly: false,
     cooldown: 2,
-    aliases: []
-}
+    aliases: [],
+};
 
 exports.help = {
-    name: "userinfo",
-    description: "Displays info about a user",
-    usage: "userinfo [user]"
-}
+    name: 'userinfo',
+    description: 'Displays info about a user',
+    usage: 'userinfo [user]',
+};

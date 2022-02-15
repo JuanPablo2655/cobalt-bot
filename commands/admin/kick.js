@@ -1,4 +1,4 @@
-const { Permissions } = require("discord.js");
+const { Permissions } = require('discord.js');
 
 module.exports.run = async (cobalt, message, args, addCD, cb) => {
     try {
@@ -9,14 +9,14 @@ module.exports.run = async (cobalt, message, args, addCD, cb) => {
                 if (userKick.permissions.has(Permissions.FLAGS.KICK_MEMBERS))
                     return message.reply({ content: "You can't kick someoneon ranked the same or higher than you" });
                 await member.kick({
-                    reason: reason || "fuck you, to the ranch dimension",
+                    reason: reason || 'fuck you, to the ranch dimension',
                 });
                 message.channel.send({ content: `${userKick.displayName} has been sent to the ranch dimension` });
             } catch {
-                message.channel.send({ content: "I do not have permission to kick " + userKick.displayName });
+                message.channel.send({ content: 'I do not have permission to kick ' + userKick.displayName });
             }
         } else {
-            message.reply({ content: "you can not kick " + userKick.displayName });
+            message.reply({ content: 'you can not kick ' + userKick.displayName });
         }
     } catch (e) {
         cb(e);
@@ -31,7 +31,7 @@ exports.conf = {
 };
 
 exports.help = {
-    name: "kick",
-    description: "kick someone from the server",
-    usage: "kick [userID]",
+    name: 'kick',
+    description: 'kick someone from the server',
+    usage: 'kick [userID]',
 };

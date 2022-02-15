@@ -1,15 +1,15 @@
-const Discord = require("discord.js");
-let currency = require("../../models/currency");
+const Discord = require('discord.js');
+let currency = require('../../models/currency');
 
 module.exports.run = async (cobalt, message, args, addCD, cb) => {
     try {
         addCD();
-        let moneyEmoji = cobalt.emojis.cache.get("426859750798655489");
+        let moneyEmoji = cobalt.emojis.cache.get('426859750798655489');
         const member =
             message.mentions.members.first() ||
             message.guild.members.cache.get(args[0]) ||
             message.guild.members.cache.find(
-                (member) => member.user.username === args.slice(0).join(" ") || member.user.username === args[0]
+                member => member.user.username === args.slice(0).join(' ') || member.user.username === args[0],
             ) ||
             message.member;
 
@@ -24,17 +24,17 @@ module.exports.run = async (cobalt, message, args, addCD, cb) => {
         let bankPercent = (bal.deposited / bal.bankSpace) * 100;
 
         let balanceEmbed = new Discord.MessageEmbed()
-            .setAuthor({ name: `${message.guild.name}`, iconURL: member.user.displayAvatarURL({ format: "png" }) })
+            .setAuthor({ name: `${message.guild.name}`, iconURL: member.user.displayAvatarURL({ format: 'png' }) })
             .setTitle(`${member.user.username}'s balance`)
-            .setColor("RANDOM")
+            .setColor('RANDOM')
             .setDescription(
                 `**Cash**: ₡${bal.onHand}\n**Bank**: ₡${bal.deposited} / ₡${bal.bankSpace} \`${bankPercent
                     .toString()
-                    .substring(0, 4)}%\`\n**Net Worth**: ₡${bal.netWorth}\n**Bounty**: ₡${bal.bounty}`
+                    .substring(0, 4)}%\`\n**Net Worth**: ₡${bal.netWorth}\n**Bounty**: ₡${bal.bounty}`,
             )
             .setFooter({
                 text: `${message.author.username}`,
-                iconURL: `${message.author.displayAvatarURL({ format: "png" })}`,
+                iconURL: `${message.author.displayAvatarURL({ format: 'png' })}`,
             })
             .setTimestamp();
         message.channel.send({ embeds: [balanceEmbed] });
@@ -47,11 +47,11 @@ exports.conf = {
     enabled: true,
     ownerOnly: false,
     cooldown: 1,
-    aliases: ["bal"],
+    aliases: ['bal'],
 };
 
 exports.help = {
-    name: "balance",
-    description: "check your balance or someone else",
-    usage: "balance [user]",
+    name: 'balance',
+    description: 'check your balance or someone else',
+    usage: 'balance [user]',
 };

@@ -1,5 +1,5 @@
-const Discord = require("discord.js");
-let currency = require("../../models/currency");
+const Discord = require('discord.js');
+let currency = require('../../models/currency');
 
 module.exports.run = async (cobalt, message, args, addCD, cb) => {
     try {
@@ -17,7 +17,7 @@ exports.conf = {
 };
 
 exports.help = {
-    name: "bank",
-    description: "bank",
-    usage: "bank",
+    name: 'bank',
+    description: 'bank',
+    usage: 'bank',
 };
