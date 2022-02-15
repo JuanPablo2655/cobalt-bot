@@ -4,7 +4,7 @@ class ItemManager {
     contructor() {
         this.items = items;
     }
-    
+
     find(item = '') {
         const found = items.find(x => x.id === item);
         if (!found) return false;
@@ -15,7 +15,7 @@ class ItemManager {
         const found = items.find(x => x.id === item);
         if (!found) return false;
         if (!found.canUse) return false;
-        return true; 
+        return true;
     }
 
     list() {

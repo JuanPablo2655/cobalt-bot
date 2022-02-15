@@ -1,14 +1,14 @@
-const { Client } = require("discord.js");
-const mongoose = require("mongoose");
-let currency = require("../models/currency");
-let stats = require("../models/stats");
-const itemManager = require("./itemManager");
+const { Client } = require('discord.js');
+const mongoose = require('mongoose');
+let currency = require('../models/currency');
+let stats = require('../models/stats');
+const itemManager = require('./itemManager');
 
 class cobaltClass extends Client {
     constructor() {
         super();
-        this.config = require("../config.json");
-        this.secrets = require("../secrets.json");
+        this.config = require('../config.json');
+        this.secrets = require('../secrets.json');
         const dbOptions = {
             // useNewUrlParser: true,
             autoIndex: false,
@@ -22,19 +22,19 @@ class cobaltClass extends Client {
 
         mongoose.connect(this.secrets.databasePass, dbOptions);
 
-        mongoose.set("useFindAndModify", false);
+        mongoose.set('useFindAndModify', false);
         mongoose.Promise = global.Promise;
 
-        mongoose.connection.on("connected", () => {
-            console.log("[Mongoose]\tMongoose connection successfully opened");
+        mongoose.connection.on('connected', () => {
+            console.log('[Mongoose]\tMongoose connection successfully opened');
         });
 
-        mongoose.connection.on("err", (err) => {
+        mongoose.connection.on('err', err => {
             console.error(`[Mongoose]\tMongoose connection error: \n ${err.stack}`);
         });
 
-        mongoose.connection.on("disconnected", () => {
-            console.log("[Mongoose]\tMongoose connection disconnected");
+        mongoose.connection.on('disconnected', () => {
+            console.log('[Mongoose]\tMongoose connection disconnected');
         });
         this.items = new itemManager();
     }

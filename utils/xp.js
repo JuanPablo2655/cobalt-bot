@@ -1,5 +1,5 @@
 exports.add = async function (xpToAdd, message) {
-    let levels = require("../models/levels.js");
+    let levels = require('../models/levels.js');
     levels.findOne(
         {
             userID: message.author.id,
@@ -15,7 +15,7 @@ exports.add = async function (xpToAdd, message) {
                     lvl: 0,
                     totalXp: xpToAdd,
                 });
-                newLevel.save().catch((err) => console.log(err));
+                newLevel.save().catch(err => console.log(err));
             } else {
                 const nextLevel = exports.nextLevel(res.lvl);
                 let futureXP = res.xp + xpToAdd;
@@ -31,9 +31,9 @@ exports.add = async function (xpToAdd, message) {
                     futureXP -= nextLevel;
                     message.channel
                         .send({
-                            content: "Congratulations <@" + res.userID + "> you are now level " + futureLevel + "!",
+                            content: 'Congratulations <@' + res.userID + '> you are now level ' + futureLevel + '!',
                         })
-                        .then((message) => {
+                        .then(message => {
                             setTimeout(() => {
                                 message.delete();
                             }, 10000);
@@ -42,15 +42,15 @@ exports.add = async function (xpToAdd, message) {
                 res.lvl = futureLevel;
                 res.xp = futureXP;
                 res.totalXp = futureLevel * nextLevel + futureXP;
-                res.save().catch((err) => console.log(err));
+                res.save().catch(err => console.log(err));
             }
-        }
+        },
     );
 };
 
 exports.get = function (userID) {
-    return new Promise((resolve) => {
-        let level = require("../models/levels.js");
+    return new Promise(resolve => {
+        let level = require('../models/levels.js');
         level.findOne({ userID: userID }, function (err, res) {
             if (err) console.log(err);
             resolve(res);
