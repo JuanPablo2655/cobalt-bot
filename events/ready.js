@@ -7,7 +7,7 @@ module.exports = cobalt => {
         .setDescription(`Cobalt Network is ready in \`${cobalt.guilds.cache.size}\` servers.`)
         .setColor('#1cc936')
         .setTimestamp();
-    webhook.send({ embeds: readyEmbed });
+    webhook.send({ embeds: [readyEmbed] });
     console.log('[Cobalt]\tOnline!');
-    cobalt.user.setActivity('Samuel', { type: 'WATCHING' });
+    cobalt.user.setActivity('Breaking Bad ', { type: 'WATCHING' });
 };

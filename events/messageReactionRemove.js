@@ -24,9 +24,9 @@ module.exports = async (cobalt, reaction, user) => {
     if (message.content == '') {
         reactionEmbed.setImage(message.attachments.first().url);
     } else if (message.attachments.first() == undefined) {
-        reactionEmbed.addField('Message', message);
+        reactionEmbed.addField('Message', message.content);
     } else {
-        reactionEmbed.addField('Message', message);
+        reactionEmbed.addField('Message', message.content);
         reactionEmbed.setImage(message.attachments.first().url);
     }
     reactionEmbed.setFooter({ text: 'Message ID: ' + message.id });

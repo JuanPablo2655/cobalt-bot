@@ -5,8 +5,8 @@ let stats = require('../models/stats');
 const itemManager = require('./itemManager');
 
 class cobaltClass extends Client {
-    constructor() {
-        super();
+    constructor(options) {
+        super(options);
         this.config = require('../config.json');
         this.secrets = require('../secrets.json');
         const dbOptions = {
@@ -22,7 +22,7 @@ class cobaltClass extends Client {
 
         mongoose.connect(this.secrets.databasePass, dbOptions);
 
-        mongoose.set('useFindAndModify', false);
+        // mongoose.set('useFindAndModify', false);
         mongoose.Promise = global.Promise;
 
         mongoose.connection.on('connected', () => {

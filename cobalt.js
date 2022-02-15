@@ -74,20 +74,20 @@ fs.readdir('./events/', async (err, files) => {
 
 const { inspect } = require('node:util');
 process.on('unhandledRejection', (reason, promise) => {
-    cobalt.channels.cache.get('823301224798617680').send(
-        `UnhandledRejection\nReason:\n\`\`\`\n${inspect(reason, {
+    cobalt.channels.cache.get('823301224798617680').send({
+        content: `UnhandledRejection\nReason:\n\`\`\`\n${inspect(reason, {
             depth: 0,
         })}\n\`\`\` Promise:\n\`\`\`\n${inspect(promise, { depth: 0 })}\n\`\`\``,
-    );
+    });
     console.error(reason, promise);
 });
 
 process.on('uncaughtException', async (err, origin) => {
-    await cobalt.channels.cache.get('823301224798617680').send(
-        `UncaughtException\nError:\n\`\`\`\n${inspect(err, {
+    await cobalt.channels.cache.get('823301224798617680').send({
+        content: `UncaughtException\nError:\n\`\`\`\n${inspect(err, {
             depth: 0,
         })}\n\`\`\`\nType: ${inspect(origin, { depth: 0 })}`,
-    );
+    });
     await console.error(err, origin);
     process.exit(1);
 });

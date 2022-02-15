@@ -10,7 +10,7 @@ module.exports = async (cobalt, message) => {
     let deletedMessage = new Discord.MessageEmbed()
         .setTitle('Message deleted')
         .setAuthor({ name: author.username, iconURL: avatar })
-        .addField('Channel', message.channel)
+        .addField('Channel', `${message.channel}`)
         .setColor('#d62424')
         .setFooter({ text: 'Message ID: ' + message.id })
         .setTimestamp();
