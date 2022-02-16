@@ -34,7 +34,7 @@ module.exports = async (cobalt, reaction, user) => {
     if (emoji == undefined) {
         reactionEmbed.addField('Reaction', emojiName);
     } else {
-        reactionEmbed.addField('Reaction', emoji);
+        reactionEmbed.addField('Reaction', `${emoji}`);
     }
     channel.send({ embeds: [reactionEmbed] });
 };
