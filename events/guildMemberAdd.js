@@ -9,13 +9,13 @@ module.exports = (cobalt, member) => {
     let newMember = new Discord.MessageEmbed()
         .setTitle('New Cobaltia citizen has joined')
         .setAuthor({ name: member.user.username, iconURL: member.user.displayAvatarURL({ format: 'png' }) })
-        .addField('Member count', member.guild.memberCount)
+        .addField('Member count', `${member.guild.memberCount}`)
         .setColor('#1cc936')
         .setFooter({ text: 'User ID: ' + member.user.id })
         .setTimestamp();
     log.send({ embeds: [newMember] });
 
     welcome.send({
-        context: `Welcome, ${member.user.username} to ${member.guild.name}. Please wait while the Directors administers your member role.`,
+        content: `Welcome, ${member.user.username} to ${member.guild.name}. Please wait while the Directors administers your member role.`,
     });
 };

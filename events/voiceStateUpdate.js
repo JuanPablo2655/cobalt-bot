@@ -21,8 +21,8 @@ module.exports = async (cobalt, oldState, newState) => {
         channel.send({ embeds: [voiceEmbed] });
     } else if (oldState.channel && newState.channel && oldState.channel !== newState.channel) {
         voiceEmbed.setTitle('User switched');
-        voiceEmbed.addField('From', `${oldUserChannel.name}`, true);
-        voiceEmbed.addField('To', `${newUserChannel.name}`, true);
+        voiceEmbed.addField('From', `${oldState.channel}`, true);
+        voiceEmbed.addField('To', `${newState.channel}`, true);
         channel.send({ embeds: [voiceEmbed] });
     }
 };

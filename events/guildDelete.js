@@ -8,7 +8,7 @@ module.exports = (cobalt, guild) => {
         .setTitle('Old server')
         .setAuthor({ name: guild.name, iconURL: avatar })
         .setThumbnail(avatar)
-        .addField('member count', guild.memberCount)
+        .addField('member count', `${guild.memberCount}`)
         .setColor('#d62424')
         .setFooter({ text: 'guild ID: ' + guild.id })
         .setTimestamp();

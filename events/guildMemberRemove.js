@@ -7,7 +7,7 @@ module.exports = (cobalt, member) => {
     let newMember = new Discord.MessageEmbed()
         .setTitle('Old Cobaltia citizen left')
         .setAuthor({ name: member.user.username, iconURL: member.user.displayAvatarURL({ format: 'png' }) })
-        .addField('member count', member.guild.memberCount)
+        .addField('member count', `${member.guild.memberCount}`)
         .setColor('d62424')
         .setFooter({ text: 'User ID: ' + member.user.id })
         .setTimestamp();
