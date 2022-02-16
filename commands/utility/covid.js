@@ -8,7 +8,7 @@ module.exports.run = async (cobalt, message, args, addCD, cb) => {
         let [parameter, ...fullName] = args;
 
         function addCommas(nStr) {
-            Number.parseFloat(String(nStr)).toLocaleString('en-US');
+            return Number.parseFloat(String(nStr)).toLocaleString('en-US');
         }
 
         if (parameter === 'state') {
@@ -20,11 +20,11 @@ module.exports.run = async (cobalt, message, args, addCD, cb) => {
                 covidEmbed
                     .setColor('RANDOM')
                     .setTitle(`COVID-19 Data for ${ans.state}`)
-                    .addField('Total Cases', addCommas(ans.cases), true)
-                    .addField('Active Cases', addCommas(ans.active), true)
-                    .addField('Total Deaths', addCommas(ans.deaths), true)
-                    .addField("Today's deaths", addCommas(ans.todayDeaths), true)
-                    .addField("Today's Cases", addCommas(ans.todayCases), true)
+                    .addField('Total Cases', `${addCommas(ans.cases)}`, true)
+                    .addField('Active Cases', `${addCommas(ans.active)}`, true)
+                    .addField('Total Deaths', `${addCommas(ans.deaths)}`, true)
+                    .addField("Today's deaths", `${addCommas(ans.todayDeaths)}`, true)
+                    .addField("Today's Cases", `${addCommas(ans.todayCases)}`, true)
                     .addField(
                         '% of Population Infected',
                         ((ans.active / ans.population) * 100).toString().substring(0, 4) + '%',
@@ -43,13 +43,13 @@ module.exports.run = async (cobalt, message, args, addCD, cb) => {
                     .setColor('RANDOM')
                     .setTitle(`COVID-19 Data for ${ans.country}`)
                     .setThumbnail(ans.countryInfo.flag)
-                    .addField('Total Cases', addCommas(ans.cases), true)
-                    .addField('Recovered', addCommas(ans.recovered), true)
-                    .addField('Active Cases', addCommas(ans.active), true)
-                    .addField('Total Deaths', addCommas(ans.deaths), true)
-                    .addField("Today's deaths", addCommas(ans.todayDeaths), true)
-                    .addField("Today's Cases", addCommas(ans.todayCases), true)
-                    .addField("Today's Recovered", addCommas(ans.todayRecovered), true)
+                    .addField('Total Cases', `${addCommas(ans.cases)}`, true)
+                    .addField('Recovered', `${addCommas(ans.recovered)}`, true)
+                    .addField('Active Cases', `${addCommas(ans.active)}`, true)
+                    .addField('Total Deaths', `${addCommas(ans.deaths)}`, true)
+                    .addField("Today's deaths", `${addCommas(ans.todayDeaths)}`, true)
+                    .addField("Today's Cases", `${addCommas(ans.todayCases)}`, true)
+                    .addField("Today's Recovered", `${addCommas(ans.todayRecovered)}`, true)
                     .addField(
                         '% of Population Infected',
                         ((ans.active / ans.population) * 100).toString().substring(0, 4) + '%',
@@ -64,13 +64,13 @@ module.exports.run = async (cobalt, message, args, addCD, cb) => {
             covidEmbed
                 .setColor('RANDOM')
                 .setTitle('COVID-19 World Data')
-                .addField('Total Cases', addCommas(ans.cases), true)
-                .addField('Recovered', addCommas(ans.recovered), true)
-                .addField('Active Cases', addCommas(ans.active), true)
-                .addField('Total Deaths', addCommas(ans.deaths), true)
-                .addField("Today's deaths", addCommas(ans.todayDeaths), true)
-                .addField("Today's Cases", addCommas(ans.todayCases), true)
-                .addField("Today's Recovered", addCommas(ans.todayRecovered), true)
+                .addField('Total Cases', `${addCommas(ans.cases)}`, true)
+                .addField('Recovered', `${addCommas(ans.recovered)}`, true)
+                .addField('Active Cases', `${addCommas(ans.active)}`, true)
+                .addField('Total Deaths', `${addCommas(ans.deaths)}`, true)
+                .addField("Today's deaths", `${addCommas(ans.todayDeaths)}`, true)
+                .addField("Today's Cases", `${addCommas(ans.todayCases)}`, true)
+                .addField("Today's Recovered", `${addCommas(ans.todayRecovered)}`, true)
                 .addField(
                     '% of Population Infected',
                     ((ans.active / ans.population) * 100).toString().substring(0, 4) + '%',

@@ -27,11 +27,11 @@ module.exports.run = async (cobalt, message, args, addCD, cb) => {
                 resolve(memeEmbed);
             });
         };
-        const meme = await meme();
-        if (typeof meme === 'string') {
-            message.channel.send({ content: meme });
+        const memePost = await meme();
+        if (typeof memePost === 'string') {
+            message.channel.send({ content: memePost });
         } else {
-            message.channel.send({ embeds: [meme] });
+            message.channel.send({ embeds: [memePost] });
         }
     } catch (e) {
         cb(e);

@@ -8,7 +8,7 @@ module.exports.run = async (cobalt, message, args, addCD, cb) => {
             .find({
                 servers: message.guild.id,
             })
-            .sort([['totalXp', 'descending']])
+            .sort({ totalXp: -1 })
             .exec((err, res) => {
                 if (err) console.log(err);
                 let leaderEmbed = new Discord.MessageEmbed().setTitle('Leaderboard');

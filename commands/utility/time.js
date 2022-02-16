@@ -4,7 +4,7 @@ const { DateTime } = require('luxon');
 module.exports.run = async (cobalt, message, args, addCD, cb) => {
     try {
         addCD();
-        time = DateTime.fromObject({ zone: 'America/New_York' }).toLocaleString(DateTime.DATETIME_MED);
+        time = DateTime.fromObject({}, { zone: 'America/New_York' }).toLocaleString(DateTime.DATETIME_MED);
         message.channel.send({ content: "It's " + time + ' CBT' });
     } catch (e) {
         cb(e);

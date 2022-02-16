@@ -23,9 +23,9 @@ module.exports.run = async (cobalt, message, args, addCD, cb) => {
                         })
                         .setTitle('NationStates.net')
                         .setThumbnail(cobalt.user.displayAvatarURL({ format: 'png' }))
-                        .addField('Number of Regions', obj.WORLD.NUMREGIONS, true)
-                        .addField('Number of Nations', obj.WORLD.NUMNATIONS, true)
-                        .addField("Today's Featured Region", obj.WORLD.FEATUREDREGION)
+                        .addField('Number of Regions', `${obj.WORLD.NUMREGIONS}`, true)
+                        .addField('Number of Nations', `${obj.WORLD.NUMNATIONS}`, true)
+                        .addField("Today's Featured Region", `${obj.WORLD.FEATUREDREGION}`)
                         .setFooter({ text: `requested by: ${message.author.tag}` });
                     resolve(worldEmbed);
                 });

@@ -13,7 +13,7 @@ module.exports.run = async (cobalt, message, args, addCD, cb) => {
         if (userData.onHand - money <= 0) return message.channel.send({ content: "You don't have that much money" });
         if (userData.deposited + money > userData.bankSpace)
             return message.channel.send({ content: "You don't have enough bank space" });
-        if (args[0] == 'all') {
+        if (args[0] == 'max') {
             canDeposit = Number(userData.bankSpace) - Number(userData.deposited);
             if (canDeposit == 0) return message.channel.send({ content: "You don't have enough bank space" });
             money = Math.min(canDeposit, Number(userData.onHand));
@@ -41,5 +41,5 @@ exports.conf = {
 exports.help = {
     name: 'deposit',
     description: 'deposit your money',
-    usage: 'deposit [all|amount]',
+    usage: 'deposit [max|amount]',
 };

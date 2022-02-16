@@ -9,7 +9,7 @@ module.exports.run = async (cobalt, message, args, addCD, cb) => {
             user = message.author;
         }
 
-        let level = await xp.get(user.id);
+        let level = await xp.get(user);
         let xpPos = require('../../models/levels');
         let pos = (await xpPos.find({ totalXp: { $gt: level.totalXp } }).countDocuments()) + 1;
 

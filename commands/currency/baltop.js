@@ -9,7 +9,7 @@ module.exports.run = async (cobalt, message, args, addCD, cb) => {
             .find({
                 servers: message.guild.id,
             })
-            .sort([['netWorth', 'descending']])
+            .sort({ netWorth: -1 })
             .exec((err, res) => {
                 if (err) console.log(err);
                 let balEmbed = new Discord.MessageEmbed().setTitle('Top 10 most rich users');

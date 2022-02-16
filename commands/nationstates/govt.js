@@ -21,7 +21,7 @@ module.exports.run = async (cobalt, message, args, addCD, cb) => {
                         .setColor('RANDOM')
                         .setAuthor({ name: `${obj.NATION.NAME}`, iconURL: `${obj.NATION.FLAG}` })
                         .setTitle(`Government Info for ${obj.NATION.NAME}`)
-                        .setDescription(obj.NATION.FULLNAME)
+                        .setDescription(`${obj.NATION.FULLNAME}`)
                         .setThumbnail(`${obj.NATION.FLAG}`)
                         .addField('Administration', obj.NATION.GOVT[0].ADMINISTRATION + '%', true)
                         .addField('Defense', obj.NATION.GOVT[0].DEFENCE + '%', true)

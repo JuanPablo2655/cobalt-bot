@@ -48,11 +48,27 @@ exports.add = async function (xpToAdd, message) {
     );
 };
 
-exports.get = function (userID) {
+exports.get = function (user) {
     return new Promise(resolve => {
         let level = require('../models/levels.js');
-        level.findOne({ userID: userID }, function (err, res) {
+        level.findOne({ userID: user.id }, function (err, res) {
             if (err) console.log(err);
+            if (!res) {
+                try {
+                    const newEntry = new level({
+                        username: user.username,
+                        userID: user.id,
+                        servers: [],
+                        xp: 0,
+                        lvl: 0,
+                        totalXp: 0,
+                    });
+                    newEntry.save().catch(err => console.log(err));
+                    resolve(newEntry);
+                } catch (err) {
+                    console.log(err);
+                }
+            }
             resolve(res);
         });
     });
