@@ -34,7 +34,8 @@ module.exports.run = async (cobalt, message, args, addCD, cb) => {
                     .toString()
                     .substring(0, 4)}%\`\n**Net**: ₡${bal.netWorth}\n**Bounty**: ₡${bal.bounty}`,
                 true,
-            );
+            )
+            .addField('Soical Credit Score', `${exp.socialCredit} / 2000`, true);
         message.channel.send({ embeds: [profileEmbed] });
     } catch (e) {
         cb(e);

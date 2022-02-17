@@ -15,20 +15,20 @@ module.exports.run = async (cobalt, message, args, addCD, cb) => {
         let joined = DateTime.fromISO(memberboi.joinedAt.toISOString())
             .setZone('America/New_York')
             .toLocaleString(DateTime.DATETIME_MED);
-        let game = userboi.presence.game ? userboi.presence.game.name : 'None';
+        let game = memberboi.presence?.game ? userboi.presence.game.name : 'None';
         let nickname = !memberboi.nickname ? 'None' : memberboi.nickname;
         let avatar = userboi.displayAvatarURL({ format: 'png' });
         let userid = userboi.id;
         let tag = userboi.tag;
         let isBot = userboi.bot ? 'Yes' : 'No';
         let status = '';
-        if (userboi.presence.status === 'online') {
+        if (memberboi.presence?.status === 'online') {
             status = 'Online';
-        } else if (userboi.presence.status === 'offline') {
+        } else if (memberboi.presence?.status === 'offline') {
             status = 'Offline';
-        } else if (userboi.presence.status === 'idle') {
+        } else if (memberboi.presence?.status === 'idle') {
             status = 'Idle';
-        } else if (userboi.presence.status === 'dnd') {
+        } else if (memberboi.presence?.status === 'dnd') {
             status = 'Do not disturb';
         }
         let server = message.guild;
