@@ -10,8 +10,12 @@ module.exports.run = async (cobalt, message, args, addCD, cb) => {
             message.guild.members.cache.find(
                 member => member.user.username === user.join(' ') || member.user.username === user.join(' '),
             );
-        if (!message.member?.roles.cache.get('355885679076442112') || message.author.id !== '288703114473635841')
-            return message.channel.send({ content: "You aren't a minister or not in the correct server" });
+        const role = cobalt.guilds.cache.get('322505254098698240')?.roles.cache.get('232670598872956929');
+        console.log(message.author.id !== '288703114473635841' || !message.member?.roles.cache.has(role?.id));
+        if (!message.member?.roles.cache.has(role?.id)) {
+            if (message.author.id !== '288703114473635841')
+                return message.channel.send({ content: "You aren't a minister" });
+        }
         if (!member || !user) return message.channel.send({ content: 'Missing user' });
         if (member.user.id === message.author.id)
             return message.channel.send({ content: "You can't update your own socal credit score" });

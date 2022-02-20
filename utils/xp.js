@@ -68,8 +68,9 @@ exports.get = function (user) {
                 } catch (err) {
                     console.log(err);
                 }
+            } else {
+                resolve(res);
             }
-            resolve(res);
         });
     });
 };

@@ -12,7 +12,7 @@ module.exports.run = async (cobalt, message, args, addCD, cb) => {
                 member => member.user.username === args.slice(0).join(' ') || member.user.username === args[0],
             ) ||
             message.member;
-        let exp = await xp.get(member.id);
+        let exp = await xp.get(member);
         let bal = await cobalt.fetchEconUser(member.id);
         let xpPos = require('../../models/levels');
         let pos = (await xpPos.find({ totalXp: { $gt: exp.totalXp } }).countDocuments()) + 1;
