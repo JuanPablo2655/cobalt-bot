@@ -1,23 +1,23 @@
 const Discord = require('discord.js');
 const config = require('../config.json');
-const { DateTime } = require("luxon");
+const { DateTime } = require('luxon');
 const prettyMilliseconds = require('pretty-ms');
 
-const devMode = config.devMode
-const levelMode = config.levelMode
+const devMode = config.devMode;
+const levelMode = config.levelMode;
 
 let levelCooldowns = new Set();
 
 module.exports = async (cobalt, message) => {
-    const messageDAT = message.content + "";
+    const messageDAT = message.content + '';
     if (message.author.bot) {
-        return
-    };
+        return;
+    }
     const args = message.content.slice(config.prefix.length).trim().split(/ +/g);
     const command = args.shift().toLowerCase();
 
-    if ((message.content + "").replace("!", "").trim() === "<@" + cobalt.user.id + ">") {
-        message.reply("the prefix is: " + config.prefix);
+    if ((message.content + '').replace('!', '').trim() === '<@' + cobalt.user.id + '>') {
+        message.reply('the prefix is: ' + config.prefix);
     }
 
     if (message.guild && !message.member) await message.guild.members.fetch(message.author);
@@ -31,7 +31,7 @@ module.exports = async (cobalt, message) => {
     if (!messageDAT.toLowerCase().startsWith(config.prefix)) {
         if (levelMode == true) {
             return await manageUser(message);
-        } else return
+        } else return;
     }
 
     let cmd;
@@ -44,16 +44,19 @@ module.exports = async (cobalt, message) => {
     if (!cmd) {
         if (levelMode == true) {
             return await manageUser(message);
-        } else return
-    };
+        } else return;
+    }
     if (cmd.conf.enabled === false) {
         if (devMode == true) {
-            cmd.run(cobalt, message, args, commandError)
-        } else return message.channel.send(`the command \`${cmd.help.name}\` is not enabled, try again later`)
+            cmd.run(cobalt, message, args, commandError);
+        } else
+            return message.channel.send({
+                content: `the command \`${cmd.help.name}\` is not enabled, try again later`,
+            });
     }
     if (cmd.conf.ownerOnly === true) {
         const devs = ['288703114473635841', '232670598872956929'];
-        if (!devs.includes(message.author.id)) return
+        if (!devs.includes(message.author.id)) return;
     }
 
     const addCD = () => {
@@ -63,26 +66,26 @@ module.exports = async (cobalt, message) => {
         const now = Date.now();
         let cooldownAmount;
         const timestamps = cobalt.cooldowns.get(cmd.help.name);
-        if (devMode) cooldownAmount = .1;
+        if (devMode) cooldownAmount = 0.1;
         else cooldownAmount = (cmd.conf.cooldown || 1) * 1000;
 
         if (timestamps.has(message.author.id)) {
             const expirationTime = timestamps.get(message.author.id) + cooldownAmount;
             if (now < expirationTime) {
-                return
+                return;
             }
         }
         timestamps.set(message.author.id, now);
         setTimeout(() => timestamps.delete(message.author.id), cooldownAmount);
-    }
-    
+    };
+
     const checkCD = () => {
         const now = Date.now();
         let cooldownAmount;
         const timestamps = cobalt.cooldowns.get(cmd.help.name);
-        if (devMode) cooldownAmount = .1;
+        if (devMode) cooldownAmount = 0.1;
         else cooldownAmount = (cmd.conf.cooldown || 1) * 1000;
-        if (!timestamps) return false
+        if (!timestamps) return false;
 
         if (timestamps.has(message.author.id)) {
             const expirationTime = timestamps.get(message.author.id) + cooldownAmount;
@@ -90,17 +93,23 @@ module.exports = async (cobalt, message) => {
                 const timeLeft = (expirationTime - now) / 1000;
                 const cooldownEmbed = new Discord.MessageEmbed()
                     .setTitle(`Woah hold up buddy`)
-                    .setDescription(`This command is on a cooldown.\n\nYou will be able to run the command again in : \`${prettyMilliseconds(timeLeft * 1000)}\`.\n\nThe default cooldown on this command is \`${prettyMilliseconds(cmd.conf.cooldown * 1000)}\`.`)
+                    .setDescription(
+                        `This command is on a cooldown.\n\nYou will be able to run the command again in : \`${prettyMilliseconds(
+                            timeLeft * 1000,
+                        )}\`.\n\nThe default cooldown on this command is \`${prettyMilliseconds(
+                            cmd.conf.cooldown * 1000,
+                        )}\`.`,
+                    )
                     .setColor('#FFA500');
-                message.channel.send(cooldownEmbed);
-                return true
+                message.channel.send({ embeds: [cooldownEmbed] });
+                return true;
             }
         }
-        return false
-    }
+        return false;
+    };
 
     if (cmd) {
-        if (checkCD()) return
+        if (checkCD()) return;
         cmd.run(cobalt, message, args, addCD, commandError);
 
         // let data = await cobalt.commandUsed(message);
@@ -121,24 +130,28 @@ module.exports = async (cobalt, message) => {
     }
 
     function commandError(err) {
-        console.log("ERROR RUNNING COMMAND");
+        console.log('ERROR RUNNING COMMAND');
         console.log(err);
-        message.channel.send("The command failed to run.");
-        cobalt.channels.cache.get('823301224798617680').send(`From ${message.guild.name} - ${message.guild.id}\n\`\`\`${err.stack}\`\`\`` || "error lmao");
+        message.channel.send({ content: 'The command failed to run.' });
+        cobalt.channels.cache
+            .get('823301224798617680')
+            .send({
+                content: `From ${message.guild.name} - ${message.guild.id}\n\`\`\`${err.stack}\`\`\`` || 'error lmao',
+            });
     }
 
     async function manageUser(message) {
-        if (levelCooldowns.has(message.author.id)) return
-        levelCooldowns.add(message.author.id)
+        if (levelCooldowns.has(message.author.id)) return;
+        levelCooldowns.add(message.author.id);
         setTimeout(() => {
-            levelCooldowns.delete(message.author.id)
-        }, 60000)
+            levelCooldowns.delete(message.author.id);
+        }, 60000);
 
-        let xpToAdd = Math.round(Math.random() * ((25 - 15) + 1) + 15);
+        let xpToAdd = Math.round(Math.random() * (25 - 15 + 1) + 15);
         require('../utils/xp.js').add(xpToAdd, message);
 
-        let bankSpaceToAdd = Math.round(10 + Math.random() * 20)
-        await cobalt.addBankSpace(message.author.id, bankSpaceToAdd)
+        let bankSpaceToAdd = Math.round(10 + Math.random() * 20);
+        await cobalt.addBankSpace(message.author.id, bankSpaceToAdd);
         // require('../utils/econ').add(bankSpaceToAdd, message);
     }
-}
+};

@@ -1,23 +1,23 @@
-const Discord = require("discord.js");
+const Discord = require('discord.js');
 let currency = require('../../models/currency');
 
 module.exports.run = async (cobalt, message, args, addCD, cb) => {
     try {
-        return
+        return;
     } catch (e) {
-        cb(e)
+        cb(e);
     }
-}
+};
 
 exports.conf = {
     enabled: false,
     ownerOnly: false,
     cooldown: 1,
-    aliases: []
-}
+    aliases: [],
+};
 
 exports.help = {
-    name: "bank",
-    description: "bank",
-    usage: "bank"
-}
+    name: 'bank',
+    description: 'bank',
+    usage: 'bank',
+};

@@ -5,34 +5,34 @@ let stats = require('../models/stats');
 const itemManager = require('./itemManager');
 
 class cobaltClass extends Client {
-    constructor () {
-        super();
+    constructor(options) {
+        super(options);
         this.config = require('../config.json');
         this.secrets = require('../secrets.json');
         const dbOptions = {
-            useNewUrlParser: true,
+            // useNewUrlParser: true,
             autoIndex: false,
-            useUnifiedTopology: true,
+            // useUnifiedTopology: true,
             // reconnectTries: Number.MAX_VALUE,
             // reconnectInterval: 500,
-            poolSize: 5,
+            maxPoolSize: 5,
             connectTimeoutMS: 10000,
-            family: 4
+            family: 4,
         };
 
         mongoose.connect(this.secrets.databasePass, dbOptions);
 
-        mongoose.set('useFindAndModify', false);
+        // mongoose.set('useFindAndModify', false);
         mongoose.Promise = global.Promise;
-        
+
         mongoose.connection.on('connected', () => {
             console.log('[Mongoose]\tMongoose connection successfully opened');
         });
-        
+
         mongoose.connection.on('err', err => {
             console.error(`[Mongoose]\tMongoose connection error: \n ${err.stack}`);
         });
-        
+
         mongoose.connection.on('disconnected', () => {
             console.log('[Mongoose]\tMongoose connection disconnected');
         });
@@ -40,29 +40,29 @@ class cobaltClass extends Client {
     }
 
     /**
-     * 
+     *
      * @param {string} userID - A discord user ID.
      */
 
     async fetchEconUser(userID) {
-        const someone = this.users.cache.get(userID)
+        const someone = this.users.cache.get(userID);
         if (!someone || someone.bot) return false;
         let user = await currency.findOne({
-            userID
-        })
+            userID,
+        });
         if (!user) {
             const newUser = new currency({
                 username: someone.username,
-                userID
+                userID,
             });
             newUser.save();
-            return newUser
+            return newUser;
         }
         return user;
     }
 
     /**
-     * 
+     *
      * @param {string} userID - A discord user ID.
      * @param {number} amount - Amount of money to give.
      */
@@ -71,26 +71,26 @@ class cobaltClass extends Client {
         const someone = this.users.cache.get(userID);
         if (!someone || someone.bot) return false;
         let user = await currency.findOne({
-            userID
-        })
+            userID,
+        });
         if (!user) {
             const newUser = new currency({
                 username: someone.username,
                 userID,
                 onHand: parseInt(amount),
-                netWorth: parseInt(amount)
+                netWorth: parseInt(amount),
             });
             newUser.save();
-            return newUser
+            return newUser;
         }
-        user.onHand += parseInt(amount)
-        user.netWorth += parseInt(amount)
+        user.onHand += parseInt(amount);
+        user.netWorth += parseInt(amount);
         await user.save();
         return user;
     }
 
     /**
-     * 
+     *
      * @param {string} userID - A discord user ID.
      * @param {number} amount  - Amount of money to remove.
      */
@@ -99,81 +99,81 @@ class cobaltClass extends Client {
         const someone = this.users.cache.get(userID);
         if (!someone || someone.bot) return false;
         let user = await currency.findOne({
-            userID
-        })
+            userID,
+        });
         if (!user) {
             const newUser = new currency({
                 username: someone.username,
                 userID,
                 onHand: parseInt(-amount),
-                netWorth: parseInt(-amount)
+                netWorth: parseInt(-amount),
             });
             newUser.save();
-            return newUser
+            return newUser;
         }
-        user.onHand -= parseInt(amount)
-        user.netWorth -= parseInt(amount)
+        user.onHand -= parseInt(amount);
+        user.netWorth -= parseInt(amount);
         await user.save();
         return user;
     }
 
     /**
-     * 
-     * @param {string} userID 
-     * @param {string} amount 
+     *
+     * @param {string} userID
+     * @param {string} amount
      */
 
     async addBankSpace(userID, amount) {
         const someone = this.users.cache.get(userID);
         if (!someone || someone.bot) return false;
         let user = await currency.findOne({
-            userID
-        })
+            userID,
+        });
         if (!user) {
             const newUser = new currency({
                 username: someone.username,
                 userID,
-                bankSpace: 1000 + parseInt(amount)
+                bankSpace: 1000 + parseInt(amount),
             });
             newUser.save();
-            return newUser
+            return newUser;
         }
-        user.bankSpace += parseInt(amount)
+        user.bankSpace += parseInt(amount);
         await user.save();
         return user;
     }
 
     /**
-     * 
-     * @param {string} userID 
-     * @param {string} amount 
+     *
+     * @param {string} userID
+     * @param {string} amount
      */
 
     async removeBankSpace(userID, amount) {
         const someone = this.users.cache.get(userID);
         if (!someone || someone.bot) return false;
         let user = await currency.findOne({
-            userID
-        })
+            userID,
+        });
         if (!user) {
             const newUser = new currency({
                 username: someone.username,
                 userID,
-                bankSpace: 1000 - parseInt(amount)
+                bankSpace: 1000 - parseInt(amount),
             });
             newUser.save();
-            return newUser
+            return newUser;
         }
-        user.bankSpace -= parseInt(amount)
+        user.bankSpace -= parseInt(amount);
         await user.save();
         return user;
     }
 
     async commandUsed(message) {
         const serverInfo = await stats.findOne({
-            serverID: message.guild.id
-        })
-        if(!serverInfo) {
+            serverID: message.guild.id,
+        });
+        if (!serverInfo) {
             const newEntry = new stats({
                 serverID: message.guild.id,
             });

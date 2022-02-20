@@ -1,6 +1,5 @@
-const Discord = require("discord.js");
+const Discord = require('discord.js');
 const fetch = require('node-fetch');
-
 
 module.exports.run = async (cobalt, message, args, addCD, cb) => {
     try {
@@ -11,26 +10,26 @@ module.exports.run = async (cobalt, message, args, addCD, cb) => {
                 .setTitle(json.fact)
                 .setImage(json.image)
                 .setTimestamp()
-                .setColor('RANDOM')
-            message.channel.send(bearEmbed)
+                .setColor('RANDOM');
+            message.channel.send({ embeds: [bearEmbed] });
         } catch {
-            message.channel.send("The API is down contact Juan Pablo.")
+            message.channel.send({ content: 'The API is down contact Juan Pablo.' });
         }
         addCD();
     } catch (e) {
-        cb(e)
+        cb(e);
     }
-}
+};
 
 exports.conf = {
     enabled: true,
     ownerOnly: false,
     cooldown: 2,
-    aliases: []
-}
+    aliases: [],
+};
 
 exports.help = {
-    name: "bear",
-    description: "get a random bear pic",
-    usage: "bear"
-}
+    name: 'bear',
+    description: 'get a random bear pic',
+    usage: 'bear',
+};
