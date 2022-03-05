@@ -1,5 +1,6 @@
 const Discord = require('discord.js');
 const xp = require('../../utils/xp');
+const config = require('../../config.json');
 
 module.exports.run = async (cobalt, message, args, addCD, cb) => {
     try {
@@ -10,11 +11,8 @@ module.exports.run = async (cobalt, message, args, addCD, cb) => {
             message.guild.members.cache.find(
                 member => member.user.username === user.join(' ') || member.user.username === user.join(' '),
             );
-        const role = cobalt.guilds.cache.get('322505254098698240')?.roles.cache.get('232670598872956929');
-        console.log(message.author.id !== '288703114473635841' || !message.member?.roles.cache.has(role?.id));
-        if (!message.member?.roles.cache.has(role?.id)) {
-            if (message.author.id !== '288703114473635841')
-                return message.channel.send({ content: "You aren't a minister" });
+        if (!config.ministers.includes(message.author.id)) {
+            return message.channel.send({ content: "You aren't a minister" });
         }
         if (!member || !user) return message.channel.send({ content: 'Missing user' });
         if (member.user.id === message.author.id)
@@ -57,7 +55,7 @@ exports.conf = {
     enabled: true,
     ownerOnly: false,
     cooldown: 1,
-    aliases: [],
+    aliases: ['sc'],
 };
 
 exports.help = {
