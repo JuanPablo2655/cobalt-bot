@@ -6,14 +6,14 @@ module.exports.run = async (cobalt, message, args, addCD, cb) => {
 
         let userData = await cobalt.fetchEconUser(message.author.id);
         if (!args[0]) return message.channel.send({ content: 'How much money?' });
-        if (isNaN(parseInt(args[0], 10)) && args[0] !== 'all')
+        if (isNaN(parseInt(args[0], 10)) && args[0] !== 'max')
             return message.channel.send({ content: 'Please input a valid number' });
         let money = Number(args[0]);
 
         if (userData.onHand - money <= 0) return message.channel.send({ content: "You don't have that much money" });
         if (userData.deposited + money > userData.bankSpace)
             return message.channel.send({ content: "You don't have enough bank space" });
-        if (args[0] == 'max') {
+        if (args[0] === 'max') {
             canDeposit = Number(userData.bankSpace) - Number(userData.deposited);
             if (canDeposit == 0) return message.channel.send({ content: "You don't have enough bank space" });
             money = Math.min(canDeposit, Number(userData.onHand));
